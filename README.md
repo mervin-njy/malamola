@@ -4,11 +4,11 @@ Mala Mola is a webstore by [fillyflower_crafts](https://www.instagram.com/fillyf
 
 Technologies used:
 
-| **Trigg.Track.** | **Tech Stack**                             |
-| ---------------: | ------------------------------------------ |
-|         Frontend | React with TypeScript and Next.js          |
-|          Styling | Tailwind CSS                               |
-|          Backend | Express with Node.js and NoSQL - Firestore |
+| **Features** | **Tech Stack**                             |
+| -----------: | ------------------------------------------ |
+|     Frontend | React with TypeScript and Next.js          |
+|      Styling | Tailwind CSS                               |
+|      Backend | Express with Node.js and NoSQL - Firestore |
 
 ## Users
 
