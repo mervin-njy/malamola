@@ -9,12 +9,12 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div>
-      <main className="flex min-h-screen flex-col items-center p-20">
-        <div className="flex flex-wrap justify-around w-full mb-16">
+    <>
+      <main className="flex min-h-screen flex-col items-center p-16">
+        {/* <div className="flex flex-wrap justify-around w-full mb-16">
           <Link href="/account/login">Log In</Link>
           <Link href="/account/signup">Sign Up</Link>
-        </div>
+        </div> */}
 
         <div className="flex justify-between w-8/12">
           <Image
@@ -22,10 +22,11 @@ export default function Home() {
             alt="fillyflower's logo"
             width={400}
             height={600}
+            className="rounded-full"
           />
           <h1>Welcome to Filly Flower Crafts</h1>
         </div>
       </main>
-    </div>
+    </>
   );
 }

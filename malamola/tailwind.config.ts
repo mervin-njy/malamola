@@ -9,11 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "off-black": "333333",
-        "tealish-blue": "4D6A6D",
-        "accent-orange": "DE8139",
-        "brownish-orange": "CA986C",
-        "off-white": "F3EEE1",
+        primary: "#333333", // off-black
+        secondary: "#4D6A6D", // tealish
+        accent: "#DE8139", // orange
+        neutral: "#CA986C", // brown
+        background: "#F3EEE1", // off-white
+        "logo-bg": "#F2EDDF",
       },
       screens: {
         mobile: "360px", // => @media (min-width: 360px) { ... }
@@ -24,5 +25,18 @@ const config: Config = {
     },
   },
   plugins: [require("daisyui")],
+  daisyui: {
+    themes: [
+      {
+        molaTheme: {
+          primary: "#333333",
+          secondary: "#4D6A6D",
+          accent: "#DE8139",
+          neutral: "#CA986C",
+          "base-100": "#F2EDDF",
+        },
+      },
+    ],
+  },
 };
 export default config;
