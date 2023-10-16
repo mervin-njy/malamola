@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center p-16">
+      <main className="flex min-h-screen flex-col items-center py-16">
         {/* <div className="flex flex-wrap justify-around w-full mb-16">
           <Link href="/account/login">Log In</Link>
           <Link href="/account/signup">Sign Up</Link>

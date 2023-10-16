@@ -17,4 +17,5 @@
 body {
   color: rgb(var(--foreground-rgb));
   background-color: rgb(var(--background-rgb));
+  overflow: scroll; /* prevent scrollbar from adjusting position of HTML elements */
 }

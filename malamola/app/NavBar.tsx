@@ -52,6 +52,7 @@ const NavBar = () => {
             Shop
           </Link>
         </li>
+        {/* TODO: add dropdown beside About > FillyFlower, Our Biodiversity, Materials */}
         <li>
           <Link
             href="/about"
@@ -80,7 +81,6 @@ const NavBar = () => {
       {/* TODO: 
           1. replace with icons 
           2. profile replace with sign in 
-      
       */}
       <ul className="flex justify-center w-2/12 space-x-8">
         <li>
