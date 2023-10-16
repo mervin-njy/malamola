@@ -1,15 +1,15 @@
-import Head from "next/head";
+import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import mainLogo from "../public/assets/images/branding/fillyFlowerLogo-1.png";
 
+export const metadata: Metadata = {
+  title: "Filly Flower Crafts",
+};
+
 export default function Home() {
   return (
     <div>
-      <Head>
-        <title>FillyFlower</title>
-      </Head>
-
       <main className="flex min-h-screen flex-col items-center p-20">
         <div className="flex flex-wrap justify-around w-full mb-16">
           <Link href="/account/login">Log In</Link>
