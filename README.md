@@ -26,20 +26,10 @@ Apart from the admin user which can access the Content Mangement System (CMS), t
 
 <!-- ## Installation / Dependencies
 
-#### Client:
+#### Dependencies:
 
-1. npm i react-router-dom
-2. npm install -D tailwindcss postcss autoprefixer
-3. npx tailwindcss init -p
-4. npm install react-icons --save
-5. npm install --save react-toastify
-
-#### Server:
-
-1. npm init -y
-2. npm i express nodemon
-3. npm i express-validator
-4. npm i pg cors dotenv
-5. npm i jsonwebtoken uuid bcrypt -->
+1. npx create-next-app@latest
+2. npm i -D daisyui@latest
+3. npm install react-icons --save
 
 <!-- ## Challenges & unsolved problems -->
