@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import React from "react";
 import mainLogo from "../public/assets/images/branding/fillyFlowerLogo-200.svg";
+import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
@@ -10,15 +10,27 @@ import {
   RiAccountPinCircleFill,
   RiShoppingCart2Fill,
 } from "react-icons/ri";
+import classNames from "classnames";
 
 const NavBar = () => {
-  // Get the current route --------------------------------------------------------------------------
-  const currentRoute = usePathname();
+  // Variables --------------------------------------------------------------------------------------
+  // Get the current route
+  const currentRoute = usePathname(); // requires CSR
 
-  // styles - nav
-  const navStyle = "text-xl tracking-wider hover:underline underline-offset-8";
-  const activeNav = navStyle + " text-accent font-bold hover:no-underline";
-  const nonActiveNav = navStyle + " text-secondary hover:font-bold";
+  // array for navbar options
+  const navOpts = [
+    { label: "Home", href: "/" },
+    { label: "Shop", href: "/products" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
+    { label: "FAQs", href: "/faq" },
+  ];
+
+  const helpOpts = [
+    { label: <RiSearch2Line />, href: "/search" },
+    { label: <RiAccountPinCircleFill />, href: "/account" },
+    { label: <RiShoppingCart2Fill />, href: "/cart" },
+  ];
 
   // styles - helper
   const helperStyle = "text-2xl tracking-wider hover:text-neutral";
@@ -35,84 +47,46 @@ const NavBar = () => {
       </div>
 
       <ul className="flex space-x-12">
-        <li>
-          <Link
-            href="/"
-            className={currentRoute === "/" ? activeNav : nonActiveNav}
-          >
-            Home
-          </Link>
-        </li>
         {/* TODO: add dropdown beside Shop > All, Mola, Seasonal, DIY kits, Gifts */}
-        <li>
-          <Link
-            href="/products"
-            className={currentRoute === "/products" ? activeNav : nonActiveNav}
-          >
-            Shop
-          </Link>
-        </li>
         {/* TODO: add dropdown beside About > FillyFlower, Our Biodiversity, Materials */}
-        <li>
-          <Link
-            href="/about"
-            className={currentRoute === "/about" ? activeNav : nonActiveNav}
-          >
-            About
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/contact"
-            className={currentRoute === "/contact" ? activeNav : nonActiveNav}
-          >
-            Contact
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/faq"
-            className={currentRoute === "/faq" ? activeNav : nonActiveNav}
-          >
-            FAQs
-          </Link>
-        </li>
+        {navOpts.map((option, ind) => {
+          return (
+            <li key={ind}>
+              <Link
+                href={option.href}
+                className={classNames({
+                  "text-xl tracking-wider hover:text-neutral underline-offset-8":
+                    true,
+                  "text-accent font-bold": currentRoute === option.href,
+                  "text-secondary hover:underline":
+                    currentRoute !== option.href,
+                })}
+              >
+                {option.label}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
-      {/* TODO: 
-          1. replace with icons 
-          2. profile replace with sign in 
-      */}
+
+      {/* TODO: profile replace with sign in */}
       <ul className="flex justify-center w-2/12 space-x-8">
-        <li>
-          <Link
-            href="/search"
-            className={
-              currentRoute === "/search" ? activeHelper : nonActiveHelper
-            }
-          >
-            <RiSearch2Line />
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/account"
-            className={
-              currentRoute === "/account" ? activeHelper : nonActiveHelper
-            }
-          >
-            <RiAccountPinCircleFill />
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/cart"
-            className={
-              currentRoute === "/cart" ? activeHelper : nonActiveHelper
-            }
-          >
-            <RiShoppingCart2Fill />
-          </Link>
-        </li>
+        {helpOpts.map((option, ind) => {
+          return (
+            <li key={ind}>
+              <Link
+                href={option.href}
+                className={classNames({
+                  "text-2xl tracking-wider hover:text-neutral": true,
+                  "text-accent": currentRoute === option.href,
+                  "text-secondary": currentRoute !== option.href,
+                })}
+              >
+                {option.label}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );

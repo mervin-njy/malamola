@@ -31,5 +31,6 @@ Apart from the admin user which can access the Content Mangement System (CMS), t
 1. npx create-next-app@latest
 2. npm i -D daisyui@latest
 3. npm install react-icons --save
+4. npm install classnames
 
 <!-- ## Challenges & unsolved problems -->
