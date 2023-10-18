@@ -32,5 +32,9 @@ Apart from the admin user which can access the Content Mangement System (CMS), t
 2. npm i -D daisyui@latest
 3. npm install react-icons --save
 4. npm install classnames
+5. npm i prisma
+6. npm primsa init => /prisma/schema.prisma
+7. npm install zod
+8. npm i react-hook-form
 
 <!-- ## Challenges & unsolved problems -->
