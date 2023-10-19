@@ -39,7 +39,7 @@ const NavBar = () => {
 
   // Render NavBar ----------------------------------------------------------------------------------
   return (
-    <nav className="flex justify-between items-center h-28 px-12 bg-opacity-5 bg-neutral">
+    <nav className="flex justify-between items-center h-28 px-12 bg-opacity-5 bg-neutral border-b-2 border-accent border-opacity-10 shadow-sm">
       <div className="flex justify-center w-2/12 ">
         <Link href="/">
           <Image src={mainLogo} alt="home" width={70} height={70} />

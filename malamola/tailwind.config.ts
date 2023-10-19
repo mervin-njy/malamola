@@ -30,10 +30,14 @@ const config: Config = {
       {
         molaTheme: {
           primary: "#333333",
-          secondary: "#4D6A6D",
-          accent: "#DE8139",
-          neutral: "#CA986C",
-          "base-100": "#F3EEE1",
+          secondary: "#4d6a6d",
+          accent: "#de8139",
+          neutral: "#ca986c",
+          "base-100": "#f3eee1",
+          info: "#a6b5e3",
+          success: "#188c5d",
+          warning: "#f4d166",
+          error: "#e93c25",
         },
       },
     ],

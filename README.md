@@ -32,9 +32,14 @@ Apart from the admin user which can access the Content Mangement System (CMS), t
 2. npm i -D daisyui@latest
 3. npm install react-icons --save
 4. npm install classnames
-5. npm i prisma
-6. npm primsa init => /prisma/schema.prisma
-7. npm install zod
-8. npm i react-hook-form
+5. npm i prisma @prisma/client
+    a. npm primsa init => /prisma/schema.prisma
+    b. npx prisma db pull => convert db schema to prisma schema | INSTROSPECTION
+    c. npx prisma db push => reverses ^ after you make changes to prisma model
+    d. npx prisma generate
+6. npm i next/auth @auth/prisma-adapter
+7. npm i prettier eslint-config-prettier prettier-plugin-tailwindcss
+8. npm i zod
+9. npm i react-hook-form
 
 <!-- ## Challenges & unsolved problems -->
