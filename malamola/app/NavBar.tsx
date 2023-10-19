@@ -39,8 +39,8 @@ const NavBar = () => {
 
   // Render NavBar ----------------------------------------------------------------------------------
   return (
-    <nav className="flex justify-between items-center h-28 px-12 bg-opacity-5 bg-neutral border-b-2 border-accent border-opacity-10 shadow-sm">
-      <div className="flex justify-center w-2/12 ">
+    <nav className="flex h-28 items-center justify-between border-b-2 border-accent border-opacity-10 bg-neutral bg-opacity-5 px-12 shadow-sm">
+      <div className="flex w-2/12 justify-center ">
         <Link href="/">
           <Image src={mainLogo} alt="home" width={70} height={70} />
         </Link>
@@ -55,9 +55,9 @@ const NavBar = () => {
               <Link
                 href={option.href}
                 className={classNames({
-                  "text-xl tracking-wider hover:text-neutral underline-offset-8":
+                  "text-xl tracking-wider underline-offset-8 hover:text-neutral":
                     true,
-                  "text-accent font-bold": currentRoute === option.href,
+                  "font-bold text-accent": currentRoute === option.href,
                   "text-secondary hover:underline":
                     currentRoute !== option.href,
                 })}
@@ -70,7 +70,7 @@ const NavBar = () => {
       </ul>
 
       {/* TODO: profile replace with sign in */}
-      <ul className="flex justify-center w-2/12 space-x-8">
+      <ul className="flex w-2/12 justify-center space-x-8">
         {helpOpts.map((option, ind) => {
           return (
             <li key={ind}>

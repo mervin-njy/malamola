@@ -16,7 +16,7 @@ export default function Home() {
           <Link href="/account/signup">Sign Up</Link>
         </div> */}
 
-        <div className="flex justify-between w-8/12">
+        <div className="flex w-8/12 justify-between">
           <Image
             src={mainLogo}
             alt="fillyflower's logo"
