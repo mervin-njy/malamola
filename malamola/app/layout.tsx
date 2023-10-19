@@ -24,7 +24,9 @@ export default function RootLayout({
     <html lang="en" data-theme="molaTheme">
       <body className={roboto.className}>
         <NavBar />
-        <main>{children}</main>
+        <main className="m-auto min-w-[50rem] max-w-7xl px-8 py-10">
+          {children}
+        </main>
       </body>
     </html>
   );
