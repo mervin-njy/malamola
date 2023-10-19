@@ -1,11 +1,5 @@
-import { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
 import mainLogo from "../public/assets/images/branding/fillyFlowerLogo-1.png";
-
-export const metadata: Metadata = {
-  title: "Filly Flower Crafts",
-};
 
 export default function Home() {
   return (
@@ -21,7 +15,7 @@ export default function Home() {
             src={mainLogo}
             alt="fillyflower's logo"
             width={400}
-            height={600}
+            height={400}
             className="rounded-full"
           />
           <h1>Welcome to Filly Flower Crafts</h1>
