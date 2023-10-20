@@ -8,8 +8,8 @@ export const formatPrice = (price: number) => {
 
 export const formatImageUrl = (imageUrl: string) => {
   // 1. replace "file/d/" w/ "uc?export=view&id="
-  // 2. remove "/view?usp=sharing" at the end
+  // 2. remove "/view?usp=sharing" at the end || "/view..."
   return imageUrl
     .replace("file/d/", "uc?export=view&id=")
-    .replace("/view?usp=sharing", "");
+    .replace(/\/view(.*)/, "");
 };
