@@ -31,7 +31,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </figure>
       <div className="card-body">
         <h3 className="card-title tracking-wider">{product.name} </h3>
-        <p className="tracking-wide">{product.description}</p>
+        <h4 className="font-extrabold tracking-widest text-accent">
+          {product.category}
+        </h4>
+        <p className="line-clamp-3 max-h-24 overflow-hidden tracking-wide">
+          {product.description}
+        </p>
         <div className="mt-2 flex justify-between">
           <PriceTag
             price={product.price}

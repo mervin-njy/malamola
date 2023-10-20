@@ -7,20 +7,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ProductsCategory {
+  Mola
+  Seasonal
+  DIY
+  Packages
+}
+
 // type ProductsPrice {
 //   SGD Int
 //   TWD Int
 // }
 
 model Product {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String           @id @default(auto()) @map("_id") @db.ObjectId
+  category    ProductsCategory
   description String
   imageUrl    String // []
   name        String
   price       Int // ProductsPrice
   stock       Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 
   @@map("products") // connects model to collection name, so we can change it to Caps + Singular such that it doesn't become misleading
 }

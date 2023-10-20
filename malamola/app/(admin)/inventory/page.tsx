@@ -13,17 +13,18 @@ async function addProduct(formData: FormData) {
   "use server";
 
   const name = formData.get("name")?.toString(); // ? => string or undefined
+  const category = formData.get("category"); // formData.get("category")?.toString();
   const description = formData.get("description")?.toString();
   const imageUrl = formData.get("imageUrl")?.toString();
   const price = Number(formData.get("price") || 0);
   const stock = Number(formData.get("stock") || 0);
 
-  if (!name || !description || !imageUrl || !price || !stock) {
+  if (!name || !category || !description || !imageUrl || !price || !stock) {
     throw Error("Missing required fields!");
   }
 
   await prisma.product.create({
-    data: { name, description, imageUrl, price, stock },
+    data: { name, category, description, imageUrl, price, stock },
   });
 
   redirect("/");
@@ -40,18 +41,45 @@ const ManageInventoryPage = () => {
           {/* change to "ID" mapped from db's product list */}
           <div className="card-body">
             <form action={addProduct}>
+              {/* Input: name */}
               <input
                 required
                 name="name"
                 placeholder="Name"
                 className="input input-bordered mb-3 w-full"
               />
+              {/* Input: Category choices */}
+              <div className="mb-3 flex flex-col justify-start px-4 py-2 tablet:flex-row">
+                <h3 className="mr-4 text-base font-semibold tracking-wide">
+                  Category:
+                </h3>
+                {["Mola", "Seasonal", "DIY", "Packages"].map((cat, ind) => {
+                  return (
+                    <div
+                      key={ind}
+                      className="my-2 flex flex-row tablet:mx-4 tablet:my-0"
+                    >
+                      <input
+                        type="radio"
+                        value={cat}
+                        name="category"
+                        className="radio-accent radio mr-2"
+                      />
+                      <h4 className="font-medium italic tracking-wide">
+                        {cat}
+                      </h4>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* Input: Description */}
               <textarea
                 required
                 name="description"
                 placeholder="Description"
                 className="textarea textarea-bordered mb-3 w-full"
               />
+              {/* Input: Image Url */}
               <input
                 required
                 name="imageUrl"
@@ -59,6 +87,7 @@ const ManageInventoryPage = () => {
                 type="url"
                 className="input input-bordered mb-3 w-full"
               />
+              {/* Input: Price */}
               <input
                 required
                 name="price"
@@ -66,6 +95,7 @@ const ManageInventoryPage = () => {
                 type="number"
                 className="input input-bordered mb-3 w-full"
               />
+              {/* Input: Stock */}
               <input
                 required
                 name="stock"
