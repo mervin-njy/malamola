@@ -4,7 +4,7 @@ import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
 type BtnSubmitFormProps = {
   children: React.ReactNode;
-  className?: String;
+  className?: string;
 } & ComponentProps<"button">;
 
 const BtnSubmitForm = ({
