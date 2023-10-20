@@ -14,6 +14,28 @@
   }
 }
 
+.attentionGrab {
+  animation: glowing 3s infinite;
+}
+
+@keyframes glowing {
+  0% {
+    background-color: #f3eee1;
+    box-shadow: 0 0 0.3rem #a6b5e3;
+    color: #4d6a6d;
+  }
+  70% {
+    background-color: #a6b5e3;
+    box-shadow: 0 0 0.5rem #f3eee1;
+    color: #f3eee1;
+  }
+  100% {
+    background-color: #f3eee1;
+    box-shadow: 0 0 0.1rem #a6b5e3;
+    color: #4d6a6d;
+  }
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background-color: rgb(var(--background-rgb));

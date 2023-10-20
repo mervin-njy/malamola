@@ -42,7 +42,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
             price={product.price}
             className="badge-ghost rounded-md p-3"
           />
-          {isNew && <div className="badge badge-info p-3">NEW</div>}
+          {isNew && (
+            <div className="attentionGrab badge badge-info p-3">NEW</div>
+          )}
         </div>
       </div>
     </Link>

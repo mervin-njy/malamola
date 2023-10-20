@@ -1,5 +1,6 @@
 import BtnSubmitForm from "@/app/components/buttons/BtnSubmitForm";
 import prisma from "@/lib/db/prisma";
+import { ProductsCategory } from "@prisma/client";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -13,7 +14,9 @@ async function addProduct(formData: FormData) {
   "use server";
 
   const name = formData.get("name")?.toString(); // ? => string or undefined
-  const category = formData.get("category"); // formData.get("category")?.toString();
+  const category: ProductsCategory = formData.get(
+    "category",
+  ) as ProductsCategory;
   const description = formData.get("description")?.toString();
   const imageUrl = formData.get("imageUrl")?.toString();
   const price = Number(formData.get("price") || 0);
