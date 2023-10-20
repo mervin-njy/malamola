@@ -5,3 +5,11 @@ export const formatPrice = (price: number) => {
     currency: "SGD",
   });
 };
+
+export const formatImageUrl = (imageUrl: string) => {
+  // 1. replace "file/d/" w/ "uc?export=view&id="
+  // 2. remove "/view?usp=sharing" at the end
+  return imageUrl
+    .replace("file/d/", "uc?export=view&id=")
+    .replace("/view?usp=sharing", "");
+};

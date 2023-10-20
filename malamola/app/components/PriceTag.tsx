@@ -1,3 +1,4 @@
+import { formatPrice } from "@/lib/format";
 import React from "react";
 
 interface PriceTagProps {
@@ -5,8 +6,8 @@ interface PriceTagProps {
   className?: string;
 }
 
-const PriceTag = () => {
-  return <div></div>;
+const PriceTag = ({ price, className }: PriceTagProps) => {
+  return <span className={`badge ${className}`}>{formatPrice(price)}</span>;
 };
 
 export default PriceTag;

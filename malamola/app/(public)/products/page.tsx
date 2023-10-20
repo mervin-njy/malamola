@@ -9,16 +9,28 @@ const ProductsPage = async () => {
 
   return (
     <>
-      <h1>Product Page Title</h1>
+      <h1 className="mb-4 text-3xl font-bold tracking-wider">All Products</h1>
 
-      <div>
-        <h1>Filter options: by category, name etc.</h1>
+      <div className="mb-4">
+        <h2 className="text-xl tracking-wide">
+          Filter options: by category, name etc.
+        </h2>
       </div>
 
       <ProductCard product={products[0]} />
 
+      {/* <div className="grid">
+        <>
+          {products.map((product) => {
+            <div key={product.id}>
+              <ProductCard product={product} />
+            </div>;
+          })}
+        </>
+      </div> */}
+
       <div>
-        <h1>Pagination maybe?</h1>
+        <h4 className="text-xl tracking-wide">Pagination maybe?</h4>
       </div>
     </>
   );
