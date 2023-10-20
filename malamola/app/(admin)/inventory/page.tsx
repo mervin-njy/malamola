@@ -1,3 +1,4 @@
+import BtnSubmitForm from "@/app/components/buttons/BtnSubmitForm";
 import prisma from "@/lib/db/prisma";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -61,7 +62,7 @@ const ManageInventoryPage = () => {
               <input
                 required
                 name="price"
-                placeholder="Price (SGD)"
+                placeholder="Price (in SGD cents)"
                 type="number"
                 className="input input-bordered mb-3 w-full"
               />
@@ -72,9 +73,9 @@ const ManageInventoryPage = () => {
                 type="number"
                 className="input input-bordered mb-3 w-full"
               />
-              <button type="submit" className="btn btn-primary btn-block">
+              <BtnSubmitForm className="btn-accent btn-block">
                 Add Product
-              </button>
+              </BtnSubmitForm>
             </form>
           </div>
         </div>

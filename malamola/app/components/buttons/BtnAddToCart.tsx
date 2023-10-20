@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 
-const AddToCart = () => {
+const BtnAddToCart = () => {
     return (
         <div>
             
@@ -9,4 +9,4 @@ const AddToCart = () => {
     );
 };
 
-export default AddToCart;
+export default BtnAddToCart;
