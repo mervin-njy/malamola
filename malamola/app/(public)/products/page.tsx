@@ -42,7 +42,7 @@ const ProductsPage = async () => {
                 alt={products[0].name}
                 width={800}
                 height={800}
-                className="w-full max-w-2xl rounded-lg shadow-2xl"
+                className="w-full max-w-xl rounded-lg shadow-2xl"
                 priority
               />
               <div className="px-4">
