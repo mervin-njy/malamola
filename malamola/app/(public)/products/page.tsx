@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { RiFilter2Fill } from "react-icons/ri";
+import { GrFilter, GrSort } from "react-icons/gr";
 
 const ProductsPage = async () => {
   const products = await prisma.product.findMany({
@@ -17,18 +18,20 @@ const ProductsPage = async () => {
         <div className="bg-neutral bg-opacity-5 p-4">No products found.</div>
       ) : (
         <div className="px-20 tablet:px-4 laptop:px-0">
-          <div className="my-4 flex flex-row justify-between tracking-wider">
+          <div className="my-4 flex flex-row items-center justify-between pl-4 tracking-wider">
             {/* 1. HEADING */}
             <h1 className="text-3xl font-bold">All Products</h1>
             {/* <RiFilter2Fill /> */}
 
             {/* 2. SEARCH & FILTER OPTIONS MODAL => TO BE CONVERTED INTO CSR COMPONENT */}
-            <div className="rounded-xl bg-neutral bg-opacity-10 p-4 text-xl font-light">
-              <h2 className="btn btn-primary mr-4">
+            <div className="flex rounded-xl text-xl font-light">
+              <h2 className="mr-4 flex items-center gap-2 rounded-xl border-2 border-base-200 px-4 py-2 font-semibold hover:cursor-pointer hover:border-secondary">
+                <GrFilter />
                 Filter
                 {/* (Filter options: by category, keywords, availability etc.) */}
               </h2>
-              <h2 className="btn btn-primary">
+              <h2 className="flex items-center gap-2 rounded-xl border-2 border-base-200 px-4 py-2 font-semibold hover:cursor-pointer hover:border-secondary">
+                <GrSort />
                 Sort
                 {/* (Sort options: by price, name etc.) */}
               </h2>
@@ -47,7 +50,9 @@ const ProductsPage = async () => {
                 priority
               />
               <div className="px-4">
-                <div className="text-5xl font-bold">{products[0].name}</div>
+                <div className="text-3xl font-bold tablet:text-4xl laptop:text-5xl">
+                  {products[0].name}
+                </div>
                 <p className="py-4">{products[0].description}</p>
                 <Link
                   href={"/products/" + products[0].id}

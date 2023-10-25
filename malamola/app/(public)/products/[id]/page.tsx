@@ -49,17 +49,17 @@ const ProductPage = async ({ params: { id } }: ProductPageProps) => {
           alt={product.name}
           width={600}
           height={200}
-          className="tablet:w-imageOptions m-auto mb-4 rounded-2xl object-cover"
+          className="m-auto mb-4 rounded-2xl object-cover tablet:w-11/12"
           priority
         />
 
         <div>
           {/* 1. Add image options - replace with imageUrl array */}
           {/* 2. Add selected to highlight selected image */}
-          <div className="w-imageOptions m-auto grid h-24 grid-cols-5 gap-4">
+          <div className="w-imageOptions m-auto grid grid-cols-5 gap-4 tablet:w-11/12">
             {[...Array(5)].map(() => {
               return (
-                <div className="rounded-lg bg-neutral bg-opacity-20 hover:bg-opacity-100"></div>
+                <div className="aspect-square rounded-lg bg-neutral bg-opacity-20 hover:bg-opacity-100"></div>
               );
             })}
           </div>

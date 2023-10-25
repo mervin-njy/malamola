@@ -38,12 +38,18 @@ const NavBar = () => {
       {/* LEFT: Main Logo for home nav */}
       <div className="flex justify-center">
         <Link href="/">
-          <Image src={mainLogo} alt="home" width={70} height={70} />
+          <Image
+            src={mainLogo}
+            alt="home"
+            width={70}
+            height={70}
+            className="w-9/12 tablet:w-auto"
+          />
         </Link>
       </div>
 
       {/* CENTER: Main nav links */}
-      <ul className="flex space-x-4 text-sm tracking-wider tablet:space-x-8 tablet:text-xl laptop:space-x-12">
+      <ul className="flex space-x-8 text-base tracking-wider tablet:space-x-8 laptop:space-x-12 laptop:text-xl">
         {/* TODO: add dropdown beside Shop > All, Mola, Seasonal, DIY kits, Gifts */}
         {/* TODO: add dropdown beside About > FillyFlower, Our Biodiversity, Materials */}
         {navOpts.map((option, ind) => {
@@ -67,7 +73,7 @@ const NavBar = () => {
 
       {/* RIGHT: profile helper links */}
       {/* TODO: profile replace with sign in */}
-      <ul className="flex justify-center space-x-8 text-base tracking-wider tablet:text-2xl">
+      <ul className="flex justify-center space-x-8 text-xl tracking-wider tablet:text-2xl">
         {helpOpts.map((option, ind) => {
           return (
             <li key={ind}>
