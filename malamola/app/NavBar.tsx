@@ -32,21 +32,18 @@ const NavBar = () => {
     { label: <RiShoppingCart2Fill />, href: "/cart" },
   ];
 
-  // styles - helper
-  const helperStyle = "text-2xl tracking-wider hover:text-neutral";
-  const activeHelper = helperStyle + " text-accent";
-  const nonActiveHelper = helperStyle + " text-secondary";
-
   // Render NavBar ----------------------------------------------------------------------------------
   return (
-    <nav className="flex h-28 items-center justify-between border-b-2 border-accent border-opacity-10 bg-neutral bg-opacity-5 px-12 shadow-sm">
-      <div className="flex w-2/12 justify-center ">
+    <nav className="flex h-20 min-w-[50rem] items-center justify-between border-b-2 border-accent border-opacity-10 bg-neutral bg-opacity-5 px-12 shadow-sm tablet:h-28">
+      {/* LEFT: Main Logo for home nav */}
+      <div className="flex justify-center">
         <Link href="/">
           <Image src={mainLogo} alt="home" width={70} height={70} />
         </Link>
       </div>
 
-      <ul className="flex space-x-12">
+      {/* CENTER: Main nav links */}
+      <ul className="flex space-x-4 text-sm tracking-wider tablet:space-x-8 tablet:text-xl laptop:space-x-12">
         {/* TODO: add dropdown beside Shop > All, Mola, Seasonal, DIY kits, Gifts */}
         {/* TODO: add dropdown beside About > FillyFlower, Our Biodiversity, Materials */}
         {navOpts.map((option, ind) => {
@@ -55,8 +52,7 @@ const NavBar = () => {
               <Link
                 href={option.href}
                 className={classNames({
-                  "text-xl tracking-wider underline-offset-8 hover:text-neutral":
-                    true,
+                  "underline-offset-8 hover:text-neutral": true,
                   "font-bold text-accent": currentRoute === option.href,
                   "text-secondary hover:underline":
                     currentRoute !== option.href,
@@ -69,15 +65,16 @@ const NavBar = () => {
         })}
       </ul>
 
+      {/* RIGHT: profile helper links */}
       {/* TODO: profile replace with sign in */}
-      <ul className="flex w-2/12 justify-center space-x-8">
+      <ul className="flex justify-center space-x-8 text-base tracking-wider tablet:text-2xl">
         {helpOpts.map((option, ind) => {
           return (
             <li key={ind}>
               <Link
                 href={option.href}
                 className={classNames({
-                  "text-2xl tracking-wider hover:text-neutral": true,
+                  "hover:text-neutral": true,
                   "text-accent": currentRoute === option.href,
                   "text-secondary": currentRoute !== option.href,
                 })}

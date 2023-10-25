@@ -16,7 +16,7 @@ const ProductsPage = async () => {
       {!products.length ? (
         <div className="bg-neutral bg-opacity-5 p-4">No products found.</div>
       ) : (
-        <div>
+        <div className="px-20 tablet:px-4 laptop:px-0">
           <div className="my-4 flex flex-row justify-between tracking-wider">
             {/* 1. HEADING */}
             <h1 className="text-3xl font-bold">All Products</h1>
@@ -34,6 +34,7 @@ const ProductsPage = async () => {
               </h2>
             </div>
           </div>
+
           {/* 3. HERO BANNER - LATEST PRODUCT */}
           <div className="hero my-4 rounded-xl bg-neutral bg-opacity-10">
             <div className="hero-content w-full flex-col justify-start tablet:flex-row">
@@ -42,7 +43,7 @@ const ProductsPage = async () => {
                 alt={products[0].name}
                 width={800}
                 height={800}
-                className="w-full max-w-xl rounded-lg shadow-2xl"
+                className="w-8/12 max-w-xl rounded-lg shadow-2xl laptop:w-full"
                 priority
               />
               <div className="px-4">
