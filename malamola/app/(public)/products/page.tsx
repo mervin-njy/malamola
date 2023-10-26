@@ -4,7 +4,6 @@ import { formatImageUrl } from "@/lib/format";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { RiFilter2Fill } from "react-icons/ri";
 import { GrFilter, GrSort } from "react-icons/gr";
 
 const ProductsPage = async () => {
@@ -24,13 +23,13 @@ const ProductsPage = async () => {
             {/* <RiFilter2Fill /> */}
 
             {/* 2. SEARCH & FILTER OPTIONS MODAL => TO BE CONVERTED INTO CSR COMPONENT */}
-            <div className="flex rounded-xl text-xl font-light">
-              <h2 className="mr-4 flex items-center gap-2 rounded-xl border-2 border-base-200 px-4 py-2 font-semibold hover:cursor-pointer hover:border-secondary">
+            <div className="flex gap-2 rounded-xl text-xl font-light">
+              <h2 className="btn btn-ghost w-[6rem] border-base-300 normal-case">
                 <GrFilter />
                 Filter
                 {/* (Filter options: by category, keywords, availability etc.) */}
               </h2>
-              <h2 className="flex items-center gap-2 rounded-xl border-2 border-base-200 px-4 py-2 font-semibold hover:cursor-pointer hover:border-secondary">
+              <h2 className="btn btn-ghost w-[6rem] border-base-300 normal-case">
                 <GrSort />
                 Sort
                 {/* (Sort options: by price, name etc.) */}
