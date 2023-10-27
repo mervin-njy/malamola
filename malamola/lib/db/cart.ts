@@ -1,6 +1,6 @@
 import { cookies } from "next/dist/client/components/headers";
 import prisma from "./prisma";
-import { Cart, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 // 0. export types for use at multiple locations
 
