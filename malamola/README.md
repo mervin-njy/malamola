@@ -30,3 +30,12 @@
 
 4. Prisma ORM
 -->
+
+<!--
+TODO:
+
+1. show stock update => limited qty
+
+2. qty of items to add at product/[id] page
+
+-->

@@ -6,6 +6,7 @@ import React, { cache } from "react";
 import PriceTag from "@/app/components/PriceTag";
 import { formatImageUrl } from "@/lib/format";
 import BtnAddToCart from "./BtnAddToCart";
+import { updateProductQuantity } from "./actions";
 
 // types ---------------------------------------------------------------------------------------------------
 interface ProductPageProps {
@@ -78,7 +79,10 @@ const ProductPage = async ({ params: { id } }: ProductPageProps) => {
 
         {/* <SelectVariation /> */}
         {/* <SelectQuantity /> => if (product.stock <= 5) { ShowStock() } */}
-        <BtnAddToCart productId={product.id} />
+        <BtnAddToCart
+          productId={product.id}
+          updateProductQuantity={updateProductQuantity}
+        />
       </div>
     </div>
   );

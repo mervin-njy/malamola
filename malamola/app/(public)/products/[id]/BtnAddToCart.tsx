@@ -37,7 +37,9 @@ const BtnAddToCart = ({
         <span className="loading loading-ring loading-md text-info" />
       )}
       {!isPending && success && (
-        <span className="text-success">Added to Cart</span>
+        <span className="btn btn-ghost border-success text-success cursor-not-allowed">
+          Added to Cart
+        </span>
       )}
     </div>
   );
