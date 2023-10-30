@@ -1,3 +1,5 @@
+"use client";
+
 import { ShoppingCart } from "@/lib/db/cart";
 import { formatPrice } from "@/lib/format";
 import Link from "next/link";
@@ -10,6 +12,12 @@ interface BtnShoppingCartProps {
 }
 
 const BtnShoppingCart = ({ cart }: BtnShoppingCartProps) => {
+  // functions ----------------------------------------------------------------------------------------
+  const closeDropdown = () => {
+    const elem = document.activeElement as HTMLElement;
+    if (elem) elem.blur(); // this is important to close BtnshoppingCart dropdown when user is redirected away from the page
+  };
+
   // render component ---------------------------------------------------------------------------------
   return (
     <div className="dropdown dropdown-end">
@@ -56,7 +64,11 @@ const BtnShoppingCart = ({ cart }: BtnShoppingCartProps) => {
             </span>
           </div>
           {/* Link to /Cart page for full Cart details + checkout confirmation */}
-          <Link href={"/cart"} className="btn btn-accent btn-block">
+          <Link
+            href={"/cart"}
+            className="btn btn-accent btn-block"
+            onClick={closeDropdown}
+          >
             View Cart
           </Link>
         </div>

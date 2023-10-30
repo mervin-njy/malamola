@@ -12,14 +12,14 @@ const NavLinks = () => {
 
   // array for navbar options
   const navOpts = [
-    { label: "Home", href: "/" },
+    // { label: "Home", href: "/" }, => use logo instead
     { label: "Shop", href: "/products" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
-    { label: "FAQs", href: "/faq" },
+    // { label: "FAQs", href: "/faq" }, => move to footer
   ];
   return (
-    <ul className="flex max-w-7xl space-x-8 text-base tracking-wider tablet:space-x-8 laptop:space-x-12 laptop:text-xl">
+    <ul className="flex space-x-8 text-base tracking-wider tablet:space-x-8 laptop:space-x-12 laptop:text-xl">
       {navOpts.map((option, ind) => {
         return (
           <li key={ind}>
