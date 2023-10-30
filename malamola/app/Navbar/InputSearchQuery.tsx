@@ -4,6 +4,7 @@ import React from "react";
 const InputSearchQuery = () => {
   // actions ---------------------------------------------------------------------------------------------------
   const searchProducts = async (formData: FormData) => {
+    "use server"; // needs this to pass function to client components
     const searchQuery = formData.get("searchQuery")?.toString();
     if (searchQuery) redirect("/search?query=" + searchQuery);
   };
