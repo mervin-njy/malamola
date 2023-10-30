@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import mainLogo from "../public/assets/images/branding/fillyFlowerLogo-200.svg";
+import mainLogo from "@/public/assets/images/branding/fillyFlowerLogo-200.svg";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -13,7 +13,7 @@ import {
 import classNames from "classnames";
 
 const NavBar = () => {
-  // Variables --------------------------------------------------------------------------------------
+  // Variables -----------------------------------------------------------------------------------------------
   // Get the current route
   const currentRoute = usePathname(); // requires CSR
 
@@ -32,7 +32,7 @@ const NavBar = () => {
     { label: <RiShoppingCart2Fill />, href: "/cart" },
   ];
 
-  // Render NavBar ----------------------------------------------------------------------------------
+  // render component ----------------------------------------------------------------------------------------
   return (
     <nav className="flex h-20 min-w-[50rem] items-center justify-between border-b-2 border-accent border-opacity-10 bg-neutral bg-opacity-5 px-12 shadow-sm tablet:h-28">
       {/* LEFT: Main Logo for home nav */}
@@ -49,9 +49,7 @@ const NavBar = () => {
       </div>
 
       {/* CENTER: Main nav links */}
-      <ul className="flex space-x-8 text-base tracking-wider tablet:space-x-8 laptop:space-x-12 laptop:text-xl">
-        {/* TODO: add dropdown beside Shop > All, Mola, Seasonal, DIY kits, Gifts */}
-        {/* TODO: add dropdown beside About > FillyFlower, Our Biodiversity, Materials */}
+      <ul className="flex max-w-7xl space-x-8 text-base tracking-wider tablet:space-x-8 laptop:space-x-12 laptop:text-xl">
         {navOpts.map((option, ind) => {
           return (
             <li key={ind}>
@@ -72,8 +70,7 @@ const NavBar = () => {
       </ul>
 
       {/* RIGHT: profile helper links */}
-      {/* TODO: profile replace with sign in */}
-      <ul className="flex justify-center space-x-8 text-xl tracking-wider tablet:text-2xl">
+      {/* <ul className="flex justify-center space-x-8 text-xl tracking-wider tablet:text-2xl">
         {helpOpts.map((option, ind) => {
           return (
             <li key={ind}>
@@ -90,7 +87,20 @@ const NavBar = () => {
             </li>
           );
         })}
-      </ul>
+      </ul> */}
+      <div className="flex-none space-x-8 text-xl tracking-wider tablet:text-2xl">
+        {/* formData => redirect to /search query page */}
+        <form>
+          <div className="form-control">
+            <input
+              name="searchQuery"
+              placeholder="Search products"
+              className="input input-bordered max-h-10 w-full min-w-[100px]"
+            />
+          </div>
+        </form>
+        {/* cart Btn + dropdown => client component to dynamically display cart size */}
+      </div>
     </nav>
   );
 };

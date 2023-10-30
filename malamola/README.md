@@ -38,4 +38,14 @@ TODO:
 
 2. qty of items to add at product/[id] page
 
+3. Navbar:
+    (Right-corner)
+    a. Profile (auth-login)
+    c. Language
+    b. Favourites
+
+    (Center - maybe)
+    a. Dropdown - Shop > All, Mola, Seasonal, DIY kits, Gifts
+    b. Dropdown - About > FillyFlower, Our Biodiversity, Materials
+
 -->

@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next"; // SEO tool to optimize for search engines
 import { Roboto } from "next/font/google";
-import NavBar from "./NavBar";
+import NavBar from "./Navbar/NavBar";
 
 const roboto = Roboto({
   weight: ["100", "300", "400", "700", "900"],

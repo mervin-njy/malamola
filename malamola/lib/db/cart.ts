@@ -3,7 +3,6 @@ import prisma from "./prisma";
 import { Prisma } from "@prisma/client";
 
 // 0. export types for use at multiple locations
-
 export type CartWithProducts = Prisma.CartGetPayload<{
   // a. this extends the existing Cart schema w/ the cartItems along w/ product info
   include: { items: { include: { product: true } } }; // same as cart query at 1b.
@@ -15,7 +14,7 @@ export type ShoppingCart = CartWithProducts & {
   subtotal: number;
 };
 
-// 1. getCart from cookie (if it exists)
+// 1. getCart() from cookie (if it exists)
 export const getCart = async (): Promise<ShoppingCart | null> => {
   // a. check if localCart exists in cookie
   const localCartId = cookies().get("localCartId")?.value; // safe call operator since it may be undefined
@@ -40,7 +39,7 @@ export const getCart = async (): Promise<ShoppingCart | null> => {
   };
 };
 
-// 2. if doesn't exist, createCart() => which stores newCart in cookie
+// 2. createCart() and set to cookie (if cart doesn't exist)
 export const createCart = async (): Promise<ShoppingCart> => {
   // a. create empty cart w/ no data, but timestamps will be created according to schema
   const newCart = await prisma.cart.create({ data: {} });

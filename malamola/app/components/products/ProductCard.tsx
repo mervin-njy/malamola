@@ -10,11 +10,13 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  // variables ----------------------------------------------------------------------------------------
   // give a NEW icon beside recently updated products (within 7 days => convert from ms)
   const isNew =
     Date.now() - new Date(product.createdAt).getTime() <
     1000 * 60 * 60 * 24 * 7;
 
+  // render component ---------------------------------------------------------------------------------
   return (
     <Link
       href={"/products/" + product.id}

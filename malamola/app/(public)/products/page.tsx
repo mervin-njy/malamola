@@ -7,10 +7,12 @@ import React from "react";
 import { GrFilter, GrSort } from "react-icons/gr";
 
 const ProductsPage = async () => {
+  // variables ----------------------------------------------------------------------------------------
   const products = await prisma.product.findMany({
     orderBy: { id: "desc" },
   });
 
+  // render component ---------------------------------------------------------------------------------
   return (
     <>
       {!products.length ? (
