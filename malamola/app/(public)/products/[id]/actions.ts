@@ -29,6 +29,6 @@ export const updateProductQuantity = async (productId: string) => {
   }
 
   // 4. revalidate path to show changes
-  revalidatePath("/products/[id]");
+  revalidatePath("/products/[id]", "page");
   return;
 };

@@ -4,8 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import InputSearchQuery from "./InputSearchQuery";
 import NavLinks from "./NavLinks";
+import { getCart } from "@/lib/db/cart";
+import BtnShoppingCart from "./BtnShoppingCart";
 
-const NavBar = () => {
+// this server component fetches data & contains 3 client component (NavLinks, InputSearchQuery, BtnShoppingCart)
+const NavBar = async () => {
+  // variables ----------------------------------------------------------------------------------------
+  const cart = await getCart();
+
   // render component ----------------------------------------------------------------------------------------
   return (
     <nav className="flex h-20 min-w-[50rem] items-center justify-between border-b-2 border-accent border-opacity-10 bg-neutral bg-opacity-5 px-12 shadow-sm tablet:h-28">
@@ -26,10 +32,11 @@ const NavBar = () => {
       <NavLinks />
 
       {/* RIGHT: profile helper links */}
-      <div className="flex-none space-x-8 text-xl tracking-wider tablet:text-2xl">
+      <div className="flex items-center space-x-8 text-xl tracking-wider text-secondary tablet:text-2xl">
         {/* formData => redirect to /search query page */}
         <InputSearchQuery />
         {/* cart Btn + dropdown => client component to dynamically display cart size */}
+        <BtnShoppingCart cart={cart} />
       </div>
     </nav>
   );
