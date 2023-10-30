@@ -8,6 +8,7 @@ export const metadata = {
   title: "® Inventory Management",
 };
 
+// server actions ------------------------------------------------------------------------------------
 // create server action on this file without client-side fetching => protects db credentials
 // => currently in alpha so => next.config.js => const nextConfig = { experimental: { serverActions: true, }, };
 async function addProduct(formData: FormData) {
@@ -34,6 +35,7 @@ async function addProduct(formData: FormData) {
 }
 
 const ManageInventoryPage = () => {
+  // render component ---------------------------------------------------------------------------------
   return (
     <>
       <div>

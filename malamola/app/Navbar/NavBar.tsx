@@ -11,9 +11,10 @@ import {
   RiShoppingCart2Fill,
 } from "react-icons/ri";
 import classNames from "classnames";
+import InputSearchQuery from "./InputSearchQuery";
 
 const NavBar = () => {
-  // Variables -----------------------------------------------------------------------------------------------
+  // variables -----------------------------------------------------------------------------------------------
   // Get the current route
   const currentRoute = usePathname(); // requires CSR
 
@@ -26,11 +27,11 @@ const NavBar = () => {
     { label: "FAQs", href: "/faq" },
   ];
 
-  const helpOpts = [
-    { label: <RiSearch2Line />, href: "/search" },
-    { label: <RiAccountPinCircleFill />, href: "/account" },
-    { label: <RiShoppingCart2Fill />, href: "/cart" },
-  ];
+  // const helpOpts = [
+  //   { label: <RiSearch2Line />, href: "/search" },
+  //   { label: <RiAccountPinCircleFill />, href: "/account" },
+  //   { label: <RiShoppingCart2Fill />, href: "/cart" },
+  // ];
 
   // render component ----------------------------------------------------------------------------------------
   return (
@@ -90,15 +91,7 @@ const NavBar = () => {
       </ul> */}
       <div className="flex-none space-x-8 text-xl tracking-wider tablet:text-2xl">
         {/* formData => redirect to /search query page */}
-        <form>
-          <div className="form-control">
-            <input
-              name="searchQuery"
-              placeholder="Search products"
-              className="input input-bordered max-h-10 w-full min-w-[100px]"
-            />
-          </div>
-        </form>
+        <InputSearchQuery />
         {/* cart Btn + dropdown => client component to dynamically display cart size */}
       </div>
     </nav>
