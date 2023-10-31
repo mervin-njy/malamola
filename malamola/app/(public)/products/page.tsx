@@ -16,10 +16,12 @@ const ProductsPage = async () => {
   return (
     <>
       {!products.length ? (
-        <div className="bg-neutral bg-opacity-5 p-4">No products found.</div>
+        <div className="bg-neutral bg-opacity-5 p-4 text-2xl">
+          No products found.
+        </div>
       ) : (
         <div className="px-20 tablet:px-4 laptop:px-0">
-          <div className="my-4 flex flex-row items-center justify-between pl-4 tracking-wider">
+          <div className="flex flex-row items-center justify-between pl-4 tracking-wider">
             {/* 1. HEADING */}
             <h1 className="text-3xl font-bold">All Products</h1>
             {/* <RiFilter2Fill /> */}

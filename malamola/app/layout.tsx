@@ -27,7 +27,9 @@ export default function RootLayout({
         className={`${roboto.className} flex min-h-screen min-w-[50rem] flex-col justify-between`}
       >
         <NavBar />
-        <main className="m-auto max-w-7xl px-8 py-10">{children}</main>
+        <main className="m-auto min-h-screen w-full max-w-7xl px-8 py-10">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

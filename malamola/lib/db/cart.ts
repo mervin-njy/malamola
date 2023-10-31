@@ -8,6 +8,10 @@ export type CartWithProducts = Prisma.CartGetPayload<{
   include: { items: { include: { product: true } } }; // same as cart query at 1b.
 }>;
 
+export type CartItemWithProduct = Prisma.CartItemGetPayload<{
+  include: { product: true };
+}>;
+
 export type ShoppingCart = CartWithProducts & {
   // b. this extends Cart type in prisma schema (along w/ 0a.) that we will need in 1c.
   size: number;
