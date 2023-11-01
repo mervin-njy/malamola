@@ -6,7 +6,7 @@ import React, { cache } from "react";
 import PriceTag from "@/app/components/PriceTag";
 import { formatImageUrl } from "@/lib/format";
 import BtnAddToCart from "./BtnAddToCart";
-import { updateProductQuantity } from "./actions";
+import { updateProductQuantity } from "@/app/components/products/actions";
 
 // types ---------------------------------------------------------------------------------------------------
 interface ProductPageProps {

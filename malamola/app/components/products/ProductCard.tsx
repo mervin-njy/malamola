@@ -31,6 +31,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           className="h-48 object-cover"
         />
       </figure>
+
       <div className="card-body">
         <h3 className="card-title tracking-wider">{product.name} </h3>
         <h4 className="font-extrabold tracking-widest text-accent">

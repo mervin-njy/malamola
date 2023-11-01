@@ -2,6 +2,7 @@ import { getCart } from "@/lib/db/cart";
 import React from "react";
 import Link from "next/link";
 import CartEntry from "./CartEntry";
+import { updateProductQuantity } from "@/app/components/products/actions";
 
 export const metadata = {
   title: "Your cart - Filly Flower Crafts",
@@ -27,7 +28,13 @@ const CartPage = async () => {
         </div>
       ) : (
         cart?.items.map((item) => {
-          return <CartEntry key={item.id} cartItem={item} />;
+          return (
+            <CartEntry
+              key={item.id}
+              cartItem={item}
+              updateProductQuantity={updateProductQuantity}
+            />
+          );
         })
       )}
 

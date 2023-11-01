@@ -4,14 +4,25 @@ import { CartItemWithProduct } from "@/lib/db/cart";
 import { formatImageUrl, formatPrice } from "@/lib/format";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useTransition } from "react";
 
 // types -----------------------------------------------------------------------------------------------------
 interface CartEntryProps {
   cartItem: CartItemWithProduct;
+  updateProductQuantity: (
+    revalidateUrl: string,
+    productId: string,
+    quantity: number,
+  ) => Promise<void>;
 }
 
-const CartEntry = ({ cartItem: { product, quantity } }: CartEntryProps) => {
+const CartEntry = ({
+  cartItem: { product, quantity },
+  updateProductQuantity,
+}: CartEntryProps) => {
+  // react hooks ---------------------------------------------------------------------------------------------
+  const [isPending, startTransition] = useTransition();
+
   // functions -----------------------------------------------------------------------------------------------
   const getQuantityOptions = (max: number, stock: number) => {
     // generate options for each cartItem quantity based on stock left
@@ -23,7 +34,7 @@ const CartEntry = ({ cartItem: { product, quantity } }: CartEntryProps) => {
             {i}
           </option>
         ) : (
-          <option key={i} value={i} disabled>
+          <option key={i} value={i} disabled className="text-base-200">
             {i}
           </option>
         ),
@@ -31,6 +42,18 @@ const CartEntry = ({ cartItem: { product, quantity } }: CartEntryProps) => {
     }
 
     return options;
+  };
+
+  // event handlers-------------------------------------------------------------------------------------------
+  const handleQuantityChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const newQuantity = parseInt(event.currentTarget.value);
+
+    startTransition(async () => {
+      // call server action to update cartItem qty
+      await updateProductQuantity("/cart", product.id, newQuantity);
+    });
   };
 
   // render component ----------------------------------------------------------------------------------------
@@ -62,11 +85,13 @@ const CartEntry = ({ cartItem: { product, quantity } }: CartEntryProps) => {
                 <p className="w-20 font-semibold">Price:</p>
                 <p>{formatPrice(product.price)}</p>
               </div>
+
               <div className="flex flex-wrap items-center">
                 <p className="w-20 font-semibold">Quantity:</p>
                 <select
                   className="select select-bordered max-w-[100px]"
                   defaultValue={quantity}
+                  onChange={handleQuantityChange}
                 >
                   {getQuantityOptions(20, product.stock)}
                 </select>

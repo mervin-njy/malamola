@@ -5,7 +5,11 @@ import ToastSuccess from "./ToastSuccess";
 
 interface BtnAddToCartProps {
   productId: string;
-  updateProductQuantity: (productId: string) => Promise<void>;
+  updateProductQuantity: (
+    revalidateUrl: string,
+    productId: string,
+    quantity: number,
+  ) => Promise<void>;
 }
 
 const BtnAddToCart = ({
@@ -24,7 +28,8 @@ const BtnAddToCart = ({
   const handleAddToCart = () => {
     setSuccess(false);
     startTransition(async () => {
-      await updateProductQuantity(productId);
+      // TODO: change 1 to quantity according to dropdown select
+      await updateProductQuantity("/product/[id]", productId, 1);
       setSuccess(true);
 
       // // account for multiple btn click entries for many items added

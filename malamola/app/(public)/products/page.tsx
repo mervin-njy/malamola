@@ -53,10 +53,10 @@ const ProductsPage = async () => {
                 priority
               />
               <div className="px-4">
-                <div className="text-3xl font-bold tablet:text-4xl laptop:text-5xl">
+                <div className="text-3xl font-bold tracking-wider tablet:text-4xl laptop:text-5xl">
                   {products[0].name}
                 </div>
-                <p className="py-4">{products[0].description}</p>
+                <p className="py-6">{products[0].description}</p>
                 <Link
                   href={"/products/" + products[0].id}
                   className="btn btn-accent"
