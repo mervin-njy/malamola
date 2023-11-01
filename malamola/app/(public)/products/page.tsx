@@ -49,14 +49,16 @@ const ProductsPage = async () => {
                 alt={products[0].name}
                 width={800}
                 height={800}
-                className="w-8/12 max-w-xl rounded-lg shadow-2xl laptop:w-full"
+                className="rounded-lg shadow-2xl tablet:w-8/12 tablet:max-w-xl laptop:w-full"
                 priority
               />
               <div className="px-4">
                 <div className="text-3xl font-bold tracking-wider tablet:text-4xl laptop:text-5xl">
                   {products[0].name}
                 </div>
-                <p className="py-6">{products[0].description}</p>
+                <p className="my-6 line-clamp-5 overflow-hidden tablet:line-clamp-[11]">
+                  {products[0].description}
+                </p>
                 <Link
                   href={"/products/" + products[0].id}
                   className="btn btn-accent"

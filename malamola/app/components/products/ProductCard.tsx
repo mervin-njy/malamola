@@ -28,7 +28,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           alt={product.name}
           width={800}
           height={400}
-          className="h-48 object-cover"
+          className="h-80 rounded-[2rem] object-cover p-6 tablet:h-56 tablet:rounded-none tablet:p-0"
         />
       </figure>
 

@@ -30,11 +30,11 @@ const CartEntry = ({
     for (let i = 1; i <= max; i++) {
       options.push(
         i <= stock ? (
-          <option key={i} value={i}>
+          <option key={i} value={i} className="">
             {i}
           </option>
         ) : (
-          <option key={i} value={i} disabled className="text-base-200">
+          <option key={i} value={i} disabled className="text-base-300">
             {i}
           </option>
         ),
@@ -60,50 +60,52 @@ const CartEntry = ({
   return (
     <div>
       {/* Each entry div w/ border */}
-      <div className="items-top my-3 flex flex-wrap gap-10 rounded-xl p-4 odd:bg-neutral odd:bg-opacity-10">
+      <div className="my-5 flex flex-wrap items-center gap-10 rounded-xl">
         {/* Image on the left */}
         <Image
           src={formatImageUrl(product.imageUrl)}
           alt={product.name}
           width={200}
           height={200}
-          className="rounded-lg object-cover"
+          className="h-32 w-3/12 rounded-lg object-cover laptop:h-40"
         />
 
         {/* Options on the right */}
-        <div className="h-full flex-col justify-between tracking-wide">
+        <div className="w-8/12 flex-col justify-between tracking-wide">
           {/* Title at the top links to the product/[id] page */}
           <Link href={"/products/" + product.id} className="text-xl font-bold">
             {product.name}
           </Link>
 
           {/* Details of cartItem */}
-          <div className="mt-10 flex w-[400px] items-end justify-between laptop:w-[550px] desktop:w-[800px]">
+          <div className="mt-10 flex justify-between">
             {/* Options on the left */}
             <div>
               <div className="mb-1 flex flex-wrap items-center">
-                <p className="w-20 font-semibold">Price:</p>
+                <p className="w-24 font-semibold">Price:</p>
                 <p>{formatPrice(product.price)}</p>
               </div>
 
               <div className="flex flex-wrap items-center">
-                <p className="w-20 font-semibold">Quantity:</p>
+                <p className="w-24 font-semibold">Quantity:</p>
                 <select
-                  className="select select-bordered max-w-[100px]"
+                  className="select select-bordered select-sm w-20"
                   defaultValue={quantity}
                   onChange={handleQuantityChange}
                 >
                   {getQuantityOptions(20, product.stock)}
                 </select>
+                {/* loading indicator */}
+                {isPending && (
+                  <span className="loading loading-spinner loading-md ml-4" />
+                )}
               </div>
             </div>
 
             {/* Subtotal of cartItem on the bottom right */}
-            <div>
-              <div className="flex flex-wrap">
-                <p className="w-20 font-semibold">Subtotal:</p>
-                <p>{formatPrice(product.price * quantity)}</p>
-              </div>
+            <div className="flex items-end">
+              <p className="mr-4 font-semibold">Subtotal:</p>
+              <p className="w-16">{formatPrice(product.price * quantity)}</p>
             </div>
           </div>
         </div>
