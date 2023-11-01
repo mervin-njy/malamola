@@ -16,7 +16,7 @@ const ProductsPage = async () => {
   return (
     <>
       {!products.length ? (
-        <div className="bg-neutral bg-opacity-5 p-4 text-2xl">
+        <div className="bg-neutral bg-opacity-5 p-4 text-2xl tracking-wide">
           No products found.
         </div>
       ) : (

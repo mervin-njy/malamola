@@ -9,7 +9,7 @@ import BtnShoppingCart from "./BtnShoppingCart";
 
 // this server component fetches data & contains 3 client component (NavLinks, InputSearchQuery, BtnShoppingCart)
 const NavBar = async () => {
-  // variables ----------------------------------------------------------------------------------------
+  // variables -----------------------------------------------------------------------------------------------
   const cart = await getCart();
 
   // render component ----------------------------------------------------------------------------------------

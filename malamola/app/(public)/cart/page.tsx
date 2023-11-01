@@ -1,5 +1,6 @@
 import { getCart } from "@/lib/db/cart";
 import React from "react";
+import Link from "next/link";
 import CartEntry from "./CartEntry";
 
 export const metadata = {
@@ -7,20 +8,22 @@ export const metadata = {
 };
 
 const CartPage = async () => {
-  // variables ----------------------------------------------------------------------------------------
+  // variables -----------------------------------------------------------------------------------------------
   const cart = await getCart();
 
   // render component ----------------------------------------------------------------------------------------
   return (
     <div>
       {/* 1. Title */}
-      <h1 className="mb-4 text-3xl font-bold">Your Cart</h1>
-      <div className="divider" />
+      <h1 className="mb-4 text-3xl font-bold tracking-wider">Your Cart</h1>
 
       {/* 2. Cart body - List items */}
       {!cart?.items.length ? (
-        <div className="bg-neutral bg-opacity-5 p-4 text-2xl">
-          There are no items in your cart. Browse our shop now!
+        <div className="mt-10 flex items-center justify-between text-xl tracking-wide">
+          <h2>There are no items in your cart. Browse our shop now!</h2>
+          <Link href={"/products"} className="btn btn-accent w-36">
+            Shop now!
+          </Link>
         </div>
       ) : (
         cart?.items.map((item) => {
