@@ -71,29 +71,29 @@ const CartEntry = ({
           alt={product.name}
           width={200}
           height={200}
-          className="h-32 w-3/12 rounded-lg object-cover laptop:h-40"
+          className="h-44 w-6/12 rounded-lg object-cover tablet:h-56 laptop:w-5/12"
         />
 
         {/* Options on the right */}
-        <div className="w-3/12 flex-col justify-between tracking-wide">
+        <div className="flex-col justify-between tracking-wide">
           {/* Title at the top links to the product/[id] page */}
           <Link href={"/products/" + product.id} className="text-xl font-bold">
             {product.name}
           </Link>
 
           {/* Details of cartItem */}
-          <div className="mt-8 flex justify-between">
+          <div className="mt-8 flex w-64 justify-between text-sm laptop:text-base">
             {/* Options on the left */}
             <div>
               {/* PRICE */}
               <div className="mb-3 flex flex-wrap items-center">
-                <p className="w-24 font-semibold">Price:</p>
+                <p className="w-24 font-semibold laptop:w-20">Price:</p>
                 <p>{formatPrice(product.price)}</p>
               </div>
 
               {/* QUANTITY */}
               <div className="mb-3 flex flex-wrap items-center">
-                <p className="w-24 font-semibold">Quantity:</p>
+                <p className="w-24 font-semibold laptop:w-20">Quantity:</p>
                 <select
                   className="select select-bordered select-sm w-20"
                   defaultValue={quantity}
@@ -109,7 +109,7 @@ const CartEntry = ({
 
               {/* SUBTOTAL */}
               <div className="flex flex-wrap items-center">
-                <p className="w-24 font-semibold">Subtotal:</p>
+                <p className="w-24 font-semibold laptop:w-20">Subtotal:</p>
                 <p className="badge badge-secondary p-3">
                   {formatPrice(product.price * quantity)}
                 </p>
