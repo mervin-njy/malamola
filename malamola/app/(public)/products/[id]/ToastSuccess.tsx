@@ -1,3 +1,4 @@
+import { MdClose } from "react-icons/md";
 import React, { useState } from "react";
 
 const ToastSuccess = () => {
@@ -10,14 +11,14 @@ const ToastSuccess = () => {
   // render component ---------------------------------------------------------------------------------
   return (
     isVisible && (
-      <div className="toast toast-end toast-top">
+      <div className="toast toast-end toast-top top-28">
         <div className="alert alert-success flex w-40 justify-between rounded-2xl">
           <span>Added to cart.</span>
           <div
-            className="cursor-pointer hover:font-black hover:text-warning"
+            className="cursor-pointer hover:text-base-300"
             onClick={closeToast}
           >
-            x
+            <MdClose />
           </div>
         </div>
       </div>

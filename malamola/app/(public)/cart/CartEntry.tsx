@@ -82,7 +82,7 @@ const CartEntry = ({
           </Link>
 
           {/* Details of cartItem */}
-          <div className="mt-8 flex w-64 justify-between text-sm laptop:text-base">
+          <div className="mt-12 flex w-60 justify-between text-sm laptop:text-base">
             {/* Options on the left */}
             <div>
               {/* PRICE */}
@@ -92,14 +92,14 @@ const CartEntry = ({
               </div>
 
               {/* QUANTITY */}
-              <div className="mb-3 flex flex-wrap items-center">
+              <div className="mb-4 flex flex-wrap items-center">
                 <p className="w-24 font-semibold laptop:w-20">Quantity:</p>
                 <select
-                  className="select select-bordered select-sm w-20"
+                  className="select select-bordered select-sm w-24"
                   defaultValue={quantity}
                   onChange={handleQuantityChange}
                 >
-                  {getQuantityOptions(20, product.stock)}
+                  {getQuantityOptions(10, product.stock)}
                 </select>
                 {/* loading indicator */}
                 {isPending && (

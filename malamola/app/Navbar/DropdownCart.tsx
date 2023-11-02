@@ -28,7 +28,9 @@ const DropdownCart = ({ cart }: BtnShoppingCartProps) => {
       <div className="card-body">
         {/* 1. Dropdown header w/ close button */}
         <div className="flex items-center justify-between text-lg ">
-          <span className="font-bold">{cart?.size || 0} items</span>
+          <span className="font-bold">
+            {cart?.size || 0} item{(cart?.size || 0) > 1 && <span>s</span>}
+          </span>
           <div
             className="cursor-pointer hover:font-black hover:text-accent"
             onClick={closeDropdown}

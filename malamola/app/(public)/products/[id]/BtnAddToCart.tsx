@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useTransition } from "react";
-import { RiShoppingCartFill } from "react-icons/ri";
+import { RiShoppingCart2Fill } from "react-icons/ri";
 import ToastSuccess from "./ToastSuccess";
 
 interface BtnAddToCartProps {
@@ -44,7 +44,7 @@ const BtnAddToCart = ({
     <div className="flex items-center">
       <button className="btn btn-accent" onClick={handleAddToCart}>
         Add to Cart
-        <RiShoppingCartFill />
+        <RiShoppingCart2Fill />
       </button>
 
       {/* Pending: loading indicator */}
