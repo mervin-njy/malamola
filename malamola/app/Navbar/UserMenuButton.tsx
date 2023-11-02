@@ -2,9 +2,10 @@
 
 import { Session } from "next-auth";
 import Image from "next/image";
-import { FaUserCircle, FaRegUserCircle } from "react-icons/fa";
+import { PiDotsThreeBold } from "react-icons/pi";
 import placeholderProfile from "@/public/assets/images/placeholder-profile.jpg";
 import React from "react";
+import { signIn, signOut } from "next-auth/react";
 
 // types ----------------------------------------------------------------------------------------------
 interface UserMenuButtonProps {
@@ -18,6 +19,7 @@ const UserMenuButton = ({ session }: UserMenuButtonProps) => {
   // render component ----------------------------------------------------------------------------------------
   return (
     <div className="dropdown dropdown-end">
+      {/* 1. Dropdown Button: profile icon if logged in || three dots */}
       <label tabIndex={0} className="btn btn-circle btn-ghost">
         {user ? (
           <Image
@@ -28,9 +30,27 @@ const UserMenuButton = ({ session }: UserMenuButtonProps) => {
             className="w-10 rounded-full"
           />
         ) : (
-          <FaUserCircle />
+          <PiDotsThreeBold />
         )}
       </label>
+
+      {/* 2. Dropdown List */}
+      <ul
+        tabIndex={0}
+        className="menu dropdown-content rounded-box menu-sm z-30 mt-3 w-52 bg-base-100 p-2 shadow"
+      >
+        {/* show sign in / sign out option based on user session */}
+        <li>
+          {user ? (
+            <button onClick={() => signOut({ callbackUrl: "/" })}>
+              Sign out
+            </button>
+          ) : (
+            // next-auth signIn() redirects user back to last page after signIn
+            <button onClick={() => signIn()}>Sign in</button>
+          )}
+        </li>
+      </ul>
     </div>
   );
 };

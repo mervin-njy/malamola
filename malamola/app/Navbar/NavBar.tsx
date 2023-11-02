@@ -6,11 +6,16 @@ import InputSearchQuery from "./InputSearchQuery";
 import NavLinks from "./NavLinks";
 import { getCart } from "@/lib/db/cart";
 import BtnShoppingCart from "./cart/BtnShoppingCart";
+import UserMenuButton from "./UserMenuButton";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 // this server component fetches data & contains 3 client component (NavLinks, InputSearchQuery, BtnShoppingCart)
 const NavBar = async () => {
   // variables -----------------------------------------------------------------------------------------------
+  // fetch on server component
   const cart = await getCart();
+  const session = await getServerSession(authOptions);
 
   // render component ----------------------------------------------------------------------------------------
   return (
@@ -34,10 +39,12 @@ const NavBar = async () => {
 
         {/* RIGHT: profile helper links */}
         <div className="flex items-center space-x-8 text-xl tracking-wider text-secondary tablet:text-2xl">
-          {/* formData => redirect to /search query page */}
+          {/* 1. formData => redirect to /search query page */}
           <InputSearchQuery />
-          {/* cart Btn + dropdown => client component to dynamically display cart size */}
+          {/* 2. cart Btn + dropdown => client component to dynamically display cart size */}
           <BtnShoppingCart cart={cart} />
+          {/* 3. user profile + dropdown => client component to dynamically show user session options */}
+          <UserMenuButton session={session} />
         </div>
       </nav>
     </div>
