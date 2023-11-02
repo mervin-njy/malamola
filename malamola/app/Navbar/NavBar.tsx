@@ -5,7 +5,7 @@ import Image from "next/image";
 import InputSearchQuery from "./InputSearchQuery";
 import NavLinks from "./NavLinks";
 import { getCart } from "@/lib/db/cart";
-import BtnShoppingCart from "./BtnShoppingCart";
+import BtnShoppingCart from "./cart/BtnShoppingCart";
 
 // this server component fetches data & contains 3 client component (NavLinks, InputSearchQuery, BtnShoppingCart)
 const NavBar = async () => {

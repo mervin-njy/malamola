@@ -9,6 +9,7 @@ const InputSearchQuery = () => {
     if (searchQuery) redirect("/search?query=" + searchQuery);
   };
 
+  // render component ----------------------------------------------------------------------------------------
   return (
     <form action={searchProducts}>
       <div className="form-control">
