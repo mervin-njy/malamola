@@ -2,6 +2,7 @@
 
 import { ShoppingCart } from "@/lib/db/cart";
 import { formatPrice } from "@/lib/format";
+import { MdClose } from "react-icons/md";
 import Link from "next/link";
 import React from "react";
 
@@ -32,7 +33,7 @@ const DropdownCart = ({ cart }: BtnShoppingCartProps) => {
             className="cursor-pointer hover:font-black hover:text-accent"
             onClick={closeDropdown}
           >
-            x
+            <MdClose />
           </div>
         </div>
 
@@ -42,7 +43,7 @@ const DropdownCart = ({ cart }: BtnShoppingCartProps) => {
             return (
               <li
                 key={ind}
-                className="flex justify-between rounded-md p-1 italic odd:bg-base-200"
+                className="flex justify-between rounded-md p-1 italic odd:bg-secondary odd:bg-opacity-10"
               >
                 <span className="flex-1">{item.product.name}</span>
                 <span className="mr-4">{item.quantity} x</span>
@@ -63,7 +64,7 @@ const DropdownCart = ({ cart }: BtnShoppingCartProps) => {
         {/* 4. Link to /Cart page for full Cart details + checkout confirmation */}
         <Link
           href={"/cart"}
-          className="btn btn-accent btn-block"
+          className="btn btn-secondary btn-block"
           onClick={closeDropdown}
         >
           View Cart

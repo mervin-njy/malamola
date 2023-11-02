@@ -18,6 +18,7 @@ const CartPage = async () => {
     <div>
       {/* 1. Title */}
       <h1 className="mb-4 text-3xl font-bold tracking-wider">Your Cart</h1>
+      <div className="divider font-bold" />
 
       {/* 2. Cart body - List items */}
       {!cart?.items.length ? (
@@ -32,9 +33,8 @@ const CartPage = async () => {
         // populate cart items
         cart?.items.map((item) => {
           return (
-            <div>
+            <div key={item.id}>
               <CartEntry
-                key={item.id}
                 cartItem={item}
                 updateProductQuantity={updateProductQuantity}
               />

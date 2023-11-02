@@ -2,6 +2,7 @@
 
 import { CartItemWithProduct } from "@/lib/db/cart";
 import { formatImageUrl, formatPrice } from "@/lib/format";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useTransition } from "react";
@@ -46,8 +47,11 @@ const CartEntry = ({
 
   // event handlers-------------------------------------------------------------------------------------------
   const handleQuantityChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.MouseEvent<HTMLButtonElement>,
   ) => {
+    // accounts for select element OR button element with delete icon
     const newQuantity = parseInt(event.currentTarget.value);
 
     startTransition(async () => {
@@ -71,22 +75,24 @@ const CartEntry = ({
         />
 
         {/* Options on the right */}
-        <div className="w-8/12 flex-col justify-between tracking-wide">
+        <div className="w-3/12 flex-col justify-between tracking-wide">
           {/* Title at the top links to the product/[id] page */}
           <Link href={"/products/" + product.id} className="text-xl font-bold">
             {product.name}
           </Link>
 
           {/* Details of cartItem */}
-          <div className="mt-10 flex justify-between">
+          <div className="mt-8 flex justify-between">
             {/* Options on the left */}
             <div>
-              <div className="mb-1 flex flex-wrap items-center">
+              {/* PRICE */}
+              <div className="mb-3 flex flex-wrap items-center">
                 <p className="w-24 font-semibold">Price:</p>
                 <p>{formatPrice(product.price)}</p>
               </div>
 
-              <div className="flex flex-wrap items-center">
+              {/* QUANTITY */}
+              <div className="mb-3 flex flex-wrap items-center">
                 <p className="w-24 font-semibold">Quantity:</p>
                 <select
                   className="select select-bordered select-sm w-20"
@@ -100,12 +106,25 @@ const CartEntry = ({
                   <span className="loading loading-spinner loading-md ml-4" />
                 )}
               </div>
+
+              {/* SUBTOTAL */}
+              <div className="flex flex-wrap items-center">
+                <p className="w-24 font-semibold">Subtotal:</p>
+                <p className="badge badge-secondary p-3">
+                  {formatPrice(product.price * quantity)}
+                </p>
+              </div>
             </div>
 
-            {/* Subtotal of cartItem on the bottom right */}
-            <div className="flex items-end">
-              <p className="mr-4 font-semibold">Subtotal:</p>
-              <p className="w-16">{formatPrice(product.price * quantity)}</p>
+            {/* Delete button on the right */}
+            <div className="flex items-center">
+              <button
+                className="btn btn-circle btn-ghost btn-sm border-error border-opacity-10 text-xl text-error hover:bg-error hover:text-white"
+                value={0}
+                onClick={handleQuantityChange}
+              >
+                <RiDeleteBin6Line />
+              </button>
             </div>
           </div>
         </div>
