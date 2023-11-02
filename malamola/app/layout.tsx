@@ -3,6 +3,7 @@ import type { Metadata } from "next"; // SEO tool to optimize for search engines
 import { Roboto } from "next/font/google";
 import NavBar from "./Navbar/NavBar";
 import Footer from "./Footer";
+import SessionProvider from "./SessionProvider"; // wrap this to ensure all session info accessible in all pages => but because this is a server component, we export from a client component
 
 const roboto = Roboto({
   weight: ["100", "300", "400", "700", "900"],
@@ -26,11 +27,13 @@ export default function RootLayout({
       <body
         className={`${roboto.className} flex min-h-screen min-w-[50rem] flex-col justify-between`}
       >
-        <NavBar />
-        <main className="m-auto min-h-screen w-full max-w-7xl px-8 py-10">
-          {children}
-        </main>
-        <Footer />
+        <SessionProvider>
+          <NavBar />
+          <main className="m-auto min-h-screen w-full max-w-7xl px-8 py-10">
+            {children}
+          </main>
+          <Footer />
+        </SessionProvider>
       </body>
     </html>
   );
