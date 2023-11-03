@@ -2,7 +2,7 @@
 
 import { Session } from "next-auth";
 import Image from "next/image";
-import { PiDotsThreeBold } from "react-icons/pi";
+import { RiLoginBoxLine } from "react-icons/ri";
 import placeholderProfile from "@/public/assets/images/placeholder-profile.jpg";
 import React from "react";
 import { signIn, signOut } from "next-auth/react";
@@ -20,7 +20,7 @@ const UserMenuButton = ({ session }: UserMenuButtonProps) => {
   return (
     <div className="dropdown dropdown-end">
       {/* 1. Dropdown Button: profile icon if logged in || three dots */}
-      <label tabIndex={0} className="btn btn-circle btn-ghost">
+      <label tabIndex={0} className="btn btn-circle btn-ghost text-2xl">
         {user ? (
           <Image
             src={user?.image || placeholderProfile}
@@ -30,7 +30,7 @@ const UserMenuButton = ({ session }: UserMenuButtonProps) => {
             className="w-10 rounded-full"
           />
         ) : (
-          <PiDotsThreeBold />
+          <RiLoginBoxLine />
         )}
       </label>
 

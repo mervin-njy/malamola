@@ -38,9 +38,11 @@ TODO:
 
 2. qty of items to add at product/[id] page
 
-3. Navbar:
+3. Admin userType
+
+4. Navbar:
     (Right-corner)
-    a. Profile (auth-login)
+    a. Profile (auth-login) => add links to admin-protected pages => manage-inventory, manage-about, manage-enquiries, manage-orders, manage-FAQs, manage-users, dashboard
     c. Language
     b. Favourites
 

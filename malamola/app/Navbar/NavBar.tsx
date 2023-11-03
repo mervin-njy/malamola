@@ -38,7 +38,7 @@ const NavBar = async () => {
         </div>
 
         {/* RIGHT: profile helper links */}
-        <div className="flex items-center space-x-8 text-xl tracking-wider text-secondary tablet:text-2xl">
+        <div className="flex items-center gap-1 text-xl tracking-wider text-secondary tablet:text-2xl">
           {/* 1. formData => redirect to /search query page */}
           <InputSearchQuery />
           {/* 2. cart Btn + dropdown => client component to dynamically display cart size */}

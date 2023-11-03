@@ -11,7 +11,7 @@ const InputSearchQuery = () => {
 
   // render component ----------------------------------------------------------------------------------------
   return (
-    <form action={searchProducts}>
+    <form action={searchProducts} className="mr-2">
       <div className="form-control">
         <input
           name="searchQuery"

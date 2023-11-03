@@ -1,6 +1,8 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import BtnSubmitForm from "@/app/components/buttons/BtnSubmitForm";
 import prisma from "@/lib/db/prisma";
 import { ProductsCategory } from "@prisma/client";
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -34,8 +36,14 @@ async function addProduct(formData: FormData) {
   redirect("/");
 }
 
-const ManageInventoryPage = () => {
-  // render component ---------------------------------------------------------------------------------
+const ManageInventoryPage = async () => {
+  // variables -----------------------------------------------------------------------------------------------
+  const session = await getServerSession(authOptions);
+
+  // restrict access to only those who are logged in => TO CHANGE TO ADMIN
+  if (!session) redirect("api/auth/signin?callbackUrl=/inventory"); // route to request sign-in
+
+  // render component ----------------------------------------------------------------------------------------
   return (
     <>
       <div>
