@@ -16,6 +16,10 @@ export const metadata = {
 async function addProduct(formData: FormData) {
   "use server";
 
+  const session = getServerSession(authOptions);
+  // restrict access to only those who are logged in => TO CHANGE TO ADMIN
+  if (!session) redirect("api/auth/signin?callbackUrl=/inventory"); // route to request sign-in (if add product button is clicked while not logged in)
+
   const name = formData.get("name")?.toString(); // ? => string or undefined
   const category: ProductsCategory = formData.get(
     "category",
@@ -25,10 +29,12 @@ async function addProduct(formData: FormData) {
   const price = Number(formData.get("price") || 0);
   const stock = Number(formData.get("stock") || 0);
 
+  // validate field entries
   if (!name || !category || !description || !imageUrl || !price || !stock) {
     throw Error("Missing required fields!");
   }
 
+  // CREATE new product
   await prisma.product.create({
     data: { name, category, description, imageUrl, price, stock },
   });
