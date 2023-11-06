@@ -1,6 +1,7 @@
 // route handlers => set up API endpoints
 // [...foldername] is a catch-all segment that allows nextauth to handle different routes under this endpoint
 
+import { mergeAnonymousCartIntoUserCart } from "@/lib/db/cart";
 import prisma from "@/lib/db/prisma";
 import { env } from "@/lib/env";
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -24,6 +25,12 @@ export const authOptions: NextAuthOptions = {
       // triggered whenever we return a session from the db
       session.user.id = user.id; // we add the id from the db to the session => but we need to extend user type for id: string (new folder: @types)
       return session;
+    },
+  },
+  events: {
+    async signIn({ user }) {
+      // triggers on event - signIn => mergeCarts() w/ user that just signed in
+      await mergeAnonymousCartIntoUserCart(user.id);
     },
   },
 };
