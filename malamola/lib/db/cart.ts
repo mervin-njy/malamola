@@ -171,7 +171,7 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
       where: { id: localCart.id },
     });
 
-    cookies().set("localCartId", "");
+    cookies().set("localCartId", ""),
   });
 };
 
