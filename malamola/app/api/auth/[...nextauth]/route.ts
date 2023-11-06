@@ -19,7 +19,13 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  
+  callbacks: {
+    session({ session, user }) {
+      // triggered whenever we return a session from the db
+      session.user.id = user.id; // we add the id from the db to the session => but we need to extend user type for id: string (new folder: @types)
+      return session;
+    },
+  },
 };
 
 const handler = NextAuth(authOptions);

@@ -1,7 +1,10 @@
 import { cookies } from "next/dist/client/components/headers";
 import prisma from "./prisma";
-import { Prisma } from "@prisma/client";
+import { Cart, Prisma } from "@prisma/client";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+// TYPES ----------------------------------------------------------------------------------------------------------------------------------------------
 // 0. export types for use at multiple locations
 export type CartWithProducts = Prisma.CartGetPayload<{
   // a. this extends the existing Cart schema w/ the cartItems along w/ product info
@@ -18,21 +21,39 @@ export type ShoppingCart = CartWithProducts & {
   subtotal: number;
 };
 
+// FUNCTIONS ------------------------------------------------------------------------------------------------------------------------------------------
 // 1. getCart() from cookie (if it exists)
 export const getCart = async (): Promise<ShoppingCart | null> => {
-  // a. check if localCart exists in cookie
-  const localCartId = cookies().get("localCartId")?.value; // safe call operator since it may be undefined
+  // check user session whether to assign userID to new empty cart
+  const session = await getServerSession(authOptions);
 
-  // b. if undefined: generate cart, else: cart = null
-  const cart = localCartId
-    ? await prisma.cart.findUnique({
-        where: { id: localCartId },
-        include: { items: { include: { product: true } } }, // pass cartItems into cart + pass product info into cartItem (via their id)
-      })
-    : null;
+  // cart w/ products type from prisma schema before assigning annonymouse / user Cart
+  let cart: CartWithProducts | null = null;
+
+  if (session) {
+    // a. User's Cart -----------------------------------------------------------------------
+    cart = await prisma.cart.findFirst({
+      // only the first cart since user may have multiple
+      where: { userId: session.user.id },
+      include: { items: { include: { product: true } } }, // pass cartItems into cart + pass product info into cartItem (via their id)
+    });
+  } else {
+    // b. Anonymous Cart --------------------------------------------------------------------
+    // i. check if localCart exists in cookie
+    const localCartId = cookies().get("localCartId")?.value; // safe call operator since it may be undefined
+
+    // ii. if undefined: generate cart, else: cart = null
+    cart = localCartId
+      ? await prisma.cart.findUnique({
+          where: { id: localCartId },
+          include: { items: { include: { product: true } } }, // pass cartItems into cart + pass product info into cartItem (via their id)
+        })
+      : null;
+  }
 
   // c. return cart object extending additional info: { size, subtotal }
   if (!cart) return null;
+
   return {
     ...cart,
     size: cart.items.reduce((acc, i) => acc + i.quantity, 0),
@@ -45,11 +66,26 @@ export const getCart = async (): Promise<ShoppingCart | null> => {
 
 // 2. createCart() and set to cookie (if cart doesn't exist)
 export const createCart = async (): Promise<ShoppingCart> => {
-  // a. create empty cart w/ no data, but timestamps will be created according to schema
-  const newCart = await prisma.cart.create({ data: {} });
+  // check user session whether to assign userID to new empty cart
+  const session = await getServerSession(authOptions);
 
-  // b. store in cookie for reuse => annonymous cart becomes user cart when logged in
-  cookies().set("localCartId", newCart.id);
+  // empty variable of type Cart from prisma schema before assigning annonymouse / user Cart
+  let newCart: Cart;
+
+  if (session) {
+    // a. User's Cart -----------------------------------------------------------------------
+    // create empty cart w/ user's id
+    newCart = await prisma.cart.create({
+      data: { userId: session.user.id }, // session.user.id is not there by default => modify object to be returned at route handler's session callback
+    });
+  } else {
+    // b. Anonymous Cart --------------------------------------------------------------------
+    // i. create empty cart w/ no data, but timestamps will be created according to schema
+    newCart = await prisma.cart.create({ data: {} });
+    // ii. store in cookie for reuse => annonymous cart becomes user cart when logged in
+    cookies().set("localCartId", newCart.id);
+  }
+
   // TODO: ADD encryption + secure settings for production
   return {
     ...newCart,
