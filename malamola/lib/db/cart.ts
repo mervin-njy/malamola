@@ -171,11 +171,13 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
       where: { id: localCart.id },
     });
 
-    cookies().set("localCartId", ""),
+    cookies().set("localCartId", "");
   });
 };
 
-const mergeCartItems = (...cartItems: CartItem[][]) => {
+function mergeCartItems(
+  ...cartItems: CartItem[][]
+): { id: string; productId: string; quantity: number; cartId: string }[] {
   // can merge any arbitrary number of carts => array of [cartItems]
   return cartItems.reduce((acc, items) => {
     items.forEach((item) => {
@@ -192,4 +194,4 @@ const mergeCartItems = (...cartItems: CartItem[][]) => {
     });
     return acc;
   }, [] as CartItem[]);
-};
+}

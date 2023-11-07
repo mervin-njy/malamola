@@ -36,11 +36,13 @@ TODO:
 
 1. show stock update => limited qty
 
-2. qty of items to add at product/[id] page
+2. qty of items to add at product/[id] page (+- CSR component)
 
-3. Admin userType
+3. All products filter to other categories w/ tabs
 
-4. Navbar:
+4. Admin userType + admin-specific pages (see 5a.)
+
+5. Navbar:
     (Right-corner)
     a. Profile (auth-login) => add links to admin-protected pages => manage-inventory, manage-about, manage-enquiries, manage-orders, manage-FAQs, manage-users, dashboard
     c. Language
@@ -49,5 +51,9 @@ TODO:
     (Center - maybe)
     a. Dropdown - Shop > All, Mola, Seasonal, DIY kits, Gifts
     b. Dropdown - About > FillyFlower, Our Biodiversity, Materials
+
+6. Mongodb document data expiry (anonymous cart items)
+
+7. About, Contact, FAQs pages
 
 -->
