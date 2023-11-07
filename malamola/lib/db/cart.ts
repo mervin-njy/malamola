@@ -175,9 +175,7 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
   });
 };
 
-function mergeCartItems(
-  ...cartItems: CartItem[][]
-): { id: string; productId: string; quantity: number; cartId: string }[] {
+function mergeCartItems(...cartItems: CartItem[][]): CartItem[] {
   // can merge any arbitrary number of carts => array of [cartItems]
   return cartItems.reduce((acc, items) => {
     items.forEach((item) => {
