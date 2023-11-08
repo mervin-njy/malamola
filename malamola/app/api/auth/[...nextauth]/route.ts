@@ -28,12 +28,12 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  events: {
-    async signIn({ user }) {
-      // triggers on event - signIn => mergeCarts() w/ user that just signed in
-      await mergeAnonymousCartIntoUserCart(user.id);
-    },
-  },
+  // events: {
+  //   async signIn({ user }) {
+  //     // triggers on event - signIn => mergeCarts() w/ user that just signed in
+  //     await mergeAnonymousCartIntoUserCart(user.id);
+  //   },
+  // },
 };
 
 const handler = NextAuth(authOptions);

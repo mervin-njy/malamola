@@ -136,13 +136,26 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
         where: { cartId: userCart.id }, // delete all items that belong to userCart => before replacing with mergedCartItems
       });
 
-      await tx.cartItem.createMany({
-        data: mergedCartItems.map((item) => ({
-          // ignore id => let it auto generate new cartItem.id
-          cartId: userCart.id,
-          productId: item.productId,
-          quantity: item.quantity,
-        })),
+      // await tx.cartItem.createMany({
+      //   data: mergedCartItems.map((item) => ({
+      //     // ignore id => let it auto generate new cartItem.id
+      //     cartId: userCart.id,
+      //     productId: item.productId,
+      //     quantity: item.quantity,
+      //   })),
+      // });
+      await tx.cart.update({
+        where: { id: userCart.id },
+        data: {
+          items: {
+            createMany: {
+              data: mergedCartItems.map((item) => ({
+                productId: item.productId,
+                quantity: item.quantity,
+              })),
+            },
+          },
+        },
       });
 
       // SCENARIO 2 => create userCart w/ localCart ************************************************
