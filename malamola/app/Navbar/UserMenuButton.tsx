@@ -15,6 +15,7 @@ interface UserMenuButtonProps {
 const UserMenuButton = ({ session }: UserMenuButtonProps) => {
   // can also use next-auth hook to fetch session but it's client side => useSession from next-auth/react
   const user = session?.user;
+  console.log("user profile at nav bar -", user?.name);
 
   // render component ----------------------------------------------------------------------------------------
   return (

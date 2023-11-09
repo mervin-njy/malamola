@@ -84,9 +84,9 @@ export const createCart = async (): Promise<ShoppingCart> => {
     newCart = await prisma.cart.create({ data: {} });
     // ii. store in cookie for reuse => annonymous cart becomes user cart when logged in
     cookies().set("localCartId", newCart.id);
+    // TODO: ADD encryption + secure settings for production
   }
 
-  // TODO: ADD encryption + secure settings for production
   return {
     ...newCart,
     items: [],
@@ -149,9 +149,9 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
         data: {
           items: {
             createMany: {
-              data: mergedCartItems.map((item) => ({
-                productId: item.productId,
-                quantity: item.quantity,
+              data: mergedCartItems.map((i) => ({
+                productId: i.productId,
+                quantity: i.quantity,
               })),
             },
           },
@@ -167,11 +167,11 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
           items: {
             // relation query => create cart & cartItems in their own collections in one operation
             createMany: {
-              data: localCart.items.map((item) => ({
+              data: localCart.items.map((i) => ({
                 // ignore id again
                 // ignore cartId => auto generated
-                productId: item.productId,
-                quantity: item.quantity,
+                productId: i.productId,
+                quantity: i.quantity,
               })),
             },
           },
@@ -203,6 +203,7 @@ function mergeCartItems(...cartItems: CartItem[][]): CartItem[] {
         acc.push(item);
       }
     });
+
     return acc;
   }, [] as CartItem[]);
 }
