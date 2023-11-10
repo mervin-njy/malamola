@@ -26,7 +26,6 @@ export type ShoppingCart = CartWithProducts & {
 export const getCart = async (): Promise<ShoppingCart | null> => {
   // check user session whether to assign userID to new empty cart
   const session = await getServerSession(authOptions);
-
   // cart w/ products type from prisma schema before assigning annonymouse / user Cart
   let cart: CartWithProducts | null = null;
 
@@ -112,6 +111,8 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
       })
     : null;
 
+  console.log("mergeCarts() - local cart:", localCart);
+
   // SCENARIO 1 => no local cart to merge into user cart *****************************************
   if (!localCart) return;
 
@@ -120,6 +121,7 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
     where: { userId },
     include: { items: true }, // pass cartItems without product info again
   });
+  console.log("mergeCarts() - userId:", userId, "user's cart:", userCart);
 
   // several db operations to be done =>
   //    1. merge anonymous + user cart

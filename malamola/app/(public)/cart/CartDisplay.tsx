@@ -12,7 +12,6 @@ export const metadata = {
 const CartDisplay = async () => {
   // variables -----------------------------------------------------------------------------------------------
   const cart = await getCart();
-  console.log("cart display -", cart?.size);
 
   // render component ----------------------------------------------------------------------------------------
   return (
@@ -48,7 +47,7 @@ const CartDisplay = async () => {
       )}
 
       {/* 3. Total + Checkout button */}
-      {cart?.items.length && (
+      {cart?.size !== 0 && cart?.size && (
         <div className="flex flex-col items-end">
           <h2 className="mb-4 text-2xl font-bold tracking-wider">
             Total:

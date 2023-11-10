@@ -16,12 +16,6 @@ const NavBar = async () => {
   // fetch on server component
   const cart = await getCart();
   const session = await getServerSession(authOptions);
-  console.log(
-    "Nav bar, fetch session & cart - username:",
-    session?.user?.name,
-    ", cart size:",
-    cart?.size,
-  );
 
   // render component ----------------------------------------------------------------------------------------
   return (

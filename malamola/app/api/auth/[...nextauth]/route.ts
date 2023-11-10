@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    session({ session, user }) {
+    async session({ session, user }) {
       // triggered whenever we return a session from the db
       session.user.id = user.id; // we add the id from the db to the session => but we need to extend user type for id: string (new folder: @types)
       return session;
@@ -31,11 +31,6 @@ export const authOptions: NextAuthOptions = {
   events: {
     async signIn({ user }) {
       // triggers on event - signIn => mergeCarts() w/ user that just signed in
-      console.log(
-        "route handler on signIn event -",
-        user.name,
-        "is logged in. Merging carts...",
-      );
       await mergeAnonymousCartIntoUserCart(user.id);
     },
   },
