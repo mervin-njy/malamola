@@ -27,12 +27,24 @@ export const authOptions: NextAuthOptions = {
       session.user.id = user.id; // we add the id from the db to the session => but we need to extend user type for id: string (new folder: @types)
       return session;
     },
+    async signIn({ user }) {
+      // triggers on event - signIn => mergeCarts() w/ user that just signed in
+      await mergeAnonymousCartIntoUserCart(user.id);
+      return true;
+    },
   },
   events: {
     async signIn({ user }) {
       // triggers on event - signIn => mergeCarts() w/ user that just signed in
-      await mergeAnonymousCartIntoUserCart(user.id);
+      // await mergeAnonymousCartIntoUserCart(user.id);
+      console.log(user, "has succesfully signed in.");
     },
+  },
+  theme: {
+    colorScheme: "light", // "auto" | "dark" | "light"
+    brandColor: "#de8139", // Hex color code
+    logo: "https://drive.google.com/uc?export=view&id=18mskAEdQ_tOsJrWksTmMedBCD6hiucNk", // Absolute URL to image
+    buttonText: "#f3eee1", // Hex color code
   },
 };
 
