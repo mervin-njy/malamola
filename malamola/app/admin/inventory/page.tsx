@@ -1,135 +1,86 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import BtnSubmitForm from "@/app/components/buttons/BtnSubmitForm";
 import prisma from "@/lib/db/prisma";
-import { ProductsCategory } from "@prisma/client";
+import ProductCard from "@/app/components/products/ProductCard";
+import { formatImageUrl } from "@/lib/format";
+import Image from "next/image";
+import Link from "next/link";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
+import { GrFilter, GrSort } from "react-icons/gr";
 
+// metadata --------------------------------------------------------------------------------------------------
 export const metadata = {
   title: "®Admin - Inventory",
 };
 
-// server actions ------------------------------------------------------------------------------------
-// create server action on this file without client-side fetching => protects db credentials
-// => currently in alpha so => next.config.js => const nextConfig = { experimental: { serverActions: true, }, };
-async function addProduct(formData: FormData) {
-  "use server";
-
-  const session = getServerSession(authOptions);
-  // restrict access to only those who are logged in => TO CHANGE TO ADMIN
-  if (!session) redirect("/api/auth/signin?callbackUrl=/admin/inventory"); // route to request sign-in (if add product button is clicked while not logged in)
-
-  const name = formData.get("name")?.toString(); // ? => string or undefined
-  const category: ProductsCategory = formData.get(
-    "category",
-  ) as ProductsCategory;
-  const description = formData.get("description")?.toString();
-  const imageUrl = formData.get("imageUrl")?.toString();
-  const price = Number(formData.get("price") || 0);
-  const stock = Number(formData.get("stock") || 0);
-
-  // validate field entries
-  if (!name || !category || !description || !imageUrl || !price || !stock) {
-    throw Error("Missing required fields!");
-  }
-
-  // CREATE new product
-  await prisma.product.create({
-    data: { name, category, description, imageUrl, price, stock },
-  });
-
-  redirect("/");
-}
-
 const ManageInventoryPage = async () => {
   // variables -----------------------------------------------------------------------------------------------
+  // 1. session validation => ADMIN
   const session = await getServerSession(authOptions);
-
   // restrict access to only those who are logged in => TO CHANGE TO ADMIN
   if (session?.user.role !== "admin")
     redirect("/api/auth/signin?callbackUrl=/admin/inventory"); // route to request sign-in
 
+  // 2. products for display to edit
+  const products = await prisma.product.findMany({
+    orderBy: { id: "desc" },
+  });
+
   // render component ----------------------------------------------------------------------------------------
   return (
     <>
-      <div className="tracking-wide">
-        <h1 className="mb-10 text-3xl font-bold">Manage your Products</h1>
-
-        <div className="card card-bordered bg-neutral bg-opacity-5 p-4 hover:shadow-md">
-          <h1 className="card-title">Product Name</h1>
-          {/* change to "ID" mapped from db's product list */}
-          <div className="card-body">
-            <form action={addProduct}>
-              {/* Input: name */}
-              <input
-                required
-                name="name"
-                placeholder="Name"
-                className="input input-bordered mb-3 w-full"
-              />
-              {/* Input: Category choices */}
-              <div className="mb-3 flex flex-col justify-start px-4 py-2 tablet:flex-row">
-                <h3 className="mr-4 text-base font-semibold tracking-wide">
-                  Category:
-                </h3>
-                {["Mola", "Seasonal", "DIY", "Packages"].map((cat, ind) => {
-                  return (
-                    <div
-                      key={ind}
-                      className="my-2 flex flex-row tablet:mx-4 tablet:my-0"
-                    >
-                      <input
-                        type="radio"
-                        value={cat}
-                        name="category"
-                        className="radio-accent radio mr-2"
-                      />
-                      <h4 className="font-medium italic tracking-wide">
-                        {cat}
-                      </h4>
-                    </div>
-                  );
-                })}
-              </div>
-              {/* Input: Description */}
-              <textarea
-                required
-                name="description"
-                placeholder="Description"
-                className="textarea textarea-bordered mb-3 w-full"
-              />
-              {/* Input: Image Url */}
-              <input
-                required
-                name="imageUrl"
-                placeholder="Image URL"
-                type="url"
-                className="input input-bordered mb-3 w-full"
-              />
-              {/* Input: Price */}
-              <input
-                required
-                name="price"
-                placeholder="Price (in SGD cents)"
-                type="number"
-                className="input input-bordered mb-3 w-full"
-              />
-              {/* Input: Stock */}
-              <input
-                required
-                name="stock"
-                placeholder="Stock"
-                type="number"
-                className="input input-bordered mb-3 w-full"
-              />
-              <BtnSubmitForm className="btn-accent btn-block">
-                Add Product
-              </BtnSubmitForm>
-            </form>
-          </div>
+      {!products.length ? (
+        // TODO: change to addProduct Link
+        <div className="bg-neutral bg-opacity-5 p-4 text-2xl tracking-wide">
+          No products found.
         </div>
-      </div>
+      ) : (
+        <div className="px-20 tablet:px-4 laptop:px-0">
+          <div className="flex flex-row items-center justify-between pl-4 tracking-wider">
+            {/* 1. HEADING */}
+            <h1 className="text-3xl font-bold">Manage your Products</h1>
+            {/* <RiFilter2Fill /> */}
+
+            {/* 2. SEARCH & FILTER OPTIONS MODAL => TO BE CONVERTED INTO CSR COMPONENT */}
+            <div className="flex gap-2 rounded-xl text-xl font-light">
+              <h2 className="btn btn-ghost w-[6rem] border-base-300 normal-case">
+                <GrFilter />
+                Filter
+                {/* (Filter options: by category, keywords, availability etc.) */}
+              </h2>
+              <h2 className="btn btn-ghost w-[6rem] border-base-300 normal-case">
+                <GrSort />
+                Sort
+                {/* (Sort options: by price, name etc.) */}
+              </h2>
+            </div>
+          </div>
+
+          <div className="my-6 grid grid-cols-1 gap-4 tablet:grid-cols-2 laptop:grid-cols-3">
+            {/* 3. addProduct Link */}
+            <Link
+              href="/admin/inventory/addProduct"
+              className="card w-full border-2 border-dashed border-accent"
+            >
+              <button className="btn btn-accent btn-md m-auto w-6/12">
+                Add new
+              </button>
+            </Link>
+
+            {/* 4. PRODUCT LIST DISPLAY */}
+            {/* TODO: based on filter options */}
+            {products.map((product) => (
+              <ProductCard product={product} key={product.id} />
+            ))}
+          </div>
+
+          {/* 4. PAGINATION (TBC) */}
+          {/* <div>
+            <h4 className="text-xl tracking-wide">Pagination maybe?</h4>
+          </div> */}
+        </div>
+      )}
     </>
   );
 };

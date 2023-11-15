@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
 
+// metadata --------------------------------------------------------------------------------------------------
 export const metadata = {
   title: "®Admin - Add Product",
 };
@@ -43,7 +44,7 @@ async function addProduct(formData: FormData) {
   redirect("/");
 }
 
-const ManageInventoryPage = async () => {
+const AddProductPage = async () => {
   // variables -----------------------------------------------------------------------------------------------
   const session = await getServerSession(authOptions);
 
@@ -135,4 +136,4 @@ const ManageInventoryPage = async () => {
   );
 };
 
-export default ManageInventoryPage;
+export default AddProductPage;
