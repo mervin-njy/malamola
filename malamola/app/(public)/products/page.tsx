@@ -7,10 +7,34 @@ import React from "react";
 import { GrFilter, GrSort } from "react-icons/gr";
 import PaginationBar from "@/app/components/products/PaginationBar";
 
-const ProductsPage = async () => {
+// types -----------------------------------------------------------------------------------------------------
+interface ProductsPageProps {
+  searchParams: { page: string };
+}
+
+const ProductsPage = async ({
+  searchParams: { page = "1" }, // get ?page= searchParams from PaginationBar Links => default at 1 onMount
+}: ProductsPageProps) => {
   // variables ----------------------------------------------------------------------------------------
+  // 1. generate page variables
+  const currentPage = parseInt(page);
+
+  // change page cards to display here
+  const productCards = 6;
+  const heroItemCount = 1;
+
+  const totalItemCount = await prisma.product.count();
+
+  const totalPages = Math.ceil((totalItemCount - heroItemCount) / productCards);
+
+  // 2. retrieve current page's products from db
+  // TODO: add filter options
   const products = await prisma.product.findMany({
     orderBy: { id: "desc" },
+    skip:
+      (currentPage - 1) * productCards + // skips 0 on 1st page
+      (currentPage === 1 ? 0 : heroItemCount), // skip +heroItem after 1st page
+    take: productCards + (currentPage === 1 ? heroItemCount : 0), // only +heroItem on 1st page
   });
 
   // render component ---------------------------------------------------------------------------------
@@ -43,43 +67,48 @@ const ProductsPage = async () => {
           </div>
 
           {/* 3. HERO BANNER - LATEST PRODUCT */}
-          <div className="hero my-4 rounded-xl bg-neutral bg-opacity-10">
-            <div className="hero-content w-full flex-col justify-start tablet:flex-row">
-              <Image
-                src={formatImageUrl(products[0].imageUrl)}
-                alt={products[0].name}
-                width={800}
-                height={800}
-                className="rounded-lg shadow-2xl tablet:w-8/12 tablet:max-w-xl laptop:w-full"
-                priority
-              />
-              <div className="px-4">
-                <div className="text-3xl font-bold tracking-wider tablet:text-4xl laptop:text-5xl">
-                  {products[0].name}
+          {currentPage === 1 && (
+            <div className="hero my-4 rounded-xl bg-neutral bg-opacity-10">
+              <div className="hero-content w-full flex-col justify-start tablet:flex-row">
+                <Image
+                  src={formatImageUrl(products[0].imageUrl)}
+                  alt={products[0].name}
+                  width={800}
+                  height={800}
+                  className="rounded-lg shadow-2xl tablet:w-8/12 tablet:max-w-xl laptop:w-full"
+                  priority
+                />
+                <div className="px-4">
+                  <div className="text-3xl font-bold tracking-wider tablet:text-4xl laptop:text-5xl">
+                    {products[0].name}
+                  </div>
+                  <p className="my-6 line-clamp-5 overflow-hidden tablet:line-clamp-[11]">
+                    {products[0].description}
+                  </p>
+                  <Link
+                    href={"/products/" + products[0].id}
+                    className="btn btn-accent"
+                  >
+                    Check it out!
+                  </Link>
                 </div>
-                <p className="my-6 line-clamp-5 overflow-hidden tablet:line-clamp-[11]">
-                  {products[0].description}
-                </p>
-                <Link
-                  href={"/products/" + products[0].id}
-                  className="btn btn-accent"
-                >
-                  Check it out!
-                </Link>
               </div>
             </div>
-          </div>
+          )}
 
           {/* 4. PRODUCT LIST DISPLAY */}
-          {/* TODO: based on filter options */}
-          <div className="mb-6 grid grid-cols-1 gap-4 tablet:grid-cols-2 laptop:grid-cols-3">
-            {products.slice(1).map((product) => (
-              <ProductCard product={product} key={product.id} />
-            ))}
+          <div className="my-6 grid grid-cols-1 gap-4 tablet:grid-cols-2 laptop:grid-cols-3">
+            {(currentPage === 1 ? products.slice(heroItemCount) : products).map(
+              (product) => (
+                <ProductCard product={product} key={product.id} />
+              ),
+            )}
           </div>
 
           {/* 5. PAGINATION */}
-          <PaginationBar currentPage={3} totalPages={99} />
+          {totalPages > 1 && (
+            <PaginationBar currentPage={currentPage} totalPages={totalPages} />
+          )}
         </div>
       )}
     </>

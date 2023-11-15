@@ -13,7 +13,14 @@ export const metadata = {
   title: "®Admin - Inventory",
 };
 
-const ManageInventoryPage = async () => {
+// types -----------------------------------------------------------------------------------------------------
+interface ProductsPageProps {
+  searchParams: { page: string };
+}
+
+const ManageInventoryPage = async ({
+  searchParams: { page = "1" }, // get ?page= searchParams from PaginationBar Links => default at 1 onMount
+}: ProductsPageProps) => {
   // variables -----------------------------------------------------------------------------------------------
   // 1. session validation => ADMIN
   const session = await getServerSession(authOptions);
@@ -21,9 +28,22 @@ const ManageInventoryPage = async () => {
   if (session?.user.role !== "admin")
     redirect("/api/auth/signin?callbackUrl=/admin/inventory"); // route to request sign-in
 
-  // 2. products for display to edit
+  // 2. generate page variables
+  const currentPage = parseInt(page);
+
+  const productCards = 5;
+  // no heroItemCard => but addProductCard is on every page
+
+  const totalItemCount = await prisma.product.count();
+
+  const totalPages = Math.ceil(totalItemCount / productCards);
+
+  // 3. products for display to edit
+  // TODO: add filter options
   const products = await prisma.product.findMany({
     orderBy: { id: "desc" },
+    skip: (currentPage - 1) * productCards,
+    take: productCards,
   });
 
   // render component ----------------------------------------------------------------------------------------
@@ -59,14 +79,15 @@ const ManageInventoryPage = async () => {
             <AddProductCard />
 
             {/* 4. PRODUCT LIST DISPLAY */}
-            {/* TODO: based on filter options */}
             {products.map((product) => (
               <AdminProductCard product={product} key={product.id} />
             ))}
           </div>
 
           {/* 5. PAGINATION */}
-          <PaginationBar currentPage={3} totalPages={99} />
+          {totalPages > 1 && (
+            <PaginationBar currentPage={currentPage} totalPages={totalPages} />
+          )}
         </div>
       )}
     </>
