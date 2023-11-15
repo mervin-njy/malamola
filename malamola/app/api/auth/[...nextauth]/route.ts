@@ -38,16 +38,12 @@ export const authOptions: NextAuthOptions = {
       session.user.role = user.role; // imilarly grab the user's role from db
       return session;
     },
-    async signIn({ user }) {
-      // triggers on event - signIn => mergeCarts() w/ user that just signed in
-      await mergeAnonymousCartIntoUserCart(user.id);
-      return true;
-    },
   },
   events: {
     async signIn({ user }) {
       // triggers on event - signIn => mergeCarts() w/ user that just signed in
-      // await mergeAnonymousCartIntoUserCart(user.id);
+      // Offload heavy tasks to background processes or queues
+      await processHeavyTasks(user.id);
       console.log(user, "has succesfully signed in.");
     },
   },
@@ -58,6 +54,12 @@ export const authOptions: NextAuthOptions = {
     buttonText: "#f3eee1", // Hex color code
   },
 };
+
+async function processHeavyTasks(userId: string) {
+  // Perform heavy tasks asynchronously
+  console.log("Processing heavy tasks for user:", userId);
+  await mergeAnonymousCartIntoUserCart(userId);
+}
 
 const handler = NextAuth(authOptions);
 
