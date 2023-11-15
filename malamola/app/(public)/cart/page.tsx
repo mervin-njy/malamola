@@ -1,7 +1,7 @@
 import React from "react";
-import CartDisplay from "./CartDisplay";
-import DeliveryOptions from "./DeliveryOptions";
-import PaymentOptions from "./PaymentOptions";
+import CartDisplay from "./components/CartDisplay";
+import DeliveryOptions from "./components/DeliveryOptions";
+import PaymentOptions from "./components/PaymentOptions";
 
 export const metadata = {
   title: "Your cart - Filly Flower Crafts",

@@ -1,6 +1,5 @@
 import prisma from "@/lib/db/prisma";
 import AdminProductCard from "./AdminProductCard";
-import Link from "next/link";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
