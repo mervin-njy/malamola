@@ -3,7 +3,7 @@ import React from "react";
 const page = () => {
   return (
     <>
-      <h1>Admin Dashboard</h1>
+      <h1>User access & rights</h1>
     </>
   );
 };

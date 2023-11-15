@@ -18,7 +18,7 @@ async function addProduct(formData: FormData) {
 
   const session = getServerSession(authOptions);
   // restrict access to only those who are logged in => TO CHANGE TO ADMIN
-  if (!session) redirect("api/auth/signin?callbackUrl=/inventory"); // route to request sign-in (if add product button is clicked while not logged in)
+  if (!session) redirect("/api/auth/signin?callbackUrl=/admin/inventory"); // route to request sign-in (if add product button is clicked while not logged in)
 
   const name = formData.get("name")?.toString(); // ? => string or undefined
   const category: ProductsCategory = formData.get(
@@ -47,7 +47,8 @@ const ManageInventoryPage = async () => {
   const session = await getServerSession(authOptions);
 
   // restrict access to only those who are logged in => TO CHANGE TO ADMIN
-  if (!session) redirect("api/auth/signin?callbackUrl=/inventory"); // route to request sign-in
+  if (session?.user.role !== "admin")
+    redirect("/api/auth/signin?callbackUrl=/admin/inventory"); // route to request sign-in
 
   // render component ----------------------------------------------------------------------------------------
   return (
