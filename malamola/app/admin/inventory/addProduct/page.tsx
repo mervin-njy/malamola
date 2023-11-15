@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 export const metadata = {
-  title: "®Admin - Inventory",
+  title: "®Admin - Add Product",
 };
 
 // server actions ------------------------------------------------------------------------------------
@@ -18,7 +18,8 @@ async function addProduct(formData: FormData) {
 
   const session = getServerSession(authOptions);
   // restrict access to only those who are logged in => TO CHANGE TO ADMIN
-  if (!session) redirect("/api/auth/signin?callbackUrl=/admin/inventory"); // route to request sign-in (if add product button is clicked while not logged in)
+  if (!session)
+    redirect("/api/auth/signin?callbackUrl=/admin/inventory/addProduct"); // route to request sign-in (if add product button is clicked while not logged in)
 
   const name = formData.get("name")?.toString(); // ? => string or undefined
   const category: ProductsCategory = formData.get(
@@ -48,13 +49,13 @@ const ManageInventoryPage = async () => {
 
   // restrict access to only those who are logged in => TO CHANGE TO ADMIN
   if (session?.user.role !== "admin")
-    redirect("/api/auth/signin?callbackUrl=/admin/inventory"); // route to request sign-in
+    redirect("/api/auth/signin?callbackUrl=/admin/inventory/addProduct"); // route to request sign-in
 
   // render component ----------------------------------------------------------------------------------------
   return (
     <>
       <div className="tracking-wide">
-        <h1 className="mb-10 text-3xl font-bold">Manage your Products</h1>
+        <h1 className="mb-10 text-3xl font-bold">Add new Product</h1>
 
         <div className="card card-bordered bg-neutral bg-opacity-5 p-4 hover:shadow-md">
           <h1 className="card-title">Product Name</h1>

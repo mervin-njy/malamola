@@ -6,7 +6,7 @@ import InputSearchQuery from "./InputSearchQuery";
 import NavLinks from "./NavLinks";
 import { getCart } from "@/lib/db/cart";
 import BtnShoppingCart from "./cart/BtnShoppingCart";
-import UserMenuButton from "./UserMenuButton";
+import BtnUserOptions from "./BtnUserOptions";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 
@@ -44,7 +44,7 @@ const NavBar = async () => {
           {/* 2. cart Btn + dropdown => client component to dynamically display cart size */}
           <BtnShoppingCart cart={cart} />
           {/* 3. user profile + dropdown => client component to dynamically show user session options */}
-          <UserMenuButton session={session} />
+          <BtnUserOptions session={session} />
         </div>
       </nav>
     </div>

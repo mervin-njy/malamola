@@ -9,11 +9,11 @@ import React from "react";
 import { signIn, signOut } from "next-auth/react";
 
 // types ----------------------------------------------------------------------------------------------
-interface UserMenuButtonProps {
+interface BtnUserOptionsProps {
   session: Session | null; // since user may not be logged in
 }
 
-const UserMenuButton = ({ session }: UserMenuButtonProps) => {
+const BtnUserOptions = ({ session }: BtnUserOptionsProps) => {
   // variables -----------------------------------------------------------------------------------------------
   // can also use next-auth hook to fetch session but it's client side => useSession from next-auth/react
   const user = session?.user;
@@ -27,6 +27,12 @@ const UserMenuButton = ({ session }: UserMenuButtonProps) => {
     { name: "Enquiries", href: "/admin/enquiries" },
     { name: "Orders", href: "/admin/orders" },
   ];
+
+  // functions ----------------------------------------------------------------------------------------
+  const closeDropdown = () => {
+    const elem = document.activeElement as HTMLElement;
+    if (elem) elem.blur(); // this is important to close BtnUserOptions dropdown when user is redirected away from the page
+  };
 
   // render component ----------------------------------------------------------------------------------------
   return (
@@ -51,34 +57,47 @@ const UserMenuButton = ({ session }: UserMenuButtonProps) => {
         tabIndex={0}
         className="menu dropdown-content rounded-box menu-sm z-30 mt-3 w-52 bg-base-100 p-2 shadow"
       >
-        {/* show admin options */}
+        {/* a.i. show admin options */}
         {user?.role === "admin" && (
           <>
-            <li className="btn btn-secondary btn-xs mb-1">Admin</li>
+            <li className="btn btn-secondary btn-xs mb-2 cursor-default">
+              Admin
+            </li>
             <>
               {adminLinks.map((link) => {
                 return (
                   <li key={link.name}>
-                    <Link href={link.href}>{link.name}</Link>
+                    <Link href={link.href} onClick={closeDropdown}>
+                      {link.name}
+                    </Link>
                   </li>
                 );
               })}
             </>
           </>
         )}
+        {/* a.ii. show normal user options */}
 
-        {/* show sign in / sign out option based on user session */}
+        {/* b. show sign in / sign out option based on user session */}
         <li>
           {user ? (
             <div>
               {/* next-auth singOut() redirects to home page afterwards */}
-              <button onClick={() => signOut({ callbackUrl: "/" })}>
+              <button
+                className="text-base font-bold tracking-wider"
+                onClick={() => signOut({ callbackUrl: "/" })}
+              >
                 Sign out
               </button>
             </div>
           ) : (
             // next-auth signIn() redirects user back to last page afterwards
-            <button onClick={() => signIn()}>Sign in</button>
+            <button
+              className="text-base font-bold tracking-wider"
+              onClick={() => signIn()}
+            >
+              Sign in
+            </button>
           )}
         </li>
       </ul>
@@ -86,4 +105,4 @@ const UserMenuButton = ({ session }: UserMenuButtonProps) => {
   );
 };
 
-export default UserMenuButton;
+export default BtnUserOptions;
