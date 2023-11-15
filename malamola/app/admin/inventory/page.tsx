@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 import { GrFilter, GrSort } from "react-icons/gr";
 import AddProductCard from "./AddProductCard";
+import PaginationBar from "@/app/components/products/PaginationBar";
 
 // metadata --------------------------------------------------------------------------------------------------
 export const metadata = {
@@ -64,10 +65,8 @@ const ManageInventoryPage = async () => {
             ))}
           </div>
 
-          {/* 4. PAGINATION (TBC) */}
-          {/* <div>
-            <h4 className="text-xl tracking-wide">Pagination maybe?</h4>
-          </div> */}
+          {/* 5. PAGINATION */}
+          <PaginationBar currentPage={3} totalPages={99} />
         </div>
       )}
     </>

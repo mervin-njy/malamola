@@ -48,7 +48,7 @@ const AdminProductCard = ({ product }: ProductCardProps) => {
         </p>
 
         {/* 5. dates */}
-        <div className="text-xs italic">
+        <div className="text-xs italic my-2">
           <div className="flex justify-between tracking-wide">
             <h5>
               <span className="font-bold">Created:</span>

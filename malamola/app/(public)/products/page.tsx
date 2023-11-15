@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { GrFilter, GrSort } from "react-icons/gr";
+import PaginationBar from "@/app/components/products/PaginationBar";
 
 const ProductsPage = async () => {
   // variables ----------------------------------------------------------------------------------------
@@ -71,16 +72,14 @@ const ProductsPage = async () => {
 
           {/* 4. PRODUCT LIST DISPLAY */}
           {/* TODO: based on filter options */}
-          <div className="grid grid-cols-1 gap-4 tablet:grid-cols-2 laptop:grid-cols-3">
+          <div className="mb-6 grid grid-cols-1 gap-4 tablet:grid-cols-2 laptop:grid-cols-3">
             {products.slice(1).map((product) => (
               <ProductCard product={product} key={product.id} />
             ))}
           </div>
 
-          {/* 4. PAGINATION (TBC) */}
-          {/* <div>
-            <h4 className="text-xl tracking-wide">Pagination maybe?</h4>
-          </div> */}
+          {/* 5. PAGINATION */}
+          <PaginationBar currentPage={3} totalPages={99} />
         </div>
       )}
     </>
