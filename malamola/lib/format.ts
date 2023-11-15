@@ -13,3 +13,8 @@ export const formatImageUrl = (imageUrl: string) => {
     .replace("file/d/", "uc?export=view&id=")
     .replace(/\/view(.*)/, "");
 };
+
+export const formatDate = (date: Date) => date.toDateString().slice(3);
+
+export const getAge = (date: Date) =>
+  Math.floor((Date.now() - new Date(date).getTime()) / 1000 / 60 / 60 / 24);

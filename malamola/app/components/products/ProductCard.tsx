@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import PriceTag from "../PriceTag";
-import { formatImageUrl } from "@/lib/format";
+import { formatImageUrl, getAge } from "@/lib/format";
 
 // types ----------------------------------------------------------------------------------------------
 interface ProductCardProps {
@@ -13,9 +13,7 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   // variables ----------------------------------------------------------------------------------------
   // give a NEW icon beside recently updated products (within 7 days => convert from ms)
-  const isNew =
-    Date.now() - new Date(product.createdAt).getTime() <
-    1000 * 60 * 60 * 24 * 7;
+  const isNew = getAge(product.createdAt) < 7;
 
   // render component ---------------------------------------------------------------------------------
   return (
@@ -24,6 +22,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       className="card w-full bg-neutral bg-opacity-5 transition-shadow hover:shadow-xl"
     >
       <figure>
+        {/* 1. image */}
         <Image
           src={formatImageUrl(product.imageUrl)}
           alt={product.name}
@@ -34,18 +33,23 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </figure>
 
       <div className="card-body">
+        {/* 2. title */}
         <h3 className="card-title tracking-wider">{product.name} </h3>
+        {/* 3. category */}
         <h4 className="font-extrabold tracking-widest text-accent">
           {product.category}
         </h4>
+        {/* 4. description */}
         <p className="line-clamp-3 max-h-24 overflow-hidden tracking-wide">
           {product.description}
         </p>
         <div className="mt-2 flex justify-between">
+          {/* 5. price */}
           <PriceTag
             price={product.price}
             className="badge-ghost rounded-md p-3"
           />
+          {/* 6. isNew */}
           {isNew && (
             <div className="attentionGrab badge badge-info p-3">NEW</div>
           )}

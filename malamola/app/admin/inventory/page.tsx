@@ -1,13 +1,12 @@
 import prisma from "@/lib/db/prisma";
-import ProductCard from "@/app/components/products/ProductCard";
-import { formatImageUrl } from "@/lib/format";
-import Image from "next/image";
+import AdminProductCard from "./AdminProductCard";
 import Link from "next/link";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
 import { GrFilter, GrSort } from "react-icons/gr";
+import AddProductCard from "./AddProductCard";
 
 // metadata --------------------------------------------------------------------------------------------------
 export const metadata = {
@@ -32,9 +31,7 @@ const ManageInventoryPage = async () => {
     <>
       {!products.length ? (
         // TODO: change to addProduct Link
-        <div className="bg-neutral bg-opacity-5 p-4 text-2xl tracking-wide">
-          No products found.
-        </div>
+        <AddProductCard />
       ) : (
         <div className="px-20 tablet:px-4 laptop:px-0">
           <div className="flex flex-row items-center justify-between pl-4 tracking-wider">
@@ -59,19 +56,12 @@ const ManageInventoryPage = async () => {
 
           <div className="my-6 grid grid-cols-1 gap-4 tablet:grid-cols-2 laptop:grid-cols-3">
             {/* 3. addProduct Link */}
-            <Link
-              href="/admin/inventory/addProduct"
-              className="card w-full border-2 border-dashed border-accent"
-            >
-              <button className="btn btn-accent btn-md m-auto w-6/12">
-                Add new
-              </button>
-            </Link>
+            <AddProductCard />
 
             {/* 4. PRODUCT LIST DISPLAY */}
             {/* TODO: based on filter options */}
             {products.map((product) => (
-              <ProductCard product={product} key={product.id} />
+              <AdminProductCard product={product} key={product.id} />
             ))}
           </div>
 
