@@ -1,12 +1,48 @@
+import ProductCard from "@/app/components/products/ProductCard";
+import prisma from "@/lib/db/prisma";
+import { Metadata } from "next";
 import React from "react";
 
-const page = () => {
+// metadata --------------------------------------------------------------------------------------------------
+export function generateMetadata({
+  searchParams: { query },
+}: SearchPageProps): Metadata {
+  return {
+    title: `Search: ${query} - Filly Flower Crafts`,
+  };
+}
+
+// types ----------------------------------------------------------------------------------------------
+interface SearchPageProps {
+  searchParams: { query: string };
+}
+
+const SearchPage = async ({ searchParams: { query } }: SearchPageProps) => {
+  // variables ----------------------------------------------------------------------------------------
+  const products = await prisma.product.findMany({
+    where: {
+      OR: [
+        { name: { contains: query, mode: "insensitive" } },
+        { description: { contains: query, mode: "insensitive" } },
+      ],
+    },
+    orderBy: { id: "desc" },
+  });
+
+  // render component ---------------------------------------------------------------------------------
   return (
     <>
-      <h1>Search for products</h1>
-      {/* Darken background */}
+      {!products.length ? (
+        <div className="text-2xl tracking-wide">No products found.</div>
+      ) : (
+        <div className="grid grid-cols-1 gap-4 tablet:grid-cols-2 laptop:grid-cols-3">
+          {products.map((product) => {
+            return <ProductCard key={product.id} product={product} />;
+          })}
+        </div>
+      )}
     </>
   );
 };
 
-export default page;
+export default SearchPage;

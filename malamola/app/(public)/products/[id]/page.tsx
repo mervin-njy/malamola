@@ -8,6 +8,20 @@ import { formatImageUrl } from "@/lib/format";
 import BtnAddToCart from "./BtnAddToCart";
 import { updateProductQuantity } from "@/app/(public)/cart/actions";
 
+// metadata ------------------------------------------------------------------------------------------------
+export async function generateMetaData({
+  params: { id },
+}: ProductPageProps): Promise<Metadata> {
+  const product = await getProduct(id);
+  return {
+    title: product.name + " - Filly Flower Crafts",
+    description: product.description,
+    openGraph: {
+      images: [{ url: formatImageUrl(product.imageUrl) }],
+    },
+  };
+}
+
 // types ---------------------------------------------------------------------------------------------------
 interface ProductPageProps {
   params: {
@@ -23,20 +37,6 @@ const getProduct = cache(async (id: string) => {
   console.log("Product fetched:", product.name);
   return product;
 });
-
-// metadata ------------------------------------------------------------------------------------------------
-export async function generateMetaData({
-  params: { id },
-}: ProductPageProps): Promise<Metadata> {
-  const product = await getProduct(id);
-  return {
-    title: product.name,
-    description: product.description,
-    openGraph: {
-      images: [{ url: formatImageUrl(product.imageUrl) }],
-    },
-  };
-}
 
 // render component ----------------------------------------------------------------------------------------
 const ProductPage = async ({ params: { id } }: ProductPageProps) => {

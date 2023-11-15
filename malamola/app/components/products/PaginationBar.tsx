@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { PiCaretDoubleLeftBold, PiCaretDoubleRightBold } from "react-icons/pi";
 import React from "react";
 
 // types -----------------------------------------------------------------------------------------------------
@@ -19,10 +18,10 @@ const PaginationBar = ({ currentPage, totalPages }: PaginationBarProps) => {
       <Link
         key={page}
         href={"?page=" + page}
-        className={`btn join-item border-accent border-opacity-10 bg-accent bg-opacity-5 hover:bg-accent hover:bg-opacity-20 ${
+        className={`btn join-item border-accent border-opacity-10 bg-accent hover:bg-accent hover:bg-opacity-20 ${
           currentPage === page
-            ? "btn-active pointer-events-none bg-opacity-40"
-            : ""
+            ? "btn-active pointer-events-none bg-opacity-50"
+            : "bg-opacity-5"
         }`}
       >
         {page}

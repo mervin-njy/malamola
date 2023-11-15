@@ -7,7 +7,7 @@ import React from "react";
 import { GrFilter, GrSort } from "react-icons/gr";
 import PaginationBar from "@/app/components/products/PaginationBar";
 
-// types -----------------------------------------------------------------------------------------------------
+// types ----------------------------------------------------------------------------------------------
 interface ProductsPageProps {
   searchParams: { page: string };
 }
