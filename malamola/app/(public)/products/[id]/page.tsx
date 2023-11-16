@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { prisma } from "@/lib/db/prisma";
 import { notFound } from "next/navigation";
 import { Metadata } from "next/types";
 import Image from "next/image";
@@ -6,7 +6,7 @@ import React, { cache } from "react";
 import PriceTag from "@/app/components/PriceTag";
 import { formatImageUrl } from "@/lib/format";
 import BtnAddToCart from "./BtnAddToCart";
-import { updateProductQuantity } from "@/app/(public)/cart/actions";
+import { updateProductQuantity } from "@/app/components/actions/actions";
 
 // metadata ------------------------------------------------------------------------------------------------
 export async function generateMetaData({

@@ -1,5 +1,5 @@
 import { cookies } from "next/dist/client/components/headers";
-import prisma from "./prisma";
+import { prisma } from "./prisma";
 import { Cart, CartItem, Prisma } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -146,6 +146,8 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
       //     quantity: item.quantity,
       //   })),
       // });
+
+      // update the cart's updatedAt timestamp along with cartItem creation => lib/db/prisma.ts to include prisma extension
       await tx.cart.update({
         where: { id: userCart.id },
         data: {

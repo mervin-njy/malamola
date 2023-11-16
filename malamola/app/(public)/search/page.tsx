@@ -1,5 +1,5 @@
 import ProductCard from "@/app/components/products/ProductCard";
-import prisma from "@/lib/db/prisma";
+import { prisma } from "@/lib/db/prisma";
 import { Metadata } from "next";
 import React from "react";
 

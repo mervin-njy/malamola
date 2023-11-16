@@ -2,7 +2,7 @@ import { getCart } from "@/lib/db/cart";
 import React from "react";
 import Link from "next/link";
 import CartEntry from "./CartEntry";
-import { updateProductQuantity } from "@/app/(public)/cart/actions";
+import { updateProductQuantity } from "@/app/components/actions/actions";
 import { formatPrice } from "@/lib/format";
 
 export const metadata = {

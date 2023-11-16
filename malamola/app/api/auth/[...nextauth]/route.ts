@@ -2,7 +2,7 @@
 // [...foldername] is a catch-all segment that allows nextauth to handle different routes under this endpoint
 
 import { mergeAnonymousCartIntoUserCart } from "@/lib/db/cart";
-import prisma from "@/lib/db/prisma";
+import { prisma } from "@/lib/db/prisma";
 import { env } from "@/lib/env";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";

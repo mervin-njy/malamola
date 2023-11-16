@@ -1,4 +1,4 @@
-import prisma from "@/lib/db/prisma";
+import { prisma } from "@/lib/db/prisma";
 import ProductCard from "@/app/components/products/ProductCard";
 import { formatImageUrl } from "@/lib/format";
 import Image from "next/image";
