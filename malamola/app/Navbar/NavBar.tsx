@@ -1,5 +1,5 @@
 import React from "react";
-import mainLogo from "@/public/assets/images/branding/fillyFlowerLogo-200.svg";
+import mainLogo from "@/public/assets/fillyFlowerLogo-200.svg";
 import Link from "next/link";
 import Image from "next/image";
 import InputSearchQuery from "./InputSearchQuery";
