@@ -40,12 +40,13 @@ TODO:
 
 3. All products filter to other categories w/ tabs
 
-4. Admin userType + admin-specific pages (see 5a.)
+4. Admin userType + admin-specific pages (see 5a.) => done with inventory
+    a. inventory => need to add updateProducts
+    b. users, orders, enquiries, dashboard
 
 5. Navbar:
     (Right-corner)
-    a. Profile (auth-login) => add links to admin-protected pages => manage-inventory, manage-about, manage-enquiries, manage-orders, manage-FAQs, manage-users, dashboard
-    c. Language
+    a. Language
     b. Favourites
 
     (Center - maybe)
@@ -53,6 +54,7 @@ TODO:
     b. Dropdown - About > FillyFlower, Our Biodiversity, Materials
 
 6. Mongodb document data expiry (anonymous cart items)
+    => cron jobs on vercel
 
 7. About, Contact, FAQs pages
 
