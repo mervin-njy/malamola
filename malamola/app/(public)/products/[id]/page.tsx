@@ -9,7 +9,7 @@ import BtnAddToCart from "./BtnAddToCart";
 import { updateProductQuantity } from "@/app/components/actions/actions";
 
 // metadata ------------------------------------------------------------------------------------------------
-export async function generateMetaData({
+export async function generateMetadata({
   params: { id },
 }: ProductPageProps): Promise<Metadata> {
   const product = await getProduct(id);

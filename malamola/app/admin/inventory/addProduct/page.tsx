@@ -1,6 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import BtnSubmitForm from "@/app/components/buttons/BtnSubmitForm";
-import prisma from "@/lib/db/prisma";
+import { prisma } from "@/lib/db/prisma";
 import { ProductsCategory } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
