@@ -4,7 +4,7 @@ import { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import { RiLoginBoxLine } from "react-icons/ri";
-import placeholderProfile from "@/public/assets/images/placeholder-profile.jpg";
+import placeholderProfile from "@/public/assets/placeholder-profile.jpg";
 import React from "react";
 import { signIn, signOut } from "next-auth/react";
 

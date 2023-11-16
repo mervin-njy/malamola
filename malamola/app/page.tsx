@@ -1,5 +1,5 @@
 import Image from "next/image";
-import mainLogo from "@/public/assets/images/branding/fillyFlowerLogo-1.png";
+import mainLogo from "@/public/assets/fillyFlowerLogo-1.png";
 
 export default function Home() {
   return (
