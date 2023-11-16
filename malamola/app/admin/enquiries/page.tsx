@@ -9,7 +9,9 @@ const page = () => {
   // render component ---------------------------------------------------------------------------------
   return (
     <>
-      <h1>Enquiries from customers, collaborators</h1>
+      <h1 className="text-xl tracking-wide">
+        Enquiries from customers, collaborators
+      </h1>
     </>
   );
 };

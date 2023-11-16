@@ -49,7 +49,7 @@ const BtnAddToCart = ({
 
       {/* Pending: loading indicator */}
       {isPending && (
-        <span className="loading loading-ring loading-md text-info" />
+        <span className="ml-4 loading loading-ring loading-md text-info" />
       )}
 
       {/* {toasts.length > 0 &&

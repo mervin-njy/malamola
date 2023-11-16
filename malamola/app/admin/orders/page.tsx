@@ -9,7 +9,7 @@ const page = () => {
   // render component ---------------------------------------------------------------------------------
   return (
     <>
-      <h1>Orders to manage</h1>
+      <h1 className="text-xl tracking-wide">Orders to manage</h1>
     </>
   );
 };

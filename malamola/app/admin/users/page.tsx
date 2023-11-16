@@ -9,7 +9,7 @@ const page = () => {
   // render component ---------------------------------------------------------------------------------
   return (
     <>
-      <h1>User access & rights</h1>
+      <h1 className="text-xl tracking-wide">User access & rights</h1>
     </>
   );
 };

@@ -76,10 +76,19 @@ const CartEntry = ({
 
         {/* Options on the right */}
         <div className="flex-col justify-between tracking-wide">
-          {/* Title at the top links to the product/[id] page */}
-          <Link href={"/products/" + product.id} className="text-xl font-bold">
-            {product.name}
-          </Link>
+          <div className="flex justify-between">
+            {/* Title at the top links to the product/[id] page */}
+            <Link
+              href={"/products/" + product.id}
+              className="text-xl font-bold"
+            >
+              {product.name}
+            </Link>
+            {/* loading indicator */}
+            {isPending && (
+              <span className="loading loading-spinner loading-md" />
+            )}
+          </div>
 
           {/* Details of cartItem */}
           <div className="mt-12 flex w-60 justify-between text-sm laptop:text-base">
@@ -101,10 +110,6 @@ const CartEntry = ({
                 >
                   {getQuantityOptions(10, product.stock)}
                 </select>
-                {/* loading indicator */}
-                {isPending && (
-                  <span className="loading loading-spinner loading-md ml-4" />
-                )}
               </div>
 
               {/* SUBTOTAL */}
