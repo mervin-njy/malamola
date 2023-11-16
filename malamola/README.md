@@ -29,6 +29,10 @@
 3. ESlint ^ => see the warnings directly in code editor instead of terminal
 
 4. Prisma ORM
+    => see prisma extension at lib/db/prisma.ts
+
+// https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/vercel-caching-issue
+Deployment: package.json => scripts => see vercel caching problem with prisma
 -->
 
 <!--
