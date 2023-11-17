@@ -45,7 +45,7 @@ const ProductsPage = async ({
           No products found.
         </div>
       ) : (
-        <div className="px-20 tablet:px-4 laptop:px-0">
+        <div className="px-10 tablet:px-12 laptop:px-0">
           <div className="flex flex-row items-center justify-between pl-4 tracking-wider">
             {/* 1. HEADING */}
             <h1 className="text-3xl font-bold">All Products</h1>

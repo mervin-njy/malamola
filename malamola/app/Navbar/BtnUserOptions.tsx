@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { RiLoginBoxLine } from "react-icons/ri";
 import placeholderProfile from "@/public/assets/placeholder-profile.jpg";
-import React from "react";
+import React, { useTransition } from "react";
 import { signIn, signOut } from "next-auth/react";
 
 // types ----------------------------------------------------------------------------------------------
@@ -28,7 +28,10 @@ const BtnUserOptions = ({ session }: BtnUserOptionsProps) => {
     { name: "Orders", href: "/admin/orders" },
   ];
 
-  // functions ----------------------------------------------------------------------------------------
+  // react hooks ---------------------------------------------------------------------------------------------
+  const [isPending, startTransition] = useTransition();
+
+  // functions -----------------------------------------------------------------------------------------------
   const closeDropdown = () => {
     const elem = document.activeElement as HTMLElement;
     if (elem) elem.blur(); // this is important to close BtnUserOptions dropdown when user is redirected away from the page
@@ -38,7 +41,10 @@ const BtnUserOptions = ({ session }: BtnUserOptionsProps) => {
   return (
     <div className="dropdown dropdown-end">
       {/* 1. Dropdown Button: profile icon if logged in || three dots */}
-      <label tabIndex={0} className="btn btn-circle btn-ghost text-2xl">
+      <label
+        tabIndex={0}
+        className="btn btn-circle btn-ghost text-base tablet:text-2xl"
+      >
         {user ? (
           <Image
             src={user?.image || placeholderProfile}
@@ -81,14 +87,22 @@ const BtnUserOptions = ({ session }: BtnUserOptionsProps) => {
         {/* b. show sign in / sign out option based on user session */}
         <li>
           {user ? (
-            <div>
+            <div className="flex justify-between">
               {/* next-auth singOut() redirects to home page afterwards */}
               <button
                 className="text-base font-bold tracking-wider"
-                onClick={() => signOut({ callbackUrl: "/" })}
+                onClick={() =>
+                  startTransition(async () => {
+                    await signOut({ callbackUrl: "/" });
+                  })
+                }
               >
                 Sign out
               </button>
+
+              {isPending && (
+                <span className="loading loading-spinner loading-sm" />
+              )}
             </div>
           ) : (
             // next-auth signIn() redirects user back to last page afterwards

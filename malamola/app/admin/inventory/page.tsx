@@ -53,7 +53,7 @@ const ManageInventoryPage = async ({
         // TODO: change to addProduct Link
         <AddProductCard />
       ) : (
-        <div className="px-20 tablet:px-4 laptop:px-0">
+        <div className="px-10 tablet:px-4 laptop:px-0">
           <div className="flex flex-row items-center justify-between pl-4 tracking-wider">
             {/* 1. HEADING */}
             <h1 className="text-3xl font-bold">Manage your Products</h1>

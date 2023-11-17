@@ -16,7 +16,7 @@ const InputSearchQuery = () => {
         <input
           name="searchQuery"
           placeholder="Search products"
-          className="input input-bordered max-h-10 w-full min-w-[100px]"
+          className="input input-bordered max-h-10 w-[8rem] text-xs tablet:w-full tablet:text-sm"
         />
       </div>
     </form>

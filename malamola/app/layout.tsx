@@ -29,7 +29,7 @@ export default function RootLayout({
       >
         <SessionProvider>
           <NavBar />
-          <main className="m-auto min-h-screen w-full max-w-7xl px-8 py-10">
+          <main className="m-auto min-h-screen w-full max-w-7xl py-10">
             {children}
           </main>
           <Footer />

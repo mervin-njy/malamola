@@ -43,7 +43,7 @@ const AdminProductCard = ({ product }: ProductCardProps) => {
         </div>
 
         {/* 4. description */}
-        <p className="line-clamp-1 max-h-24 overflow-hidden tracking-wide">
+        <p className="line-clamp-1 max-h-24 overflow-hidden text-sm tracking-wide">
           {product.description}
         </p>
 
@@ -63,7 +63,7 @@ const AdminProductCard = ({ product }: ProductCardProps) => {
               {formatDate(product.updatedAt)}
             </h5>
             {/* 9: orders TODO: get from new Schema - Orders */}
-            <h5>{getAge(product.updatedAt)} days ago</h5>
+            <h5>{getAge(product.updatedAt)} day(s) ago</h5>
           </div>
         </div>
 

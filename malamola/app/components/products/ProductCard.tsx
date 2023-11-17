@@ -32,7 +32,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         />
       </figure>
 
-      <div className="card-body">
+      <div className="card-body p-6">
         {/* 2. title */}
         <h3 className="card-title tracking-wider">{product.name} </h3>
         {/* 3. category */}
@@ -40,7 +40,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           {product.category}
         </h4>
         {/* 4. description */}
-        <p className="line-clamp-3 max-h-24 overflow-hidden tracking-wide">
+        <p className="line-clamp-3 max-h-24 overflow-hidden text-sm tracking-wide">
           {product.description}
         </p>
         <div className="mt-2 flex justify-between">
