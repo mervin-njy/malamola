@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 import { GrFilter, GrSort } from "react-icons/gr";
 import PaginationBar from "@/app/components/products/PaginationBar";
+import { formatImageUrl } from "@/lib/format";
 
 // types ----------------------------------------------------------------------------------------------
 interface ProductsPageProps {
@@ -70,7 +71,7 @@ const ProductsPage = async ({
             <div className="hero my-4 rounded-xl bg-neutral bg-opacity-10">
               <div className="hero-content w-full flex-col justify-start tablet:flex-row">
                 <Image
-                  src={products[0].imageUrl}
+                  src={formatImageUrl(products[0].imageUrl)}
                   alt={products[0].name}
                   width={800}
                   height={800}

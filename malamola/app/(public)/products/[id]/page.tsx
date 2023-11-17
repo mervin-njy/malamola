@@ -6,6 +6,7 @@ import React, { cache } from "react";
 import PriceTag from "@/app/components/PriceTag";
 import BtnAddToCart from "./BtnAddToCart";
 import { updateProductQuantity } from "@/app/components/actions/actions";
+import { formatImageUrl } from "@/lib/format";
 
 // metadata ------------------------------------------------------------------------------------------------
 export async function generateMetadata({
@@ -16,7 +17,7 @@ export async function generateMetadata({
     title: product.name + " - Filly Flower Crafts",
     description: product.description,
     openGraph: {
-      images: [{ url: product.imageUrl }],
+      images: [{ url: formatImageUrl(product.imageUrl) }],
     },
   };
 }
@@ -45,7 +46,7 @@ const ProductPage = async ({ params: { id } }: ProductPageProps) => {
     <div className="flex flex-col tablet:flex-row">
       <div className="mb-4 tablet:w-7/12">
         <Image
-          src={product.imageUrl}
+          src={formatImageUrl(product.imageUrl)}
           alt={product.name}
           width={600}
           height={200}

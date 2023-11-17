@@ -7,11 +7,15 @@ export const formatPrice = (price: number) => {
 };
 
 export const formatImageUrl = (imageUrl: string) => {
+  // for drive.google.com
   // 1. replace "file/d/" w/ "uc?export=view&id="
   // 2. remove "/view?usp=sharing" at the end || "/view..."
-  return imageUrl
-    .replace("file/d/", "uc?export=view&id=")
-    .replace(/\/view(.*)/, "");
+  // return imageUrl
+  //   .replace("file/d/", "uc?export=view&id=")
+  //   .replace(/\/view(.*)/, "");
+
+  // for imgur.com
+  return imageUrl + ".jpeg";
 };
 
 export const formatDate = (date: Date) => date.toDateString().slice(3);
