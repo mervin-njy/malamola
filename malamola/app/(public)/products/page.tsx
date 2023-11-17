@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/db/prisma";
 import ProductCard from "@/app/components/products/ProductCard";
-import { formatImageUrl } from "@/lib/format";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -71,7 +70,7 @@ const ProductsPage = async ({
             <div className="hero my-4 rounded-xl bg-neutral bg-opacity-10">
               <div className="hero-content w-full flex-col justify-start tablet:flex-row">
                 <Image
-                  src={formatImageUrl(products[0].imageUrl)}
+                  src={products[0].imageUrl}
                   alt={products[0].name}
                   width={800}
                   height={800}

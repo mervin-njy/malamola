@@ -22,7 +22,7 @@ const NavBar = async () => {
     <div className="border-b-2 border-accent border-opacity-10 bg-neutral bg-opacity-5 shadow-sm">
       <nav className="m-auto flex h-20 max-w-7xl justify-between px-3 tablet:h-24 tablet:px-12 laptop:px-0">
         {/* LEFT: Main Logo for home nav */}
-        <div className="flex items-center justify-start tablet:gap-2 laptop:gap-10">
+        <div className="flex items-center justify-start tablet:gap-5 laptop:gap-10">
           <Link href="/">
             <Image
               src={mainLogo}

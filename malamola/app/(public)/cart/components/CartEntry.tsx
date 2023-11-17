@@ -1,7 +1,7 @@
 "use client";
 
 import { CartItemWithProduct } from "@/lib/db/cart";
-import { formatImageUrl, formatPrice } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Image from "next/image";
 import Link from "next/link";
@@ -67,7 +67,7 @@ const CartEntry = ({
       <div className="my-5 flex flex-wrap items-center gap-10 rounded-xl">
         {/* Image on the left */}
         <Image
-          src={formatImageUrl(product.imageUrl)}
+          src={product.imageUrl}
           alt={product.name}
           width={200}
           height={200}

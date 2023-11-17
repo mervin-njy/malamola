@@ -2,6 +2,7 @@
 const nextConfig = {
   images: {
     remotePatterns: [
+      { protocol: "https", hostname: "imgur.com" },
       { protocol: "https", hostname: "drive.google.com" },
       { hostname: "lh3.googleusercontent.com" },
     ],

@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import PriceTag from "../PriceTag";
-import { formatImageUrl, getAge } from "@/lib/format";
+import { getAge } from "@/lib/format";
 
 // types ----------------------------------------------------------------------------------------------
 interface ProductCardProps {
@@ -24,7 +24,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <figure>
         {/* 1. image */}
         <Image
-          src={formatImageUrl(product.imageUrl)}
+          src={product.imageUrl}
           alt={product.name}
           width={800}
           height={400}
