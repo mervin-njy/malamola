@@ -29,7 +29,7 @@ interface ProductPageProps {
   };
 }
 
-// reusable functions --------------------------------------------------------------------------------------
+// functions -----------------------------------------------------------------------------------------------
 const getProduct = cache(async (id: string) => {
   // cached the fetched product data so we can share with metadata => fetching w/ prisma doesn't allow default data cache w/ javascript fetch
   const product = await prisma.product.findUnique({ where: { id } });
@@ -44,6 +44,7 @@ const ProductPage = async ({ params: { id } }: ProductPageProps) => {
 
   return (
     <div className="flex flex-col tablet:flex-row">
+      {/* LEFT: Product images */}
       <div className="mb-4 tablet:w-7/12">
         <Image
           src={formatImageUrl(product.imageUrl)}
@@ -72,14 +73,22 @@ const ProductPage = async ({ params: { id } }: ProductPageProps) => {
         </div>
       </div>
 
+      {/* RIGHT: Product details */}
       <div className="mx-auto w-[600px] tablet:w-5/12">
+        {/* 2. Details */}
         <h1 className="text-5xl font-bold">{product.name}</h1>
         <PriceTag price={product.price} className="mt-4" />
         <p className="py-6">{product.description}</p>
 
         {/* <SelectVariation /> */}
+
+        {/* 2. Quantity to add */}
         {/* <SelectQuantity /> => if (product.stock <= 5) { ShowStock() } */}
+        {/* (product.category === "DIY" && <SelectQuantity />) */}
+
+        {/* 3. Button to confirm add */}
         <BtnAddToCart
+          // TODO:  btnName={(product.category === "DIY" ? "Add to Cart" : "Preorder" )}
           productId={product.id}
           updateProductQuantity={updateProductQuantity}
         />
