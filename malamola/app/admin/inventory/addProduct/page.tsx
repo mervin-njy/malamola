@@ -30,6 +30,10 @@ async function addProduct(formData: FormData) {
   const imageUrl = formData.get("imageUrl")?.toString();
   const price = Number(formData.get("price") || 0);
   const stock = Number(formData.get("stock") || 0);
+  // TODO: add optionDIY for category === "mola" String?
+  const optionDIY = "";
+  // TODO: add optionColours for category === "DIY" String[]
+  const optionColours = [];
 
   // validate field entries
   if (!name || !category || !description || !imageUrl || !price || !stock) {

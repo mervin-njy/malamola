@@ -20,16 +20,18 @@ enum ProductsCategory {
 // }
 
 model Product {
-  id          String           @id @default(auto()) @map("_id") @db.ObjectId
-  category    ProductsCategory
-  description String
-  imageUrl    String // []
-  name        String
-  price       Int // ProductsPrice
-  stock       Int
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  CartItem    CartItem[]
+  id            String           @id @default(auto()) @map("_id") @db.ObjectId
+  category      ProductsCategory
+  description   String
+  imageUrl      String // []
+  name          String
+  price         Int // ProductsPrice
+  stock         Int
+  optionDIY     String? // category === "mola" => link to DIY product "/product/[id]"
+  optionColours String[] // for category === "DIY"
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  CartItem      CartItem[]
 
   @@map("products") // connects model to collection name, so we can change it to Caps + Singular such that it doesn't become misleading
 }
