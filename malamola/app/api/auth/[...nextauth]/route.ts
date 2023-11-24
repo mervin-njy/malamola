@@ -35,7 +35,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, user }) {
       // triggered whenever we return a session from the db
       session.user.id = user.id; // we add the id from the db to the session => but we need to extend user type for id: string (new folder: @types)
-      session.user.role = user.role; // imilarly grab the user's role from db
+      session.user.role = user.role; // similarly grab the user's role from db
       return session;
     },
   },
