@@ -38,28 +38,38 @@ Deployment: package.json => scripts => see vercel caching problem with prisma
 <!--
 TODO:
 
-1. show stock update => limited qty
+- /admin/inventory => updateProduct, deleteProduct
 
-2. qty of items to add at product/[id] page (+- CSR component)
+- product schema:
+    a. imageUrl => []
+    b. optionDIY => String if (product.category === "mola") "/products/[id]"
+    c. optionColour => [] if (product.category === "DIY") colour
+        - think of how to change imageDisplay
+    z. price => ProductsPrice SGD || TWD
 
-3. All products filter to other categories w/ tabs
+- show stock update => limited qty (max 10 for DIY, preorder for mola)
 
-4. Admin userType + admin-specific pages (see 5a.) => done with inventory
-    a. inventory => need to add updateProducts
-    b. users, orders, enquiries, dashboard
+- SelectQuantity (CSR component) +-qty of items to add at product/[id] page
 
-5. Navbar:
-    (Right-corner)
-    a. Language
-    b. Favourites
+- All products filter to other categories w/ tabs
 
-    (Center - maybe)
-    a. Dropdown - Shop > All, Mola, Seasonal, DIY kits, Gifts
-    b. Dropdown - About > FillyFlower, Our Biodiversity, Materials
+- Nextjs noSSR dynamic lazy loading
 
-6. Mongodb document data expiry (anonymous cart items)
-    => cron jobs on vercel
+- About, Contact, FAQs pages
 
-7. About, Contact, FAQs pages
+- User: user pages:
+    a. profile => show updatable info:
+        i. delivery details
+        ii. payment options
+    b. favourite/likes
+    c. reviews
+    d. enquiries
+    e. orders
+
+- Admin userType + admin-specific pages => done with inventory
+    a. users, orders, enquiries, dashboard
+
+- Navbar:
+    a. language + currency
 
 -->

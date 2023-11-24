@@ -55,7 +55,7 @@ const AdminProductCard = ({ product }: ProductCardProps) => {
               {formatDate(product.createdAt)}
             </h5>
             {/* 9: orders TODO: get from new Schema - Orders */}
-            <h5>{getAge(product.createdAt)} days ago</h5>
+            <h5>{getAge(product.createdAt)} days(s) ago</h5>
           </div>
           <div className="flex justify-between tracking-wide">
             <h5>
