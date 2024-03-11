@@ -3,7 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import PriceTag from "@/app/components/PriceTag";
-import { formatDate, formatImageUrl, getAge } from "@/lib/format";
+import {
+  formatCategory,
+  formatImageUrl,
+  formatDate,
+  getAge,
+} from "@/app/helper/format";
 
 // types ----------------------------------------------------------------------------------------------
 interface ProductCardProps {
@@ -38,7 +43,7 @@ const AdminProductCard = ({ product }: ProductCardProps) => {
           <h3 className="card-title tracking-wider">{product.name} </h3>
           {/* 3. category */}
           <h4 className="badge badge-accent rounded-md p-3 tracking-wide text-white">
-            {product.category}
+            {formatCategory(product.category)}
           </h4>
         </div>
 

@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import CartEntry from "./CartEntry";
 import { updateProductQuantity } from "@/app/components/actions/actions";
-import { formatPrice } from "@/lib/format";
+import { formatPrice } from "@/app/helper/format";
 
 export const metadata = {
   title: "Your cart - Filly Flower Crafts",

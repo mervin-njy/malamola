@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 import { GrFilter, GrSort } from "react-icons/gr";
 import PaginationBar from "@/app/components/products/PaginationBar";
-import { formatImageUrl } from "@/lib/format";
+import { formatImageUrl } from "@/app/helper/format";
 
 // types ----------------------------------------------------------------------------------------------
 interface ProductsPageProps {

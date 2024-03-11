@@ -1,3 +1,19 @@
+// convert category format into readable text
+export const formatCategory = (category: string): string => {
+  switch (category) {
+    case "Mola":
+      return "Mola Gang";
+    case "Seasonal":
+      return "Seasonal Specials";
+    case "DIY":
+      return "DIY Kits";
+    case "Past":
+      return "Past Projects";
+    default:
+      return category;
+  }
+};
+
 export const formatPrice = (price: number) => {
   // TODO: option to convert to TWD
   return (price / 100).toLocaleString("en-US", {

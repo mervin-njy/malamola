@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import PriceTag from "../PriceTag";
-import { formatImageUrl, getAge } from "@/lib/format";
+import { formatCategory, formatImageUrl, getAge } from "@/app/helper/format";
 
 // types ----------------------------------------------------------------------------------------------
 interface ProductCardProps {
@@ -36,8 +36,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
         {/* 2. title */}
         <h3 className="card-title tracking-wider">{product.name} </h3>
         {/* 3. category */}
-        <h4 className="font-extrabold tracking-widest text-accent">
-          {product.category}
+        <h4 className="badge badge-accent badge-outline rounded-md p-3 font-bold italic tracking-wider">
+          {formatCategory(product.category)}
         </h4>
         {/* 4. description */}
         <p className="line-clamp-3 max-h-24 overflow-hidden text-sm tracking-wide">

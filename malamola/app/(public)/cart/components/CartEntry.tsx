@@ -1,7 +1,7 @@
 "use client";
 
 import { CartItemWithProduct } from "@/lib/db/cart";
-import { formatImageUrl, formatPrice } from "@/lib/format";
+import { formatImageUrl, formatPrice } from "@/app/helper/format";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Image from "next/image";
 import Link from "next/link";

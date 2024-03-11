@@ -1,4 +1,4 @@
-import { formatPrice } from "@/lib/format";
+import { formatPrice } from "@/app/helper/format";
 import React from "react";
 
 interface PriceTagProps {

@@ -1,7 +1,7 @@
 "use client";
 
 import { ShoppingCart } from "@/lib/db/cart";
-import { formatPrice } from "@/lib/format";
+import { formatPrice } from "@/app/helper/format";
 import { MdClose } from "react-icons/md";
 import Link from "next/link";
 import React from "react";
