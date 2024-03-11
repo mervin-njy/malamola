@@ -5,11 +5,6 @@ import mainLogo from "@/public/assets/fillyFlowerLogo-1.png";
 export default function Home() {
   return (
     <main className="flex flex-col items-center">
-      {/* <div className="flex flex-wrap justify-around w-full mb-16">
-          <Link href="/account/login">Log In</Link>
-          <Link href="/account/signup">Sign Up</Link>
-        </div> */}
-
       <div className="justify-between">
         <Image
           src={mainLogo}

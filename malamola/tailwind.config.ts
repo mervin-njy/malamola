@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        karla: ["Karla"],
+      },
       colors: {
         primary: "#333333", // off-black
         secondary: "#4D6A6D", // tealish

@@ -1,3 +1,5 @@
+// TO BE FIXED: This component is not working as expected. It is not redirecting to the intended route after sign-in.
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -10,7 +12,7 @@ const LoadingAfterSignIn = () => {
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
-//   const searchParams = useSearchParams();
+  //   const searchParams = useSearchParams();
 
   useEffect(() => {
     setLoading(true);
