@@ -14,24 +14,20 @@ enum ProductsCategory {
   Past // Past Projects
 }
 
-// type ProductsPrice {
-//   SGD Int
-//   TWD Int
-// }
-
 model Product {
   id          String           @id @default(auto()) @map("_id") @db.ObjectId
   category    ProductsCategory
   description String
-  imageUrl    String // []
+  // imageUrl    String // [] => to be removed
   name        String
-  price       Int // ProductsPrice
-  stock       Int
-  // optionDIY     String? // category === "mola" => link to DIY product "/product/[id]"
-  // optionColours String[] // for category === "DIY"
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  CartItem    CartItem[]
+  price       Json // Object { SGD: Int, TWD: Int } => to be changed from Int
+  requests    Int // => to be changed from stock
+  options     Json[] // Object { title: String, imageUrl: String } => to be added => to account for 1 option, if product.options.length === 1 { imageUrl: String }
+
+  // relatedProducts Product[] @relation("RelatedProducts", references: [id])
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  CartItem  CartItem[]
 
   @@map("products") // connects model to collection name, so we can change it to Caps + Singular such that it doesn't become misleading
 }
