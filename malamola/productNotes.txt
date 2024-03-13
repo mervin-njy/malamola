@@ -1,35 +1,70 @@
 (ID) > Name > Category > Description > imageUrl > Price > Stock
 
 TODO: 
-- imageUrl  =>  []
+- Options   =>  [{name, imageUrl}]
 - Price     =>  SGD || TWD
-- Category  =>  Mola || Seasonal || DIY || Packages
+- Category  =>  Mola || Seasonal || DIY || Past
 
-Mola 1
+Your blues { Libby }
 Mola
 Sunfish, or mola, develop their truncated, bullet-like shape because the back fin which they are born with simply never grows. Instead, it folds into itself as the enormous creature matures, creating a rounded rudder called a clavus. Mola in Latin means "millstone" and describes the ocean sunfish’s somewhat circular shape. They are a silvery color and have a rough skin texture.
-https://drive.google.com/file/d/1HmqezVZHncIXzH498BRX_EycNLqXm6yZ/view?usp=sharing
-1000
-6
+https://drive.google.com/file/d/1HmqezVZHncIXzH498BRX_EycNLqXm6yZ/view?usp=sharing  |   https://imgur.com/6xcFE0b
+3000
+70000 ------------------------------------------------------------------------------------------------------------
 
-Mola 2
+Your blues { Thumbelina }
 Mola
 Mola are found in temperate and tropical oceans around the world. They are frequently seen basking in the sun near the surface and are often mistaken for sharks when their huge dorsal fins emerge above the water. Their teeth are fused into a beak-like structure, and they are unable to fully close their relatively small mouths.
-https://drive.google.com/file/d/14QoPxMgUiHsI2ULsHTbACUzYvPO7wc-7/view?usp=sharing
-1000
-2
+https://drive.google.com/file/d/14QoPxMgUiHsI2ULsHTbACUzYvPO7wc-7/view?usp=sharing  |   https://imgur.com/JejCeaw
+3000
+70000 ------------------------------------------------------------------------------------------------------------
 
-Mola 3
+Your blues { Bumpa }
 Mola
 They are clumsy swimmers, waggling their large dorsal and anal fins to move and steering with their clavus. Their food of choice is jellyfish, though they will eat small fish and huge amounts of zooplankton and algae as well. They are harmless to people, but can be very curious and will often approach divers.
-https://drive.google.com/uc?export=view&id=1LOV_1_CFOy_HEx0cNwMomuaWdFrUOML8
-1000
-4
+https://drive.google.com/uc?export=view&id=1LOV_1_CFOy_HEx0cNwMomuaWdFrUOML8        |   https://imgur.com/4pbwupF
+3000
+70000 ------------------------------------------------------------------------------------------------------------
 
-Mola trio 1 to 3
-Packages
+Turquoise gem { Bobba }
+Mola
+-
+-
+3000
+70000 ------------------------------------------------------------------------------------------------------------
+
+Turquoise gem { Dino }
+Mola
+-
+-
+3000
+70000 ------------------------------------------------------------------------------------------------------------
+
+Turquoise gem { Daito }
+Mola
+-
+-
+3000
+70000 ------------------------------------------------------------------------------------------------------------
+
+Grain of sand { Moony }
+Mola
+-
+https://imgur.com/OFfhFg1
+3000
+70000 ------------------------------------------------------------------------------------------------------------
+
+Grain of sand { Ray }
+Mola
+-
+https://imgur.com/OFfhFg1
+3000
+70000 ------------------------------------------------------------------------------------------------------------
+
+DIY - your blues
+DIY
 Get Rachel's favourite trio of molas!! The mola are the heaviest of all the bony fish, with large specimens reaching 14 feet vertically and 10 feet horizontally and weighing nearly 5,000 pounds. Sharks and rays can be heavier, but they're cartilaginous fish.
-https://drive.google.com/file/d/1pJjqrNEbw_Z84B_RWMgE0qcDCb2uplmw/view?usp=sharing
+https://drive.google.com/file/d/1pJjqrNEbw_Z84B_RWMgE0qcDCb2uplmw/view?usp=sharing  |   https://imgur.com/obco3q4
 2500
 2
 

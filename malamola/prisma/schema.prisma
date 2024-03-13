@@ -17,42 +17,59 @@ enum ProductsCategory {
 model Product {
   id          String           @id @default(auto()) @map("_id") @db.ObjectId
   category    ProductsCategory
-  description String
   name        String
-  requests    Int // => to be changed from stock
+  description String
 
   // to remove: imageUrl, price, stock
-  // to add: requests, Price [], Options [ { name, imageUrl } ], (not yet) relatedProducts
-  // relatedProducts Product[] @relation("RelatedProducts", references: [id])
+  // to add: requests, Options [ { type?, name?, imageUrl, price_SGD, price_TWD, actions, favourited, requested, pre_ordered } ], (not yet) relatedProducts
 
   // timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // related models
-  Price    ProductPrice[]
   Options  ProductOptions[]
   CartItem CartItem[]
 
   @@map("products") // connects model to collection name, so we can change it to Caps + Singular such that it doesn't become misleading
 }
 
-model ProductPrice {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  productId String  @db.ObjectId // attach price to specific product
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  SGD       Int
-  TWD       Int
-
-  @@map("productprices")
+enum OptionChoices {
+  Wish // Wish list => adds count to favourited + display favourite list for each user
+  Enquire // Enquire => adds count to requested
+  Order // Pre-order => adds count to pre_ordered
 }
 
 model ProductOptions {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
   productId String  @db.ObjectId
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  name      String
+
+  // options for product display
+  type      String?
+  name      String?
   imageUrl  String
+  price_SGD Int
+  price_TWD Int
+  // relatedProducts Product[] @relation("RelatedProducts", references: [id])
+  // Estimated Delivery Date
+
+  // actions
+  action OptionChoices
+
+  // track product-option-quantity: for ADMIN purposes
+  favourited  Int // notify admin >= 10
+  requested   Int // enquire to admin
+  pre_ordered Int // limit to 5
+
+  // timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // for user model to track product option as favourite
+  // Users      User[]   @relation(fields: [userIDs], references: [id])
+  // userIDs    String[] @db.ObjectId
+  // favourites User[]   @relation("UserFavourites", fields: [userIDs], references: [id], onDelete: Cascade)
 
   @@map("productoptions")
 }
@@ -68,13 +85,25 @@ model Cart {
   @@map("carts")
 }
 
+enum ProductStatus {
+  Ordered
+  Preparing
+  Ready
+  Delivering
+  Completed
+}
+
 model CartItem {
   id        String  @id @default(auto()) @map("_id") @db.ObjectId
   productId String  @db.ObjectId
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   quantity  Int
-  cartId    String  @db.ObjectId
-  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+
+  // track status of ordered product from user (ordered) to admin (preparing, ready, delivering) to user (completed)
+  status ProductStatus
+
+  cartId String @db.ObjectId
+  cart   Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
 
   @@map("cartitems")
 }
@@ -117,9 +146,15 @@ model User {
   emailVerified DateTime?
   image         String?
   role          String? // new column => admin || user => route handler auth options => profile() callback's return value is used to create users in the database.
-  accounts      Account[]
-  sessions      Session[]
-  Cart          Cart[]
+
+  // for tracking favourite product options for each user account
+  // favouriteIDs String[] @db.ObjectId
+  // favourites   ProductOptions[] @relation("UserFavourites", fields: [favouriteIDs], references: [id] onDelete: Cascade)
+
+  // related models
+  accounts Account[]
+  sessions Session[]
+  Cart     Cart[]
 
   @@map("users")
 }
