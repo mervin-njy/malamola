@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import OptionField from "./OptionField";
 import { addProduct } from "@/app/components/actions/addProduct";
 
-const AddProductPage = async () => {
+const AddProductPage = () => {
   // hooks ----------------------------------------------------------------------------------------------------
   const [options, setOptions] = useState(1); // for productOptions form fields => child of AddProductPage
   const [optionFields, setOptionFields] = useState([]); // to contain optionFields data to create new productOptions
@@ -39,6 +39,7 @@ const AddProductPage = async () => {
               <input
                 required
                 name="name"
+                type="text"
                 placeholder="Name"
                 className="input input-bordered mb-3 w-full"
               />
@@ -54,9 +55,9 @@ const AddProductPage = async () => {
                       className="my-2 flex flex-row tablet:mx-4 tablet:my-0"
                     >
                       <input
+                        name="category"
                         type="radio"
                         value={cat}
-                        name="category"
                         defaultChecked={ind === 0}
                         className="radio-accent radio mr-2"
                       />

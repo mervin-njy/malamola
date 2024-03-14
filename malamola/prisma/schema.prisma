@@ -66,20 +66,20 @@ model ProductOptions {
   // ----------------------------------------------------------------
 
   // options for product display
-  type      String?
-  name      String?
-  imageUrl  String
-  price_SGD Int
-  price_TWD Int
+  type     String?
+  name     String?
+  imageUrl String
+  priceSGD Int
+  priceTWD Int
   // Estimated Delivery Date
 
   // actions allowed for users to take on productOptions
   action OptionChoices
 
   // track product-option-quantity: for ADMIN purposes - by default: 0
-  favourited  Int // notify admin >= 10
-  requested   Int // enquire to admin
-  pre_ordered Int // limit to 5
+  wishedFor  Int // notify admin >= 10
+  requested  Int // enquire to admin
+  preOrdered Int // limit to 5
 
   // timestamps
   createdAt DateTime @default(now())
@@ -108,6 +108,7 @@ model Cart {
 }
 
 enum ProductStatus {
+  InCart
   Ordered
   Preparing
   Ready
@@ -130,7 +131,7 @@ model CartItem {
 
   // cart item details
   quantity Int
-  // track status of ordered product from user (ordered) to admin (preparing, ready, delivering) to user (completed)
+  // from inCart to track status of ordered product from user (ordered) to admin (preparing, ready, delivering) to user (completed)
   status   ProductStatus
 
   @@map("cartitems")

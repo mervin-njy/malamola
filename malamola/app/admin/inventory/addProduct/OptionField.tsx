@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // type interface for OptionField props
 interface OptionFieldProps {
@@ -14,12 +14,33 @@ const OptionField: React.FC<OptionFieldProps> = ({
   setOptions,
   setOptionFields,
 }) => {
+  // hooks ---------------------------------------------------------------------------------------------------
+  const [fields, setFields] = useState({
+    type: "",
+    name: "",
+    imageUrl: "",
+    priceSGD: 0,
+    priceTWD: 0,
+    action: "Wish",
+  });
+
   // event handlers ------------------------------------------------------------------------------------------
   const handleRemoveOption = () => {
     setOptions((prev) => prev - 1);
   };
   const handleAddOption = () => {
     setOptions((prev) => prev + 1);
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // event.preventDefault();
+    setFields((prevFields) => {
+      console.log("Option ", optionIndex + 1, ": handleChange", fields);
+      return {
+        ...prevFields,
+        [event.target.id]: event.target.value,
+      };
+    });
   };
 
   // render component ----------------------------------------------------------------------------------------
@@ -29,42 +50,47 @@ const OptionField: React.FC<OptionFieldProps> = ({
       <h4 className="mb-3 text-lg font-medium">Option {optionIndex + 1}:</h4>
       {/* Input: type (optional - for option labeling, e.g. colour, backing) */}
       <input
-        name="type"
+        id="type"
         placeholder="Type of product (e.g. colour, backing) if applicable"
         type="text"
         className="input input-bordered mb-3 w-full"
+        onChange={handleChange}
       />
       {/* Input: name (optional - for only option of product) */}
       <input
         required={optionIndex > 0 ? true : false}
-        name="name"
-        placeholder="Name of option"
+        id="name"
         type="text"
+        placeholder="Name of option"
         className="input input-bordered mb-3 w-full"
+        onChange={handleChange}
       />
       {/* Input: Image Url */}
       <input
         required
-        name="imageUrl"
-        placeholder="Image URL"
+        id="imageUrl"
         type="url"
+        placeholder="Image URL"
         className="input input-bordered mb-3 w-full"
+        onChange={handleChange}
       />
       {/* Input: Price (SGD) */}
       <input
         required
-        name="price_SGD"
-        placeholder="Price (in SGD)"
+        id="priceSGD"
         type="number"
+        placeholder="Price (in SGD)"
         className="input input-bordered mb-3 w-full"
+        onChange={handleChange}
       />
       {/* Input: Price (TWD) */}
       <input
         required
-        name="price_TWD"
-        placeholder="Price (in TWD)"
+        id="priceTWD"
         type="number"
+        placeholder="Price (in TWD)"
         className="input input-bordered mb-3 w-full"
+        onChange={handleChange}
       />
       {/* Input: Action choices */}
       <div className="mb-3 flex flex-col justify-start p-2 tablet:flex-row">
@@ -72,17 +98,18 @@ const OptionField: React.FC<OptionFieldProps> = ({
           Customer Action:
         </h3>
         {["Wish", "Enquire", "Order"].map((action, ind) => {
-          // FIX NEEDED: each div = 1 input from radio button, shouldn't be affected by other OptionField components
           return (
             <div
               key={ind}
               className="my-2 flex flex-row tablet:mx-4 tablet:my-0"
             >
               <input
+                id="action"
+                name={`action-${optionIndex}`} // set unique to each optionField
                 type="radio"
                 value={action}
-                name="action"
                 defaultChecked={ind === 0}
+                onChange={handleChange}
                 className="radio-accent radio mr-2"
               />
               <h4 className="font-medium italic tracking-wide">{action}</h4>
@@ -111,16 +138,6 @@ const OptionField: React.FC<OptionFieldProps> = ({
           </button>
         )}
       </div>
-      {/* <div className="mt-4 grid grid-cols-4 gap-3">
-        <div className="btn btn-primary" />
-        <div className="btn btn-secondary" />
-        <div className="btn btn-accent" />
-        <div className="btn btn-neutral" />
-        <div className="btn btn-success" />
-        <div className="btn btn-info" />
-        <div className="btn btn-warning" />
-        <div className="btn btn-error" />
-      </div> */}
     </div>
   );
 };
