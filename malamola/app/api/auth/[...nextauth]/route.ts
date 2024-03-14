@@ -43,7 +43,7 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user }) {
       // triggers on event - signIn => mergeCarts() w/ user that just signed in
       // Offload heavy tasks to background processes or queues
-      await processHeavyTasks(user.id);
+      // await processHeavyTasks(user.id);
       console.log(user, "has succesfully signed in.");
     },
   },

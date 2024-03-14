@@ -1,72 +1,40 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+"use client";
+
 import BtnSubmitForm from "@/app/components/buttons/BtnSubmitForm";
-import { prisma } from "@/lib/db/prisma";
-import { ProductsCategory } from "@prisma/client";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-import React from "react";
-
-// metadata --------------------------------------------------------------------------------------------------
-export const metadata = {
-  title: "®Admin - Add Product",
-};
-
-// server actions ------------------------------------------------------------------------------------
-// create server action on this file without client-side fetching => protects db credentials
-// => currently in alpha so => next.config.js => const nextConfig = { experimental: { serverActions: true, }, };
-async function addProduct(formData: FormData) {
-  "use server";
-
-  const session = getServerSession(authOptions);
-  // restrict access to only those who are logged in => TO CHANGE TO ADMIN
-  if (!session)
-    redirect("/api/auth/signin?callbackUrl=/admin/inventory/addProduct"); // route to request sign-in (if add product button is clicked while not logged in)
-
-  const name = formData.get("name")?.toString(); // ? => string or undefined
-  const category: ProductsCategory = formData.get(
-    "category",
-  ) as ProductsCategory;
-  const description = formData.get("description")?.toString();
-  const imageUrl = formData.get("imageUrl")?.toString();
-  const price = Number(formData.get("price") || 0);
-  const stock = Number(formData.get("stock") || 0);
-  // TODO: add optionDIY for category === "mola" String?
-  const optionDIY = "";
-  // TODO: add optionColours for category === "DIY" String[]
-  const optionColours = [];
-
-  // validate field entries
-  if (!name || !category || !description || !imageUrl || !price || !stock) {
-    throw Error("Missing required fields!");
-  }
-
-  // CREATE new product
-  await prisma.product.create({
-    data: { name, category, description, imageUrl, price, stock },
-  });
-
-  redirect("/");
-}
+import React, { useState } from "react";
+import OptionField from "./OptionField";
+import { addProduct } from "@/app/components/actions/addProduct";
 
 const AddProductPage = async () => {
-  // variables -----------------------------------------------------------------------------------------------
-  const session = await getServerSession(authOptions);
+  // hooks ----------------------------------------------------------------------------------------------------
+  const [options, setOptions] = useState(1); // for productOptions form fields => child of AddProductPage
+  const [optionFields, setOptionFields] = useState([]); // to contain optionFields data to create new productOptions
 
-  // restrict access to only those who are logged in => TO CHANGE TO ADMIN
-  if (session?.user.role !== "admin")
-    redirect("/api/auth/signin?callbackUrl=/admin/inventory/addProduct"); // route to request sign-in
+  // event handlers -------------------------------------------------------------------------------------------
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
 
-  // render component ----------------------------------------------------------------------------------------
+    // validate form data before sending to server
+
+    // server actions -----------------------------------------------------------------------------------------
+    // imported server action to this file without client-side data fetching => protects db credentials
+    // => currently in alpha so => next.config.js => const nextConfig = { experimental: { serverActions: true, }, };
+    // from @app/components/actions/addProduct.ts
+    await addProduct(formData);
+  };
+
+  // render component -----------------------------------------------------------------------------------------
   return (
     <>
       <div className="tracking-wide">
         <h1 className="mb-10 text-3xl font-bold">Add new Product</h1>
 
         <div className="card card-bordered bg-neutral bg-opacity-5 p-4 hover:shadow-md">
-          <h1 className="card-title">Product Name</h1>
+          <h1 className="card-title px-3 py-2 text-2xl">Product Information</h1>
           {/* change to "ID" mapped from db's product list */}
-          <div className="card-body">
-            <form action={addProduct}>
+          <div className="card-body p-2">
+            <form onSubmit={handleFormSubmit}>
               {/* Input: name */}
               <input
                 required
@@ -75,11 +43,11 @@ const AddProductPage = async () => {
                 className="input input-bordered mb-3 w-full"
               />
               {/* Input: Category choices */}
-              <div className="mb-3 flex flex-col justify-start px-4 py-2 tablet:flex-row">
+              <div className="mb-3 flex flex-col justify-start p-2 tablet:flex-row">
                 <h3 className="mr-4 text-base font-semibold tracking-wide">
                   Category:
                 </h3>
-                {["Mola", "Seasonal", "DIY", "Packages"].map((cat, ind) => {
+                {["Mola", "Seasonal", "DIY", "Past"].map((cat, ind) => {
                   return (
                     <div
                       key={ind}
@@ -89,6 +57,7 @@ const AddProductPage = async () => {
                         type="radio"
                         value={cat}
                         name="category"
+                        defaultChecked={ind === 0}
                         className="radio-accent radio mr-2"
                       />
                       <h4 className="font-medium italic tracking-wide">
@@ -105,30 +74,24 @@ const AddProductPage = async () => {
                 placeholder="Description"
                 className="textarea textarea-bordered mb-3 w-full"
               />
-              {/* Input: Image Url */}
-              <input
-                required
-                name="imageUrl"
-                placeholder="Image URL"
-                type="url"
-                className="input input-bordered mb-3 w-full"
-              />
-              {/* Input: Price */}
-              <input
-                required
-                name="price"
-                placeholder="Price (in SGD cents)"
-                type="number"
-                className="input input-bordered mb-3 w-full"
-              />
-              {/* Input: Stock */}
-              <input
-                required
-                name="stock"
-                placeholder="Stock"
-                type="number"
-                className="input input-bordered mb-3 w-full"
-              />
+
+              {/* Render (multiple) option fields */}
+              <h3 className="mb-4 text-xl font-medium">
+                Input Product Options:
+              </h3>
+              <div className="mb-6 grid grid-cols-2 gap-5">
+                {[...Array(options)].map((_, ind) => (
+                  <div key={ind}>
+                    <OptionField
+                      options={options}
+                      optionIndex={ind}
+                      setOptions={setOptions}
+                      setOptionFields={setOptionFields}
+                    />
+                  </div>
+                ))}
+              </div>
+
               <BtnSubmitForm className="btn-accent btn-block">
                 Add Product
               </BtnSubmitForm>

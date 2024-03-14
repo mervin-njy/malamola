@@ -14,7 +14,7 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 const NavBar = async () => {
   // variables -----------------------------------------------------------------------------------------------
   // fetch on server component
-  const cart = await getCart();
+  // const cart = await getCart();
   const session = await getServerSession(authOptions);
 
   // render component ----------------------------------------------------------------------------------------
@@ -42,7 +42,7 @@ const NavBar = async () => {
           {/* 1. formData => redirect to /search query page */}
           <InputSearchQuery />
           {/* 2. cart Btn + dropdown => client component to dynamically display cart size */}
-          <BtnShoppingCart cart={cart} />
+          {/* <BtnShoppingCart cart={cart} /> */}
           {/* 3. user profile + dropdown => client component to dynamically show user session options */}
           <BtnUserOptions session={session} />
         </div>

@@ -1,3 +1,4 @@
+// ----------------------------- Setup Prisma & MongoDB --------------------------------
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,6 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// --------------------------------- SCHEMA MODELS -------------------------------------
 enum ProductsCategory {
   Mola // Mola Gang
   Seasonal // Seasonal Specials
@@ -15,21 +17,22 @@ enum ProductsCategory {
 }
 
 model Product {
-  id          String           @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  // RELATED MODELS -------------------------------------------------
+  // (One)-Many | (Product)-ProductOptions: for linking product to multiple productOptions
+  Options ProductOptions[]
+  // ----------------------------------------------------------------
+
+  // product details
   category    ProductsCategory
   name        String
   description String
-
-  // to remove: imageUrl, price, stock
-  // to add: requests, Options [ { type?, name?, imageUrl, price_SGD, price_TWD, actions, favourited, requested, pre_ordered } ], (not yet) relatedProducts
+  // tags String[] // for filtering productOptions
 
   // timestamps
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  // related models
-  Options  ProductOptions[]
-  CartItem CartItem[]
 
   @@map("products") // connects model to collection name, so we can change it to Caps + Singular such that it doesn't become misleading
 }
@@ -41,9 +44,26 @@ enum OptionChoices {
 }
 
 model ProductOptions {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  // RELATED MODELS -------------------------------------------------
+  // One-(Many) | Product-(ProductOptions): for linking multiple productOptions to product
   productId String  @db.ObjectId
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade) // delete productOption if product is deleted
+
+  // (Many)-(Many) | self-relations: for linking multiple productOptions to multiple related productsOptions
+  relatedId       String[]         @db.ObjectId
+  relatedOptions  ProductOptions[] @relation("RelatedProducts", fields: [relatedId], references: [id])
+  originalIDs     String[]         @db.ObjectId
+  originalOptions ProductOptions[] @relation("RelatedProducts", fields: [relatedId], references: [id])
+
+  // (Many)-Many | (ProductOptions)-User: for multiple productOptions favourited by multiple users
+  userIDs    String[] @db.ObjectId
+  favourites User[]   @relation(fields: [userIDs], references: [id])
+
+  // (One)-Many | ProductOptions-(CartItem): for linking productItem to multiple cartItems
+  CartItem CartItem[]
+  // ----------------------------------------------------------------
 
   // options for product display
   type      String?
@@ -51,13 +71,12 @@ model ProductOptions {
   imageUrl  String
   price_SGD Int
   price_TWD Int
-  // relatedProducts Product[] @relation("RelatedProducts", references: [id])
   // Estimated Delivery Date
 
-  // actions
+  // actions allowed for users to take on productOptions
   action OptionChoices
 
-  // track product-option-quantity: for ADMIN purposes
+  // track product-option-quantity: for ADMIN purposes - by default: 0
   favourited  Int // notify admin >= 10
   requested   Int // enquire to admin
   pre_ordered Int // limit to 5
@@ -66,21 +85,24 @@ model ProductOptions {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // for user model to track product option as favourite
-  // Users      User[]   @relation(fields: [userIDs], references: [id])
-  // userIDs    String[] @db.ObjectId
-  // favourites User[]   @relation("UserFavourites", fields: [userIDs], references: [id], onDelete: Cascade)
-
   @@map("productoptions")
 }
 
 model Cart {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  items     CartItem[]
-  userId    String?    @db.ObjectId // attach cart to user so it's not anonymous 
-  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  // RELATED MODELS -------------------------------------------------
+  // (One)-Many | (Cart)-CartItem: for linking cart to multiple cartItems
+  items CartItem[]
+
+  // One-(Many) | User-(Cart): for linking multiple carts to user
+  userId String? @db.ObjectId // attach cart to user so it's not anonymous 
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade) // delete cart if user is deleted
+  // ----------------------------------------------------------------
+
+  // timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("carts")
 }
@@ -94,24 +116,33 @@ enum ProductStatus {
 }
 
 model CartItem {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  productId String  @db.ObjectId
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  quantity  Int
+  id String @id @default(auto()) @map("_id") @db.ObjectId
 
+  // RELATED MODELS -------------------------------------------------
+  // One-(Many) | ProductOptions-(CartItem): for linking multiple cartItems to productOption
+  productOptionID String         @db.ObjectId
+  productOption   ProductOptions @relation(fields: [productOptionID], references: [id], onDelete: Cascade) // delete cartItem if productOption is deleted
+
+  // One-(Many) | Cart-(CartItem): for linking multiple cartItems to cart
+  cartID String @db.ObjectId
+  cart   Cart   @relation(fields: [cartID], references: [id], onDelete: Cascade) // delete cartItem if cart is deleted
+  // ----------------------------------------------------------------
+
+  // cart item details
+  quantity Int
   // track status of ordered product from user (ordered) to admin (preparing, ready, delivering) to user (completed)
-  status ProductStatus
-
-  cartId String @db.ObjectId
-  cart   Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  status   ProductStatus
 
   @@map("cartitems")
 }
 
 // *** REQUIRED by next-auth ---------------------------------------------------------------------------------
 model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   type              String
   provider          String
   providerAccountId String
@@ -123,38 +154,41 @@ model Account {
   id_token          String? @db.String
   session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   @@unique([provider, providerAccountId])
   @@map("accounts")
 }
 
 model Session {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  sessionToken String   @unique
-  userId       String   @db.ObjectId
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String @unique
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  expires DateTime
 
   @@map("sessions")
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  // RELATED MODELS -------------------------------------------------
+  // Many-(Many) | POptions-(User): for tracking favourite product options of each user account
+  favouriteIDs String[]         @db.ObjectId
+  favourites   ProductOptions[] @relation(fields: [favouriteIDs], references: [id])
+
+  // (One)-Many | (User)-Accounts; (User)-Sessions; (User)-Cart
+  accounts Account[] // To change to one-one
+  sessions Session[] // To change to one-one
+  Cart     Cart[]
+  // ----------------------------------------------------------------
+
   name          String?
   email         String?   @unique
   emailVerified DateTime?
   image         String?
   role          String? // new column => admin || user => route handler auth options => profile() callback's return value is used to create users in the database.
-
-  // for tracking favourite product options for each user account
-  // favouriteIDs String[] @db.ObjectId
-  // favourites   ProductOptions[] @relation("UserFavourites", fields: [favouriteIDs], references: [id] onDelete: Cascade)
-
-  // related models
-  accounts Account[]
-  sessions Session[]
-  Cart     Cart[]
 
   @@map("users")
 }
