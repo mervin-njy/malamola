@@ -1,45 +1,70 @@
-import React, { useState } from "react";
+import React from "react";
+
+interface Fields {
+  type: string;
+  name: string;
+  imageUrl: string;
+  priceSGD: number;
+  priceTWD: number;
+  action: string;
+  wishedFor: number;
+  requested: number;
+  preOrdered: number;
+}
 
 // type interface for OptionField props
 interface OptionFieldProps {
   options: number;
   optionIndex: number;
-  setOptions: React.Dispatch<React.SetStateAction<number>>;
-  setOptionFields: React.Dispatch<React.SetStateAction<never[]>>;
+  fields: Fields;
+  setOptionFields: React.Dispatch<React.SetStateAction<Fields[]>>;
 }
 
 const OptionField: React.FC<OptionFieldProps> = ({
   options,
   optionIndex,
-  setOptions,
+  fields,
   setOptionFields,
 }) => {
-  // hooks ---------------------------------------------------------------------------------------------------
-  const [fields, setFields] = useState({
-    type: "",
-    name: "",
-    imageUrl: "",
-    priceSGD: 0,
-    priceTWD: 0,
-    action: "Wish",
-  });
-
   // event handlers ------------------------------------------------------------------------------------------
+  // removes a specific optionField from optionFields state
   const handleRemoveOption = () => {
-    setOptions((prev) => prev - 1);
-  };
-  const handleAddOption = () => {
-    setOptions((prev) => prev + 1);
+    console.log("removing option field ", optionIndex + 1);
+
+    setOptionFields((prevFields) => {
+      return prevFields.filter((_, ind) => ind !== optionIndex);
+    });
   };
 
+  // add a new optionField to optionFields state
+  const handleAddOption = () => {
+    setOptionFields((prevOptionFields) => [
+      ...prevOptionFields,
+      {
+        type: "",
+        name: "",
+        imageUrl: "",
+        priceSGD: 0,
+        priceTWD: 0,
+        action: "Wish",
+        wishedFor: 0,
+        requested: 0,
+        preOrdered: 0,
+      },
+    ]);
+  };
+
+  // change state of individual fields on input change
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // event.preventDefault();
-    setFields((prevFields) => {
-      console.log("Option ", optionIndex + 1, ": handleChange", fields);
-      return {
-        ...prevFields,
+    console.log("changing option field ", optionIndex + 1);
+
+    setOptionFields((prevOptionFields) => {
+      const updatedFields = [...prevOptionFields];
+      updatedFields[optionIndex] = {
+        ...updatedFields[optionIndex],
         [event.target.id]: event.target.value,
       };
+      return updatedFields;
     });
   };
 
@@ -51,6 +76,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
       {/* Input: type (optional - for option labeling, e.g. colour, backing) */}
       <input
         id="type"
+        value={fields.type}
         placeholder="Type of product (e.g. colour, backing) if applicable"
         type="text"
         className="input input-bordered mb-3 w-full"
@@ -60,6 +86,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
       <input
         required={optionIndex > 0 ? true : false}
         id="name"
+        value={fields.name}
         type="text"
         placeholder="Name of option"
         className="input input-bordered mb-3 w-full"
@@ -69,6 +96,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
       <input
         required
         id="imageUrl"
+        value={fields.imageUrl}
         type="url"
         placeholder="Image URL"
         className="input input-bordered mb-3 w-full"
@@ -78,6 +106,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
       <input
         required
         id="priceSGD"
+        value={fields.priceSGD}
         type="number"
         placeholder="Price (in SGD)"
         className="input input-bordered mb-3 w-full"
@@ -87,6 +116,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
       <input
         required
         id="priceTWD"
+        value={fields.priceTWD}
         type="number"
         placeholder="Price (in TWD)"
         className="input input-bordered mb-3 w-full"
@@ -108,7 +138,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
                 name={`action-${optionIndex}`} // set unique to each optionField
                 type="radio"
                 value={action}
-                defaultChecked={ind === 0}
+                checked={fields.action === action}
                 onChange={handleChange}
                 className="radio-accent radio mr-2"
               />

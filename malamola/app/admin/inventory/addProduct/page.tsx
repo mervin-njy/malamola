@@ -7,8 +7,20 @@ import { addProduct } from "@/app/components/actions/addProduct";
 
 const AddProductPage = () => {
   // hooks ----------------------------------------------------------------------------------------------------
-  const [options, setOptions] = useState(1); // for productOptions form fields => child of AddProductPage
-  const [optionFields, setOptionFields] = useState([]); // to contain optionFields data to create new productOptions
+  const [optionFields, setOptionFields] = useState([
+    {
+      type: "",
+      name: "",
+      imageUrl: "",
+      priceSGD: 0,
+      priceTWD: 0,
+      action: "Wish",
+      // for admin to track productOption-quantities
+      wishedFor: 0,
+      requested: 0,
+      preOrdered: 0,
+    },
+  ]); // to contain optionFields data to create new productOptions
 
   // event handlers -------------------------------------------------------------------------------------------
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -81,12 +93,12 @@ const AddProductPage = () => {
                 Input Product Options:
               </h3>
               <div className="mb-6 grid grid-cols-2 gap-5">
-                {[...Array(options)].map((_, ind) => (
+                {optionFields.map((fields, ind) => (
                   <div key={ind}>
                     <OptionField
-                      options={options}
+                      options={optionFields.length}
                       optionIndex={ind}
-                      setOptions={setOptions}
+                      fields={fields}
                       setOptionFields={setOptionFields}
                     />
                   </div>
