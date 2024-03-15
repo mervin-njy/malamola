@@ -1,4 +1,6 @@
 import React from "react";
+import InputField from "@/app/components/inputs/InputField";
+import { IoMdAdd, IoMdRemove } from "react-icons/io";
 
 interface Fields {
   type: string;
@@ -70,60 +72,86 @@ const OptionField: React.FC<OptionFieldProps> = ({
 
   // render component ----------------------------------------------------------------------------------------
   return (
-    <div className="rounded-xl border-[1px] border-accent p-4">
-      {/* Option Heading */}
-      <h4 className="mb-3 text-lg font-medium">Option {optionIndex + 1}:</h4>
+    <div className="rounded-xl border-[1px] border-accent p-5">
+      {/* Option Header */}
+      <div className="mb-4 flex justify-between">
+        <h4 className="ml-1 text-lg font-medium">Option {optionIndex + 1}:</h4>
+
+        {/* Buttons to update option quantity */}
+        <div className="flex justify-end gap-2">
+          {optionIndex + 1 === options && (
+            // if last option, render add button
+            <button
+              className="btn btn-circle btn-success btn-xs rounded-[30%]"
+              onClick={handleAddOption}
+            >
+              <IoMdAdd size={14} />
+            </button>
+          )}
+          {options > 1 && (
+            // if > 1 option, render remove button
+            <button
+              className="btn btn-circle btn-error btn-xs rounded-[30%]"
+              onClick={handleRemoveOption}
+            >
+              <IoMdRemove size={14} />
+            </button>
+          )}
+        </div>
+      </div>
+
       {/* Input: type (optional - for option labeling, e.g. colour, backing) */}
-      <input
+      <InputField
+        title="Type"
+        reqBool={false}
         id="type"
         value={fields.type}
-        placeholder="Type of product (e.g. colour, backing) if applicable"
+        placeholder="Option type if applicable, e.g. colour, backing"
         type="text"
-        className="input input-bordered mb-3 w-full"
-        onChange={handleChange}
+        changeHandler={handleChange}
       />
       {/* Input: name (optional - for only option of product) */}
-      <input
-        required={optionIndex > 0 ? true : false}
+      <InputField
+        title="Name"
+        reqBool={options > 1 ? true : false}
         id="name"
         value={fields.name}
+        placeholder="What would you like to call this option?"
         type="text"
-        placeholder="Name of option"
-        className="input input-bordered mb-3 w-full"
-        onChange={handleChange}
+        changeHandler={handleChange}
       />
       {/* Input: Image Url */}
-      <input
-        required
+      <InputField
+        title="Image URL"
         id="imageUrl"
         value={fields.imageUrl}
-        type="url"
         placeholder="Image URL"
-        className="input input-bordered mb-3 w-full"
-        onChange={handleChange}
+        type="url"
+        changeHandler={handleChange}
       />
+
+      {/* Price options */}
+      <div className="flex"></div>
       {/* Input: Price (SGD) */}
-      <input
-        required
+      <InputField
+        title="Price (SGD)"
         id="priceSGD"
         value={fields.priceSGD}
+        placeholder="How much in SGD?"
         type="number"
-        placeholder="Price (in SGD)"
-        className="input input-bordered mb-3 w-full"
-        onChange={handleChange}
+        changeHandler={handleChange}
       />
       {/* Input: Price (TWD) */}
-      <input
-        required
+      <InputField
+        title="Price (TWD)"
         id="priceTWD"
         value={fields.priceTWD}
+        placeholder="How much in TWD?"
         type="number"
-        placeholder="Price (in TWD)"
-        className="input input-bordered mb-3 w-full"
-        onChange={handleChange}
+        changeHandler={handleChange}
       />
       {/* Input: Action choices */}
-      <div className="mb-3 flex flex-col justify-start p-2 tablet:flex-row">
+      <div className="flex flex-col justify-start p-2 laptop:flex-row">
         <h3 className="mr-4 text-base font-semibold tracking-wide">
           Customer Action:
         </h3>
@@ -131,7 +159,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
           return (
             <div
               key={ind}
-              className="my-2 flex flex-row tablet:mx-4 tablet:my-0"
+              className="laptop:text-md my-1 flex flex-row items-center text-sm laptop:mx-4 laptop:my-0"
             >
               <input
                 id="action"
@@ -140,33 +168,12 @@ const OptionField: React.FC<OptionFieldProps> = ({
                 value={action}
                 checked={fields.action === action}
                 onChange={handleChange}
-                className="radio-accent radio mr-2"
+                className="radio-accent radio radio-xs mr-2 laptop:radio-sm"
               />
               <h4 className="font-medium italic tracking-wide">{action}</h4>
             </div>
           );
         })}
-      </div>
-
-      <div className="flex justify-end gap-4">
-        {optionIndex + 1 === options && (
-          // if last option, render add button
-          <button
-            className="btn btn-success btn-sm w-20"
-            onClick={handleAddOption}
-          >
-            Add
-          </button>
-        )}
-        {options > 1 && (
-          // if > 1 option, render remove button
-          <button
-            className="btn btn-error btn-sm w-20"
-            onClick={handleRemoveOption}
-          >
-            Remove
-          </button>
-        )}
       </div>
     </div>
   );
