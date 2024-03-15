@@ -3,6 +3,8 @@
 import BtnSubmitForm from "@/app/components/buttons/BtnSubmitForm";
 import React, { useState } from "react";
 import InputField from "@/app/components/inputs/InputField";
+import InputRadio from "@/app/components/inputs/InputRadio";
+import InputTextArea from "@/app/components/inputs/InputTextArea";
 import OptionField from "./OptionField";
 import { addProduct } from "@/app/components/actions/addProduct"; // server action
 
@@ -32,9 +34,12 @@ const AddProductPage = () => {
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
+    console.log(event.target.id, event.target.value); // debug
+    console.log(productFields);
     const { id, value } = event.target;
     setProductFields((prevFields) => ({ ...prevFields, [id]: value }));
   };
+
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -69,52 +74,29 @@ const AddProductPage = () => {
                 type="text"
                 changeHandler={handleChange}
               />
-
               {/* Input: Category choices */}
-              <div className="mb-3 flex flex-col justify-start p-2 tablet:flex-row">
-                <h3 className="mr-4 text-base font-semibold tracking-wide">
-                  Category:
-                </h3>
-                {["Mola", "Seasonal", "DIY", "Past"].map((cat, ind) => {
-                  return (
-                    <div
-                      key={ind}
-                      className="my-2 flex flex-row items-center tablet:mx-4 tablet:my-0"
-                    >
-                      <input
-                        id="category"
-                        name="category"
-                        type="radio"
-                        value={cat}
-                        checked={productFields.category === cat}
-                        onChange={handleChange}
-                        className="radio-accent radio radio-xs mr-2 laptop:radio-sm"
-                      />
-                      <h4 className="font-medium italic tracking-wide">
-                        {cat}
-                      </h4>
-                    </div>
-                  );
-                })}
-              </div>
+              <InputRadio
+                size="lg"
+                title="Category"
+                selections={["Mola", "Seasonal", "DIY", "Past"]}
+                id="category"
+                name="category"
+                value={productFields.category} // checked: value === selection
+                changeHandler={handleChange}
+              />
               {/* Input: Description */}
-              <label className="textarea textarea-bordered textarea-md mb-3 flex items-center gap-4">
-                <h5 className="w-28 self-start font-semibold italic">
-                  Description
-                </h5>
-                <textarea
-                  required
-                  id="description"
-                  value={productFields.description}
-                  placeholder="Describe the product in the most attractive way possible!"
-                  className="textarea textarea-ghost grow pt-0"
-                  onChange={handleChange}
-                ></textarea>
-              </label>
-
+              <InputTextArea
+                title="Description"
+                id="description"
+                value={productFields.description}
+                placeholder="Describe the product in the most attractive way possible!"
+                changeHandler={handleChange}
+              />
+              {/* ---------- divider - options below ---------- */}
+              <div className="divider"></div>{" "}
               {/* Render (multiple) option fields */}
-              <h3 className="mb-4 text-xl font-medium">
-                Input Product Options:
+              <h3 className="mb-4 ml-1 text-xl font-medium">
+                Describe Product Options:
               </h3>
               <div className="mb-6 grid grid-cols-1 gap-5 tablet:grid-cols-2">
                 {optionFields.map((fields, ind) => (
@@ -128,7 +110,6 @@ const AddProductPage = () => {
                   </div>
                 ))}
               </div>
-
               <BtnSubmitForm className="btn-accent btn-block">
                 Add Product
               </BtnSubmitForm>

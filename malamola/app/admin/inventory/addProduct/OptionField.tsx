@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import Image from "next/image";
 import InputField from "@/app/components/inputs/InputField";
+import InputRadio from "@/app/components/inputs/InputRadio";
 import { IoMdAdd, IoMdRemove } from "react-icons/io";
+import { formatImageUrl } from "@/app/helper/format";
 
 interface Fields {
   type: string;
@@ -28,11 +31,14 @@ const OptionField: React.FC<OptionFieldProps> = ({
   fields,
   setOptionFields,
 }) => {
+  // hooks --------------------------------------------------------------------------------------------------
+  const [loadImage, setLoadImage] = useState(false); // to load image preview
+
   // event handlers ------------------------------------------------------------------------------------------
   // removes a specific optionField from optionFields state
   const handleRemoveOption = () => {
     console.log("removing option field ", optionIndex + 1);
-
+    // filter out the optionField at optionIndex
     setOptionFields((prevFields) => {
       return prevFields.filter((_, ind) => ind !== optionIndex);
     });
@@ -40,6 +46,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
 
   // add a new optionField to optionFields state
   const handleAddOption = () => {
+    // add at end of optionFields (state) array
     setOptionFields((prevOptionFields) => [
       ...prevOptionFields,
       {
@@ -56,10 +63,15 @@ const OptionField: React.FC<OptionFieldProps> = ({
     ]);
   };
 
+  const handlePreview = () => {
+    console.log("previewing image ", fields.imageUrl);
+    setLoadImage(true);
+  };
+
   // change state of individual fields on input change
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("changing option field ", optionIndex + 1);
-
+    // update the specific optionField at optionIndex
     setOptionFields((prevOptionFields) => {
       const updatedFields = [...prevOptionFields];
       updatedFields[optionIndex] = {
@@ -82,6 +94,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
           {optionIndex + 1 === options && (
             // if last option, render add button
             <button
+              type="button" // to prevent form submission - only by button type="submit"
               className="btn btn-circle btn-success btn-xs rounded-[30%]"
               onClick={handleAddOption}
             >
@@ -91,6 +104,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
           {options > 1 && (
             // if > 1 option, render remove button
             <button
+              type="button" // to prevent form submission - only by button type="submit"
               className="btn btn-circle btn-error btn-xs rounded-[30%]"
               onClick={handleRemoveOption}
             >
@@ -106,7 +120,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
         reqBool={false}
         id="type"
         value={fields.type}
-        placeholder="Option type if applicable, e.g. colour, backing"
+        placeholder="colour, backing, etc. if applicable"
         type="text"
         changeHandler={handleChange}
       />
@@ -121,60 +135,69 @@ const OptionField: React.FC<OptionFieldProps> = ({
         changeHandler={handleChange}
       />
       {/* Input: Image Url */}
-      <InputField
-        title="Image URL"
-        id="imageUrl"
-        value={fields.imageUrl}
-        placeholder="Image URL"
-        type="url"
-        changeHandler={handleChange}
-      />
+      <div className="flex justify-between">
+        <InputField
+          title="Image URL"
+          id="imageUrl"
+          value={fields.imageUrl}
+          placeholder="Image URL"
+          type="url"
+          changeHandler={handleChange}
+        />
+
+        <button
+          type="button"
+          className="btn btn-outline btn-primary btn-sm"
+          onClick={handlePreview}
+        >
+          preview
+        </button>
+      </div>
 
       {/* Price options */}
-      <div className="flex"></div>
-      {/* Input: Price (SGD) */}
-      <InputField
-        title="Price (SGD)"
-        id="priceSGD"
-        value={fields.priceSGD}
-        placeholder="How much in SGD?"
-        type="number"
-        changeHandler={handleChange}
-      />
-      {/* Input: Price (TWD) */}
-      <InputField
-        title="Price (TWD)"
-        id="priceTWD"
-        value={fields.priceTWD}
-        placeholder="How much in TWD?"
-        type="number"
-        changeHandler={handleChange}
-      />
-      {/* Input: Action choices */}
-      <div className="flex flex-col justify-start p-2 laptop:flex-row">
-        <h3 className="mr-4 text-base font-semibold tracking-wide">
-          Customer Action:
-        </h3>
-        {["Wish", "Enquire", "Order"].map((action, ind) => {
-          return (
-            <div
-              key={ind}
-              className="laptop:text-md my-1 flex flex-row items-center text-sm laptop:mx-4 laptop:my-0"
-            >
-              <input
-                id="action"
-                name={`action-${optionIndex}`} // set unique to each optionField
-                type="radio"
-                value={action}
-                checked={fields.action === action}
-                onChange={handleChange}
-                className="radio-accent radio radio-xs mr-2 laptop:radio-sm"
-              />
-              <h4 className="font-medium italic tracking-wide">{action}</h4>
-            </div>
-          );
-        })}
+      <div className="flex">
+        <div>
+          {/* Input: Price (SGD) */}
+          <InputField
+            title="Price (SGD)"
+            id="priceSGD"
+            value={fields.priceSGD}
+            placeholder="How much in SGD?"
+            type="number"
+            changeHandler={handleChange}
+          />
+          {/* Input: Price (TWD) */}
+          <InputField
+            title="Price (TWD)"
+            id="priceTWD"
+            value={fields.priceTWD}
+            placeholder="How much in TWD?"
+            type="number"
+            changeHandler={handleChange}
+          />
+        </div>
+
+        {/* Preview image based on imageUrl when 'preview' button is clicked*/}
+        {loadImage && (
+          <Image
+            src={formatImageUrl(fields.imageUrl)}
+            alt={fields.name}
+            width={200}
+            height={100}
+            className="w-full rounded-[2rem] object-cover tablet:h-56 tablet:rounded-none tablet:p-0"
+          />
+        )}
       </div>
+
+      {/* Input: Action choices */}
+      <InputRadio
+        title="Action"
+        selections={["Wish", "Enquire", "Order"]}
+        id="action"
+        name={`action-${optionIndex}`} // set unique to each optionField
+        value={fields.action} // checked: value === selection
+        changeHandler={handleChange}
+      />
     </div>
   );
 };
