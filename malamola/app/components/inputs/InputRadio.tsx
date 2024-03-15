@@ -30,7 +30,7 @@ const InputRadio: React.FC<InputRadioProps> = ({
       <h3
         className={`${
           size === "lg" ? "w-28" : "w-24"
-        } mr-4 text-base font-semibold italic tracking-wide`}
+        } mr-4 text-base font-semibold tracking-wide`}
       >
         {title}:
       </h3>

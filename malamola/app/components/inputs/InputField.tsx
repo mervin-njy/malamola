@@ -27,7 +27,7 @@ const InputField: React.FC<InputFieldProps> = ({
         size === "lg" ? "input-md text-base" : "input-sm"
       } input input-bordered mb-3 flex items-center gap-4`}
     >
-      <h5 className={`${size === "lg" ? "w-32" : "w-28"} font-semibold italic`}>
+      <h5 className={`${size === "lg" ? "w-32" : "w-28"} font-semibold`}>
         {title}
       </h5>
       <input

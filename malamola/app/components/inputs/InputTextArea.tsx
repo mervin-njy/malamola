@@ -19,7 +19,7 @@ const InputTextArea: React.FC<InputTextAreaProps> = ({
 }) => {
   return (
     <label className="textarea textarea-bordered textarea-md flex items-center gap-4">
-      <h5 className="w-28 self-start font-semibold italic">{title}</h5>
+      <h5 className="w-28 self-start font-semibold">{title}</h5>
       <textarea
         required={reqBool}
         id={id}

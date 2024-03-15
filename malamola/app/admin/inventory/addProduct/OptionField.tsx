@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import InputField from "@/app/components/inputs/InputField";
 import InputRadio from "@/app/components/inputs/InputRadio";
-import { IoMdAdd, IoMdRemove } from "react-icons/io";
+import { IoMdImage, IoMdAdd, IoMdRemove } from "react-icons/io";
 import { formatImageUrl } from "@/app/helper/format";
 
 interface Fields {
@@ -32,7 +32,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
   setOptionFields,
 }) => {
   // hooks --------------------------------------------------------------------------------------------------
-  const [loadImage, setLoadImage] = useState(false); // to load image preview
+  const [loadImage, setLoadImage] = useState([]); // store image preview history
 
   // event handlers ------------------------------------------------------------------------------------------
   // removes a specific optionField from optionFields state
@@ -65,6 +65,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
 
   const handlePreview = () => {
     console.log("previewing image ", fields.imageUrl);
+    // TODO: validate image url
     setLoadImage(true);
   };
 
@@ -89,8 +90,17 @@ const OptionField: React.FC<OptionFieldProps> = ({
       <div className="mb-4 flex justify-between">
         <h4 className="ml-1 text-lg font-medium">Option {optionIndex + 1}:</h4>
 
-        {/* Buttons to update option quantity */}
+        {/* Buttons to update option quantity ------------------------------------------------------------ */}
         <div className="flex justify-end gap-2">
+          {fields.imageUrl && (
+            <button
+              type="button"
+              className="btn btn-circle btn-secondary btn-xs rounded-[30%]"
+              onClick={handlePreview}
+            >
+              <IoMdImage size={14} />
+            </button>
+          )}
           {optionIndex + 1 === options && (
             // if last option, render add button
             <button
@@ -114,52 +124,44 @@ const OptionField: React.FC<OptionFieldProps> = ({
         </div>
       </div>
 
-      {/* Input: type (optional - for option labeling, e.g. colour, backing) */}
-      <InputField
-        title="Type"
-        reqBool={false}
-        id="type"
-        value={fields.type}
-        placeholder="colour, backing, etc. if applicable"
-        type="text"
-        changeHandler={handleChange}
-      />
-      {/* Input: name (optional - for only option of product) */}
-      <InputField
-        title="Name"
-        reqBool={options > 1 ? true : false}
-        id="name"
-        value={fields.name}
-        placeholder="What would you like to call this option?"
-        type="text"
-        changeHandler={handleChange}
-      />
-      {/* Input: Image Url */}
+      {/* Option Fields -------------------------------------------------------------------------------- */}
       <div className="flex justify-between">
-        <InputField
-          title="Image URL"
-          id="imageUrl"
-          value={fields.imageUrl}
-          placeholder="Image URL"
-          type="url"
-          changeHandler={handleChange}
-        />
+        {/* Left: input -------------------------------------------------------------------------------- */}
+        <div className="flex flex-col justify-center">
+          {/* Input: type (optional - for option labeling, e.g. colour, backing) */}
+          <InputField
+            title="Type"
+            reqBool={false}
+            id="type"
+            value={fields.type}
+            placeholder="colour, backing, etc."
+            type="text"
+            changeHandler={handleChange}
+          />
+          {/* Input: name (optional - for only option of product) */}
+          <InputField
+            title="Name"
+            reqBool={options > 1 ? true : false}
+            id="name"
+            value={fields.name}
+            placeholder="Name of option"
+            type="text"
+            changeHandler={handleChange}
+          />
+          {/* Input: Image Url */}
+          <InputField
+            title="Image"
+            id="imageUrl"
+            value={fields.imageUrl}
+            placeholder="Image URL"
+            type="url"
+            changeHandler={handleChange}
+          />
 
-        <button
-          type="button"
-          className="btn btn-outline btn-primary btn-sm"
-          onClick={handlePreview}
-        >
-          preview
-        </button>
-      </div>
-
-      {/* Price options */}
-      <div className="flex">
-        <div>
+          {/* Price options ---------------------------------*/}
           {/* Input: Price (SGD) */}
           <InputField
-            title="Price (SGD)"
+            title="SGD"
             id="priceSGD"
             value={fields.priceSGD}
             placeholder="How much in SGD?"
@@ -168,7 +170,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
           />
           {/* Input: Price (TWD) */}
           <InputField
-            title="Price (TWD)"
+            title="NT$"
             id="priceTWD"
             value={fields.priceTWD}
             placeholder="How much in TWD?"
@@ -177,16 +179,21 @@ const OptionField: React.FC<OptionFieldProps> = ({
           />
         </div>
 
+        {/* Right: image preview ----------------------------------------------------------------------- */}
         {/* Preview image based on imageUrl when 'preview' button is clicked*/}
-        {loadImage && (
-          <Image
-            src={formatImageUrl(fields.imageUrl)}
-            alt={fields.name}
-            width={200}
-            height={100}
-            className="w-full rounded-[2rem] object-cover tablet:h-56 tablet:rounded-none tablet:p-0"
-          />
-        )}
+        <div className="aspect-w-1 aspect-h-1 relative mb-3 ml-4 w-full">
+          {/* Placeholder border */}
+          <div className="absolute inset-0 rounded-2xl border-[1.8px] border-dashed border-accent"></div>
+          {/* Image */}
+          {loadImage.length > 0 && (
+            <Image
+              src={formatImageUrl(fields.imageUrl)}
+              alt={fields.name}
+              layout="fill" // maintain aspect ratio and cover the container + object-cover to fill the container
+              className="w-full rounded-2xl object-cover"
+            />
+          )}
+        </div>
       </div>
 
       {/* Input: Action choices */}

@@ -98,7 +98,7 @@ const AddProductPage = () => {
               <h3 className="mb-4 ml-1 text-xl font-medium">
                 Describe Product Options:
               </h3>
-              <div className="mb-6 grid grid-cols-1 gap-5 tablet:grid-cols-2">
+              <div className="mb-6 grid grid-cols-1 gap-5 laptop:grid-cols-2">
                 {optionFields.map((fields, ind) => (
                   <div key={ind}>
                     <OptionField
