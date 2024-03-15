@@ -31,8 +31,17 @@ const OptionField: React.FC<OptionFieldProps> = ({
   fields,
   setOptionFields,
 }) => {
-  // hooks --------------------------------------------------------------------------------------------------
-  const [loadImage, setLoadImage] = useState([]); // store image preview history
+  // helper functions ----------------------------------------------------------------------------------------
+  const isValidImageUrl = (url: string) => {
+    // check if the URL starts with 'http://' or 'https://'
+    return url.startsWith("http://") || url.startsWith("https://");
+    // TODO: add other validation checks
+  };
+
+  // hooks ---------------------------------------------------------------------------------------------------
+  const [validUrl, setValidUrl] = useState(true); // store imageUrl validation status
+  const [previewUrl, setPreviewUrl] = useState(""); // store imageUrl for image preview
+  const [previews, setPreviews] = useState<string[]>([]); // store image preview history => TBD
 
   // event handlers ------------------------------------------------------------------------------------------
   // removes a specific optionField from optionFields state
@@ -63,10 +72,21 @@ const OptionField: React.FC<OptionFieldProps> = ({
     ]);
   };
 
+  // preview image based on imageUrl when 'preview' button is clicked
   const handlePreview = () => {
+    setPreviewUrl(""); // reset to refresh image preview
     console.log("previewing image ", fields.imageUrl);
-    // TODO: validate image url
-    setLoadImage(true);
+
+    if (isValidImageUrl(fields.imageUrl)) {
+      setPreviewUrl(fields.imageUrl); // set imageUrl for image preview
+
+      // TODO: validate image url
+      setPreviews((prevPreviews) => {
+        return [...prevPreviews, fields.imageUrl];
+      });
+    } else {
+      setValidUrl(false); // set imageUrl validation status
+    }
   };
 
   // change state of individual fields on input change
@@ -134,7 +154,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
             reqBool={false}
             id="type"
             value={fields.type}
-            placeholder="colour, backing, etc."
+            placeholder="Colour, Backing, etc."
             type="text"
             changeHandler={handleChange}
           />
@@ -184,10 +204,17 @@ const OptionField: React.FC<OptionFieldProps> = ({
         <div className="aspect-w-1 aspect-h-1 relative mb-3 ml-4 w-full">
           {/* Placeholder border */}
           <div className="absolute inset-0 rounded-2xl border-[1.8px] border-dashed border-accent"></div>
-          {/* Image */}
-          {loadImage.length > 0 && (
+
+          {/* Error message - if imageUrl is invalid */}
+          {!validUrl && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <p className="text-xs text-error">Invalid URL</p>
+            </div>
+          )}
+          {/* Image - if valid */}
+          {previewUrl && (
             <Image
-              src={formatImageUrl(fields.imageUrl)}
+              src={formatImageUrl(previewUrl)}
               alt={fields.name}
               layout="fill" // maintain aspect ratio and cover the container + object-cover to fill the container
               className="w-full rounded-2xl object-cover"
