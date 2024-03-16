@@ -12,9 +12,23 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Filly Flower Crafts",
-  description:
-    "Learn more about our biodiversity and browse our handcrafted embroidery products!",
+  metadataBase: new URL("https://www.fillyflowercrafts.com/"),
+  openGraph: {
+    type: "website",
+    url: "https://www.fillyflowercrafts.com/",
+    siteName: "Filly Flower Crafts",
+    title: "Filly Flower Crafts",
+    description:
+      "Learn more about our biodiversity and browse our handcrafted embroidery products!",
+    images: [
+      {
+        url: "https://imgur.com/obco3q4",
+        width: 800,
+        height: 600,
+        alt: "Filly Flower Crafts",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
