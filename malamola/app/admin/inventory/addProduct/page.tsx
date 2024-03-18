@@ -28,9 +28,9 @@ const productSchema = z.object({
         .int()
         .min(0, "Price in TWD must be a positive number"),
       action: z.string().nonempty("Action is required"), // change to enum
-      wishedFor: z.number().int().positive(),
-      requested: z.number().int().positive(),
-      preOrdered: z.number().int().positive(),
+      wishedFor: z.number().int().nonnegative(),
+      requested: z.number().int().nonnegative(),
+      preOrdered: z.number().int().nonnegative(),
     }),
   ),
 });

@@ -98,12 +98,20 @@ const OptionField: React.FC<OptionFieldProps> = ({
   // change state of individual fields on input change
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("changing option field ", optionIndex + 1);
+
+    const { id, value } = event.target;
+    // ensure that priceSGD and priceTWD are not coerced into string
+    const parsedValue =
+      id === "priceSGD" || id === "priceTWD" ? parseFloat(value) : value;
+
+    console.log(fields); // debug
+
     // update the specific optionField at optionIndex
     setOptionFields((prevOptionFields) => {
       const updatedFields = [...prevOptionFields];
       updatedFields[optionIndex] = {
         ...updatedFields[optionIndex],
-        [event.target.id]: event.target.value,
+        [id]: parsedValue,
       };
       return updatedFields;
     });
