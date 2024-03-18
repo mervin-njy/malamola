@@ -7,6 +7,35 @@ import InputRadio from "@/app/components/inputs/InputRadio";
 import InputTextArea from "@/app/components/inputs/InputTextArea";
 import OptionField from "./OptionField";
 import { addProduct } from "@/app/components/actions/addProduct"; // server action
+import { z } from "zod";
+
+// validation schema (zod) ------------------------------------------------------------------------------------
+const productSchema = z.object({
+  name: z.string().nonempty("Name is required"),
+  category: z.string().nonempty("Category is required"), // change to enum
+  description: z.string().nonempty("Description is required"),
+  options: z.array(
+    z.object({
+      type: z.string(),
+      name: z.string().nonempty("Option name is required"),
+      imageUrl: z.string().nonempty("Image URL is required"),
+      priceSGD: z
+        .number()
+        .int()
+        .min(0, "Price in SGD must be a positive number"),
+      priceTWD: z
+        .number()
+        .int()
+        .min(0, "Price in TWD must be a positive number"),
+      action: z.string().nonempty("Action is required"), // change to enum
+      wishedFor: z.number().int().positive(),
+      requested: z.number().int().positive(),
+      preOrdered: z.number().int().positive(),
+    }),
+  ),
+});
+// use zod's infer to get the type of the schema for server action usage
+export type ProductFields = z.infer<typeof productSchema>;
 
 const AddProductPage = () => {
   // hooks ----------------------------------------------------------------------------------------------------
@@ -42,15 +71,31 @@ const AddProductPage = () => {
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    try {
+      // 1. compile productFields and optionFields into formData
+      const formData = { ...productFields, options: optionFields };
+      console.log(formData); // debug
 
-    // validate form data before sending to server
+      // 2. validate form data before sending to server
+      productSchema.parse(formData);
+      // + timestamps are automatically added
 
-    // server actions -----------------------------------------------------------------------------------------
-    // imported server action to this file without client-side data fetching => protects db credentials
-    // => currently in alpha so => next.config.js => const nextConfig = { experimental: { serverActions: true, }, };
-    // from @app/components/actions/addProduct.ts
-    await addProduct(formData);
+      // server actions -----------------------------------------------------------------------------------------
+      // imported server action to this file without client-side data fetching => protects db credentials
+      // => currently in alpha so => next.config.js => const nextConfig = { experimental: { serverActions: true, }, };
+      // from @app/components/actions/addProduct.ts
+      await addProduct(formData);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        // Handle validation errors
+        console.error("Validation error:", error.errors);
+        // Display error messages to user
+        // Prevent form submission until all errors are resolved
+      } else {
+        // Handle other types of errors
+        console.error("Other error:", error);
+      }
+    }
   };
 
   // render component -----------------------------------------------------------------------------------------

@@ -38,7 +38,7 @@ model Product {
 }
 
 enum OptionChoices {
-  Wish // Wish list => adds count to favourited + display favourite list for each user
+  Wish // Wish list => adds count to wishedFor to count demand of products not currently available
   Enquire // Enquire => adds count to requested
   Order // Pre-order => adds count to pre_ordered
 }

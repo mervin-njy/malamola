@@ -51,6 +51,9 @@ const OptionField: React.FC<OptionFieldProps> = ({
     setOptionFields((prevFields) => {
       return prevFields.filter((_, ind) => ind !== optionIndex);
     });
+
+    // 1. reset imageUrl for image preview (refresh if removed)
+    setPreviewUrl("");
   };
 
   // add a new optionField to optionFields state
@@ -78,14 +81,17 @@ const OptionField: React.FC<OptionFieldProps> = ({
     console.log("previewing image ", fields.imageUrl);
 
     if (isValidImageUrl(fields.imageUrl)) {
-      setPreviewUrl(fields.imageUrl); // set imageUrl for image preview
+      // 1. set imageUrl for image preview
+      setPreviewUrl(fields.imageUrl);
 
+      // 2. add imageUrl to preview history
       // TODO: validate image url
       setPreviews((prevPreviews) => {
         return [...prevPreviews, fields.imageUrl];
       });
     } else {
-      setValidUrl(false); // set imageUrl validation status
+      // if invalid: set imageUrl validation status to false
+      setValidUrl(false);
     }
   };
 
@@ -101,6 +107,10 @@ const OptionField: React.FC<OptionFieldProps> = ({
       };
       return updatedFields;
     });
+    // 2. reset imageUrl validation status if input of imageUrl changes
+    if (event.target.id === "imageUrl") {
+      setValidUrl(true);
+    }
   };
 
   // render component ----------------------------------------------------------------------------------------
@@ -112,15 +122,6 @@ const OptionField: React.FC<OptionFieldProps> = ({
 
         {/* Buttons to update option quantity ------------------------------------------------------------ */}
         <div className="flex justify-end gap-2">
-          {fields.imageUrl && (
-            <button
-              type="button"
-              className="btn btn-circle btn-secondary btn-xs rounded-[30%]"
-              onClick={handlePreview}
-            >
-              <IoMdImage size={14} />
-            </button>
-          )}
           {optionIndex + 1 === options && (
             // if last option, render add button
             <button
@@ -201,14 +202,29 @@ const OptionField: React.FC<OptionFieldProps> = ({
 
         {/* Right: image preview ----------------------------------------------------------------------- */}
         {/* Preview image based on imageUrl when 'preview' button is clicked*/}
-        <div className="aspect-w-1 aspect-h-1 relative mb-3 ml-4 w-full">
+        <div
+          className="aspect-w-1 aspect-h-1 relative mb-3 ml-4 w-full hover:rounded-2xl hover:border-[1px] hover:border-accent"
+          onClick={handlePreview}
+        >
           {/* Placeholder border */}
           <div className="absolute inset-0 rounded-2xl border-[1.8px] border-dashed border-accent"></div>
 
           {/* Error message - if imageUrl is invalid */}
-          {!validUrl && (
+          {fields.imageUrl && validUrl && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <p className="text-xs text-error">Invalid URL</p>
+              <button
+                type="button"
+                className="btn btn-circle btn-secondary btn-xs rounded-[30%]"
+              >
+                <IoMdImage size={14} />
+              </button>
+            </div>
+          )}
+          {!validUrl && (
+            <div className="absolute inset-0 flex items-center">
+              <p className="flex justify-center text-xs font-medium text-error">
+                Invalid URL
+              </p>
             </div>
           )}
           {/* Image - if valid */}
