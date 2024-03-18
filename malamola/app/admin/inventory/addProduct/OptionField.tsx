@@ -14,7 +14,7 @@ interface Fields {
   action: string;
   wishedFor: number;
   requested: number;
-  preOrdered: number;
+  ordered: number;
 }
 
 // type interface for OptionField props
@@ -70,7 +70,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
         action: "Wish",
         wishedFor: 0,
         requested: 0,
-        preOrdered: 0,
+        ordered: 0,
       },
     ]);
   };
@@ -217,7 +217,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
           {/* Placeholder border */}
           <div className="absolute inset-0 rounded-2xl border-[1.8px] border-dashed border-accent"></div>
 
-          {/* Error message - if imageUrl is invalid */}
+          {/* a. preview button - if no preview + valid url */}
           {fields.imageUrl && validUrl && (
             <div className="absolute inset-0 flex items-center justify-center">
               <button
@@ -228,6 +228,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
               </button>
             </div>
           )}
+          {/* b. Error message - if imageUrl is invalid */}
           {!validUrl && (
             <div className="absolute inset-0 flex items-center">
               <p className="flex justify-center text-xs font-medium text-error">
@@ -235,7 +236,7 @@ const OptionField: React.FC<OptionFieldProps> = ({
               </p>
             </div>
           )}
-          {/* Image - if valid */}
+          {/* c. Image - if valid */}
           {previewUrl && (
             <Image
               src={formatImageUrl(previewUrl)}

@@ -77,9 +77,9 @@ model ProductOptions {
   action OptionChoices
 
   // track product-option-quantity: for ADMIN purposes - by default: 0
-  wishedFor  Int // notify admin >= 10
-  requested  Int // enquire to admin
-  preOrdered Int // limit to 5
+  wishedFor Int // notify admin >= 10
+  requested Int // enquire to admin
+  ordered   Int // limit to 5
 
   // timestamps
   createdAt DateTime @default(now())

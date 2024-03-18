@@ -30,7 +30,7 @@ const productSchema = z.object({
       action: z.string().nonempty("Action is required"), // change to enum
       wishedFor: z.number().int().nonnegative(),
       requested: z.number().int().nonnegative(),
-      preOrdered: z.number().int().nonnegative(),
+      ordered: z.number().int().nonnegative(),
     }),
   ),
 });
@@ -55,7 +55,7 @@ const AddProductPage = () => {
       // for admin to track productOption-quantities
       wishedFor: 0,
       requested: 0,
-      preOrdered: 0,
+      ordered: 0,
     },
   ]); // to contain optionFields data to create new productOptions
 
@@ -89,7 +89,7 @@ const AddProductPage = () => {
       if (error instanceof z.ZodError) {
         // Handle validation errors
         console.error("Validation error:", error.errors);
-        // Display error messages to user
+        // Display error messages to admin user
         // Prevent form submission until all errors are resolved
       } else {
         // Handle other types of errors

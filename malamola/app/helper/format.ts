@@ -14,11 +14,11 @@ export const formatCategory = (category: string): string => {
   }
 };
 
-export const formatPrice = (price: number) => {
+export const formatPrice = (price: number, currency: string) => {
   // TODO: option to convert to TWD
-  return (price / 100).toLocaleString("en-US", {
+  return price.toLocaleString("en-US", {
     style: "currency",
-    currency: "SGD",
+    currency: currency,
   });
 };
 

@@ -39,7 +39,7 @@ const InputRadio: React.FC<InputRadioProps> = ({
       {selections.map((sel, ind) => {
         return (
           // each radio selection div
-          <div
+          <label
             key={ind}
             className={`${
               size === "lg"
@@ -58,7 +58,7 @@ const InputRadio: React.FC<InputRadioProps> = ({
               className="radio-accent radio radio-xs mr-2 laptop:radio-sm"
             />
             <h4 className="font-medium italic tracking-wide">{sel}</h4>
-          </div>
+          </label>
         );
       })}
     </div>

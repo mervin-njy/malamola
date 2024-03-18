@@ -30,7 +30,7 @@ export async function addProduct(formData: ProductFields) {
             action: option.action as OptionChoices, // Ensure option.action matches enum OptionChoices
             wishedFor: option.wishedFor,
             requested: option.requested,
-            preOrdered: option.preOrdered,
+            ordered: option.ordered,
           })),
         },
       },
