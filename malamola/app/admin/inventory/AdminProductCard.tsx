@@ -35,7 +35,6 @@ const AdminProductCard = ({ product, options }: ProductCardProps) => {
 
   // event handlers -----------------------------------------------------------------------------------
   const handleOptionChange = (next: string) => {
-    console.log(options);
     // generate options for display
     setOptionIndex((prevIndex: number) => {
       if (next === "plus") {
@@ -46,8 +45,6 @@ const AdminProductCard = ({ product, options }: ProductCardProps) => {
       // if no change => return current index
       return prevIndex;
     });
-
-    console.log("optionIndex: ", optionIndex, options[optionIndex]);
   };
 
   // render component ---------------------------------------------------------------------------------
@@ -96,7 +93,7 @@ const AdminProductCard = ({ product, options }: ProductCardProps) => {
 
       {/* TODO: change to LINK with href={"/products/" + product.id} */}
       <div className="card-body p-6">
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between">
           {/* 2. title */}
           <h3 className="card-title font-bold tracking-wider">
             {product.name}{" "}
@@ -108,7 +105,7 @@ const AdminProductCard = ({ product, options }: ProductCardProps) => {
         </div>
 
         {/* 4. description */}
-        <p className="line-clamp-1 max-h-24 overflow-hidden text-sm tracking-wide">
+        <p className="line-clamp-2 max-h-24 overflow-hidden text-sm tracking-wide">
           {product.description}
         </p>
 

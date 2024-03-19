@@ -16,8 +16,8 @@ const productSchema = z.object({
   description: z.string().nonempty("Description is required"),
   options: z.array(
     z.object({
-      type: z.string(),
-      name: z.string().nonempty("Option name is required"),
+      type: z.string().optional(),
+      name: z.string().optional(),
       imageUrl: z.string().nonempty("Image URL is required"),
       priceSGD: z
         .number()
@@ -87,10 +87,10 @@ const AddProductPage = () => {
       await addProduct(formData);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        // Handle validation errors
-        console.error("Validation error:", error.errors);
+        // TODO: Handle validation errors
         // Display error messages to admin user
         // Prevent form submission until all errors are resolved
+        console.error("Validation error:", error.errors);
       } else {
         // Handle other types of errors
         console.error("Other error:", error);
