@@ -38,20 +38,38 @@ Deployment: package.json => scripts => see vercel caching problem with prisma
 <!--
 TODO:
 
+- All products filter to other categories w/ tabs:
+    . product page
+    . inventory (admin) page
+    . sort () => 'Past' least priority, else 'CreatedAt' top priority
+
+- product display:
+    . wish / enquire / order for individual products
+    . display options with button => smoothen animation / use option toggles
+    . price display toggle => ProductsPrice SGD || TWD
+
+- Navbar:
+    a. language + currency
+
 - /admin/inventory => updateProduct, deleteProduct
 
 - product schema:
-    a. imageUrl => []
-    b. optionDIY => String if (product.category === "mola") "/products/[id]"
-    c. optionColour => [] if (product.category === "DIY") colour
-        - think of how to change imageDisplay
-    z. price => ProductsPrice SGD || TWD
+    . add product tags (i.e. mammal, fish, bird)
+    . add imageUrl [] for group photos to display
 
-- show stock update => limited qty (max 10 for DIY, preorder for mola)
+- product quantity updates for admin
+    . order > preparing > ready > delivery > completed
+    . wishedFor > 10 => select change to action: request
+    . request link to enquiries
+
+- send out email to Admin & User for notifications
+    . order initiation
+    . wishedFor > 10
+        . Admin - change to request?
+        . User - wish list product has been updated to request availability
+    . request initiation
 
 - SelectQuantity (CSR component) +-qty of items to add at product/[id] page
-
-- All products filter to other categories w/ tabs
 
 - Nextjs noSSR dynamic lazy loading
 
@@ -68,8 +86,5 @@ TODO:
 
 - Admin userType + admin-specific pages => done with inventory
     a. users, orders, enquiries, dashboard
-
-- Navbar:
-    a. language + currency
 
 -->
