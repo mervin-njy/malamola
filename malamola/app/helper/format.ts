@@ -1,16 +1,20 @@
 // convert category format into readable text
-export const formatCategory = (category: string): string => {
-  switch (category) {
-    case "Mola":
-      return "Mola Gang";
-    case "Seasonal":
-      return "Seasonal Specials";
-    case "DIY":
-      return "DIY Kits";
-    case "Past":
-      return "Past Projects";
-    default:
-      return category;
+type Categories = { [key: string]: string };
+
+export const formatCategory = (from: string, cat: string) => {
+  const categories: Categories = {
+    Mola: "Mola Gang",
+    Seasonal: "Seasonal",
+    DIY: "DIY",
+    Past: "Past Projects",
+  };
+
+  if (from === "db") {
+    return categories[cat];
+  } else {
+    return Object.keys(categories).find(
+      (key) => categories[key] === cat,
+    ) as string;
   }
 };
 

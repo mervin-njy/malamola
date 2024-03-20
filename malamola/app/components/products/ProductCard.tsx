@@ -37,7 +37,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <h3 className="card-title tracking-wider">{product.name} </h3>
         {/* 3. category */}
         <h4 className="badge badge-accent badge-outline rounded-md p-3 font-bold italic tracking-wider">
-          {formatCategory(product.category)}
+          {formatCategory("db", product.category)}
         </h4>
         {/* 4. description */}
         <p className="line-clamp-3 max-h-24 overflow-hidden text-sm tracking-wide">

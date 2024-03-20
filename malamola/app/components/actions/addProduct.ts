@@ -3,9 +3,10 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/db/prisma";
-import { ProductsCategory, OptionChoices } from "@prisma/client";
+import { ProductsCategory, OptionChoices } from "@prisma/client"; // import enums
 import { redirect } from "next/navigation";
-import { ProductFields } from "@/app/admin/inventory/addProduct/page";
+import { ProductFields } from "@/app/admin/inventory/addProduct/page"; // import type
+import { formatCategory } from "@/app/helper/format"; // import helper function get category enum
 
 export async function addProduct(formData: ProductFields) {
   const session = await getServerSession(authOptions);
@@ -17,7 +18,7 @@ export async function addProduct(formData: ProductFields) {
   await prisma.product.create({
     data: {
       name: formData.name,
-      category: formData.category as ProductsCategory, // Ensure formData.category matches enum ProductsCategory
+      category: formatCategory("admin", formData.category) as ProductsCategory, // Ensure formData.category matches enum ProductsCategory
       description: formData.description,
       Options: {
         createMany: {

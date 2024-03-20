@@ -84,11 +84,11 @@ const ProductPage = async ({ params: { id } }: ProductPageProps) => {
 
         {/* 2. Quantity to add */}
         {/* <SelectQuantity /> => if (product.stock <= 5) { ShowStock() } */}
-        {/* (formatCategory(product.category) === "DIY" && <SelectQuantity />) */}
+        {/* (formatCategory("db", product.category) === "DIY" && <SelectQuantity />) */}
 
         {/* 3. Button to confirm add */}
         <BtnAddToCart
-          // TODO:  btnName={(formatCategory(product.category) === "DIY" ? "Add to Cart" : "Preorder" )}
+          // TODO:  btnName={(formatCategory("db", product.category) === "DIY" ? "Add to Cart" : "Preorder" )}
           productId={product.id}
           updateProductQuantity={updateProductQuantity}
         />

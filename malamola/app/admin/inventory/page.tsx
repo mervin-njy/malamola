@@ -60,22 +60,27 @@ const ManageInventoryPage = async ({
             <h1 className="text-3xl font-bold">Manage your Products</h1>
             {/* <RiFilter2Fill /> */}
 
-            {/* 2. SEARCH & FILTER OPTIONS MODAL => TO BE CONVERTED INTO CSR COMPONENT */}
+            {/* 2. FILTER TABS - categories */}
             <div className="flex gap-2 rounded-xl text-xl font-light">
-              <h2 className="btn btn-ghost w-[6rem] border-base-300 normal-case">
-                <GrFilter />
-                Filter
-                {/* (Filter options: by category, keywords, availability etc.) */}
+              <h2 className="btn btn-ghost btn-sm w-[7.5rem] border-base-300 normal-case">
+                All
               </h2>
-              <h2 className="btn btn-ghost w-[6rem] border-base-300 normal-case">
-                <GrSort />
-                Sort
-                {/* (Sort options: by price, name etc.) */}
+              <h2 className="btn btn-ghost btn-sm w-[7.5rem] border-base-300 normal-case">
+                Mola Gang
+              </h2>
+              <h2 className="btn btn-ghost btn-sm w-[7.5rem] border-base-300 normal-case">
+                Seasonal
+              </h2>
+              <h2 className="btn btn-ghost btn-sm w-[7.5rem] border-base-300 normal-case">
+                DIY
+              </h2>
+              <h2 className="btn btn-ghost btn-sm w-[7.5rem] border-base-300 normal-case">
+                Past Projects
               </h2>
             </div>
           </div>
 
-          <div className="my-6 grid grid-cols-1 gap-4 tablet:grid-cols-2 laptop:grid-cols-3">
+          <div className="my-6 grid grid-cols-1 gap-4 px-4 tablet:grid-cols-2 laptop:grid-cols-3">
             {/* 3. addProduct Link */}
             <AddProductCard />
 

@@ -123,7 +123,7 @@ const AddProductPage = () => {
               <InputRadio
                 size="lg"
                 title="Category"
-                selections={["Mola", "Seasonal", "DIY", "Past"]}
+                selections={["Mola Gang", "Seasonal", "DIY", "Past Projects"]}
                 id="category"
                 name="category"
                 value={productFields.category} // checked: value === selection

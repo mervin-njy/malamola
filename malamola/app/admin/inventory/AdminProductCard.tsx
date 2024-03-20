@@ -100,7 +100,7 @@ const AdminProductCard = ({ product, options }: ProductCardProps) => {
           </h3>
           {/* 3. category */}
           <h4 className="badge badge-accent rounded-md p-3 tracking-wide text-white">
-            {formatCategory(product.category)}
+            {formatCategory("db", product.category)}
           </h4>
         </div>
 
