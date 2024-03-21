@@ -1,40 +1,50 @@
 import { prisma } from "@/lib/db/prisma";
-import ProductCard from "@/app/components/products/ProductCard";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { GrFilter, GrSort } from "react-icons/gr";
+import { formatCategory, formatImageUrl } from "@/app/helper/format";
+import CategoryFilter from "@/app/components/filters/CategoryFilter";
+import ProductCard from "@/app/components/products/ProductCard";
 import PaginationBar from "@/app/components/filters/PaginationBar";
-import { formatImageUrl } from "@/app/helper/format";
 
 // types ----------------------------------------------------------------------------------------------
 interface ProductsPageProps {
-  searchParams: { page: string };
+  // get searchParams for page number and category filter
+  searchParams: { page: string; category: string };
 }
 
 const ProductsPage = async ({
-  searchParams: { page = "1" }, // get ?page= searchParams from PaginationBar Links => default at 1 onMount
+  // get {?page=, ?category} searchParams from {PaginationBar, CategoryFilter} Links => default at {1, "All"} onMount
+  searchParams: { page = "1", category = "All" },
 }: ProductsPageProps) => {
   // variables ----------------------------------------------------------------------------------------
-  // 1. generate page variables
+  // 1. generate filter variables ------------------------------------------------------------
+  const searchCategory = formatCategory("admin", category); // convert to db format || undefined for "All"
+
+  // 2. generate page variables --------------------------------------------------------------
   const currentPage = parseInt(page);
 
   // change page cards to display here
   const productCards = 6;
   const heroItemCount = 1;
 
-  const totalItemCount = await prisma.product.count();
+  const totalItemCount = await prisma.product.count({
+    where: { category: searchCategory }, // based on filtered category
+  });
 
   const totalPages = Math.ceil((totalItemCount - heroItemCount) / productCards);
 
-  // 2. retrieve current page's products from db
-  // TODO: add filter options
+  // 3. retrieve current page's filtered products from db ------------------------------------
+  // TODO: change sorting priority
   const products = await prisma.product.findMany({
     orderBy: { id: "desc" },
+    where: { category: searchCategory }, // based on category searchParam from child component (CategoryFilter)
     skip:
       (currentPage - 1) * productCards + // skips 0 on 1st page
       (currentPage === 1 ? 0 : heroItemCount), // skip +heroItem after 1st page
     take: productCards + (currentPage === 1 ? heroItemCount : 0), // only +heroItem on 1st page
+    include: { Options: true },
   });
 
   // render component ---------------------------------------------------------------------------------
@@ -51,19 +61,19 @@ const ProductsPage = async ({
             <h1 className="text-3xl font-bold">All Products</h1>
             {/* <RiFilter2Fill /> */}
 
-            {/* 2. SEARCH & FILTER OPTIONS MODAL => TO BE CONVERTED INTO CSR COMPONENT */}
-            <div className="flex gap-2 rounded-xl text-xl font-light">
-              <h2 className="btn btn-ghost w-[6rem] border-base-300 normal-case">
-                <GrFilter />
-                Filter
-                {/* (Filter options: by category, keywords, availability etc.) */}
-              </h2>
-              <h2 className="btn btn-ghost w-[6rem] border-base-300 normal-case">
-                <GrSort />
-                Sort
-                {/* (Sort options: by price, name etc.) */}
-              </h2>
-            </div>
+            {/* 2. FILTER TABS - categories */}
+            {/* <RiFilter2Fill /> */}
+            {/* TODO: filter for tags, sort by price, availability */}
+            <CategoryFilter
+              current={category}
+              categories={[
+                "All",
+                "Mola Gang",
+                "Seasonal",
+                "DIY",
+                "Past Projects",
+              ]}
+            />
           </div>
 
           {/* 3. HERO BANNER - LATEST PRODUCT */}
@@ -71,7 +81,7 @@ const ProductsPage = async ({
             <div className="hero my-4 rounded-xl bg-neutral bg-opacity-10">
               <div className="hero-content w-full flex-col justify-start tablet:flex-row">
                 <Image
-                  src={formatImageUrl(products[0].imageUrl)}
+                  src={formatImageUrl(products[0].Options[0].imageUrl)}
                   alt={products[0].name}
                   width={800}
                   height={800}
@@ -100,7 +110,11 @@ const ProductsPage = async ({
           <div className="my-6 grid grid-cols-1 gap-4 tablet:grid-cols-2 laptop:grid-cols-3">
             {(currentPage === 1 ? products.slice(heroItemCount) : products).map(
               (product) => (
-                <ProductCard product={product} key={product.id} />
+                <ProductCard
+                  product={product}
+                  options={product.Options}
+                  key={product.id}
+                />
               ),
             )}
           </div>

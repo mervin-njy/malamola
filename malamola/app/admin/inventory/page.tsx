@@ -15,14 +15,15 @@ export const metadata = {
 };
 
 // types -----------------------------------------------------------------------------------------------------
-interface ProductsPageProps {
+interface ManageInventoryPageProps {
   // get searchParams for page number and category filter
   searchParams: { page: string; category: string };
 }
 
 const ManageInventoryPage = async ({
-  searchParams: { page = "1", category = "All" }, // get ?page= searchParams from PaginationBar Links => default at 1 onMount
-}: ProductsPageProps) => {
+  // get {?page=, ?category} searchParams from {PaginationBar, CategoryFilter} Links => default at {1, "All"} onMount
+  searchParams: { page = "1", category = "All" },
+}: ManageInventoryPageProps) => {
   // variables -----------------------------------------------------------------------------------------------
   // 1. session validation => ADMIN ----------------------------------------------------------
   const session = await getServerSession(authOptions);
@@ -32,7 +33,6 @@ const ManageInventoryPage = async ({
 
   // 2. generate filter variables ------------------------------------------------------------
   const searchCategory = formatCategory("admin", category); // convert to db format || undefined for "All"
-  console.log("category:", category, searchCategory); // debug
 
   // 3. generate page variables --------------------------------------------------------------
   const currentPage = parseInt(page);
@@ -47,7 +47,7 @@ const ManageInventoryPage = async ({
   const totalPages = Math.ceil(totalItemCount / productCards);
 
   // 4. products for display to edit ---------------------------------------------------------
-  // TODO: add filter options
+  // TODO: change sorting priority
   const products = await prisma.product.findMany({
     orderBy: { id: "desc" },
     where: { category: searchCategory }, // based on category searchParam from child component (CategoryFilter)
@@ -64,8 +64,9 @@ const ManageInventoryPage = async ({
           {/* 1. HEADING */}
           <h1 className="text-3xl font-bold">Manage your Products</h1>
 
-          {/* <RiFilter2Fill /> */}
           {/* 2. FILTER TABS - categories */}
+          {/* <RiFilter2Fill /> */}
+          {/* TODO: filter for tags, sort by price, availability */}
           <CategoryFilter
             current={category}
             categories={[

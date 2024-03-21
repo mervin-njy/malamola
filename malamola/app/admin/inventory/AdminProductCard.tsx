@@ -5,16 +5,16 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
 import {
-  IoMdArrowDropleftCircle,
-  IoMdArrowDroprightCircle,
-} from "react-icons/io";
-import PriceTag from "@/app/components/badges/PriceTag";
-import {
   formatCategory,
   formatImageUrl,
   formatDate,
   getAge,
 } from "@/app/helper/format";
+import {
+  IoMdArrowDropleftCircle,
+  IoMdArrowDroprightCircle,
+} from "react-icons/io";
+import PriceTag from "@/app/components/badges/PriceTag";
 import AdminProductStatus from "@/app/components/badges/AdminProductStatus";
 
 // types ----------------------------------------------------------------------------------------------
@@ -48,14 +48,14 @@ const AdminProductCard = ({ product, options }: ProductCardProps) => {
   // render component ---------------------------------------------------------------------------------
   return (
     <div
-      // href={"/products/" + product.id}
+      // Link: href={"/products/" + product.id}
       className="card w-full bg-neutral bg-opacity-5 transition-shadow hover:shadow-xl"
     >
       <figure className="relative">
         {/* 1. image + option update buttons */}
         <Image
           src={formatImageUrl(options[optionIndex].imageUrl)}
-          alt={"option-1"}
+          alt={`option-${options[optionIndex].name}`}
           width={800}
           height={400}
           className="h-80 rounded-[2rem] object-cover p-6 tablet:h-56 tablet:rounded-none tablet:p-0"
@@ -91,10 +91,11 @@ const AdminProductCard = ({ product, options }: ProductCardProps) => {
 
       {/* TODO: change to LINK with href={"/products/" + product.id} */}
       <div className="card-body p-6">
+        {/* PRODUCT HEADER */}
         <div className="flex items-center justify-between">
           {/* 2. title */}
           <h3 className="card-title font-bold tracking-wider">
-            {product.name}{" "}
+            {product.name}
           </h3>
           {/* 3. category */}
           <h4 className="badge badge-accent rounded-md p-3 tracking-wide text-white">
