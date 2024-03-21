@@ -44,7 +44,7 @@ const InputRadio: React.FC<InputRadioProps> = ({
             className={`${
               size === "lg"
                 ? "my-2 tablet:mx-4 tablet:my-0"
-                : "laptop:text-md my-1 text-sm laptop:mx-4 laptop:my-0"
+                : "my-1 text-sm laptop:mx-4 laptop:my-0 laptop:text-sm"
             } flex flex-row items-center`}
           >
             {/* radio input */}

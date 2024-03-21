@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 
 const AddProductCard = () => {
+  // render component ----------------------------------------------------------------------------------------
   return (
     <Link
       href="/admin/inventory/addProduct"

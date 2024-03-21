@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next/types";
 import Image from "next/image";
 import React, { cache } from "react";
-import PriceTag from "@/app/components/PriceTag";
+import PriceTag from "@/app/components/badges/PriceTag";
 import BtnAddToCart from "./BtnAddToCart";
 import { updateProductQuantity } from "@/app/components/actions/actions";
 import { formatImageUrl, formatCategory } from "@/app/helper/format";

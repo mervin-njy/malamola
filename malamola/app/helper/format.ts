@@ -1,20 +1,29 @@
+import { ProductsCategory } from "@prisma/client";
+
 // convert category format into readable text
 type Categories = { [key: string]: string };
 
-export const formatCategory = (from: string, cat: string) => {
-  const categories: Categories = {
-    Mola: "Mola Gang",
-    Seasonal: "Seasonal",
-    DIY: "DIY",
-    Past: "Past Projects",
+export const formatCategory = (from: string, cat: string): ProductsCategory => {
+  // to ensure type safety for enum type in schema.prisma
+  const categories: Record<string, ProductsCategory> = {
+    "Mola Gang": ProductsCategory.Mola,
+    Seasonal: ProductsCategory.Seasonal,
+    DIY: ProductsCategory.DIY,
+    "Past Projects": ProductsCategory.Past,
   };
 
+  // return all categories if "All" is passed => only from client
+  // if (cat === "All") {
+  //   if (from === "db") return Object.values(categories);
+  //   else return Object.keys(categories).map((cat) => categories[cat]);
+  // }
+
   if (from === "db") {
-    return categories[cat];
-  } else {
     return Object.keys(categories).find(
       (key) => categories[key] === cat,
-    ) as string;
+    ) as ProductsCategory;
+  } else {
+    return categories[cat];
   }
 };
 

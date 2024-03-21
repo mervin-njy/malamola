@@ -47,11 +47,10 @@ const CategoryFilter = ({ current, categories }: CategoryFilterProps) => {
     );
     // b. smaller screens
     categoryItems.dropdown.push(
-      <li onClick={handleClick}>
+      <li key={category} onClick={handleClick}>
         <Link
           key={category}
           href={`?category=${category}`}
-          // passHref
           className={`hover:bg-accent hover:bg-opacity-20 ${
             current === category
               ? "dropdown-item-active pointer-events-none bg-accent bg-opacity-40"
@@ -76,9 +75,9 @@ const CategoryFilter = ({ current, categories }: CategoryFilterProps) => {
         <div
           tabIndex={0}
           role="button"
-          className="btn btn-sm border-accent border-opacity-10 bg-accent bg-opacity-10 hover:bg-accent hover:bg-opacity-20"
+          className="btn btn-sm border-accent border-opacity-10 bg-accent bg-opacity-10 text-base hover:bg-accent hover:bg-opacity-20"
         >
-          Categories
+          {current === "All" ? "Categories" : current}
           <PiCaretDownFill size={18} />
         </div>
         <ul

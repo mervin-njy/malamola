@@ -2,7 +2,7 @@ import { Product } from "@prisma/client";
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import PriceTag from "../PriceTag";
+import PriceTag from "../badges/PriceTag";
 import { formatCategory, formatImageUrl, getAge } from "@/app/helper/format";
 
 // types ----------------------------------------------------------------------------------------------

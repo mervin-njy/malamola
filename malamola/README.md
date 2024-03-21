@@ -40,11 +40,11 @@ TODO:
 
 - All products filter to other categories w/ tabs:
     . product page
-    . inventory (admin) page
+    . inventory (admin) page (DONE)
     . sort () => 'Past' least priority, else 'CreatedAt' top priority
 
 - product display:
-    . wish / enquire / order for individual products
+    . wish / enquire / order for individual products (DONE for admin)
     . display options with button => smoothen animation / use option toggles
     . price display toggle => ProductsPrice SGD || TWD
 

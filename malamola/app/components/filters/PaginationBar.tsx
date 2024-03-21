@@ -41,7 +41,7 @@ const PaginationBar = ({ currentPage, totalPages }: PaginationBarProps) => {
         {currentPage > 1 && (
           <Link
             href={"?page=" + (currentPage - 1)}
-            className="text-md btn join-item btn-sm"
+            className="btn join-item btn-sm"
           >
             «
           </Link>
@@ -52,7 +52,7 @@ const PaginationBar = ({ currentPage, totalPages }: PaginationBarProps) => {
         {currentPage < totalPages && (
           <Link
             href={"?page=" + (currentPage + 1)}
-            className="text-md btn join-item btn-sm"
+            className="btn join-item btn-sm"
           >
             »
           </Link>

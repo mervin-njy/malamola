@@ -7,17 +7,15 @@ import React, { useState } from "react";
 import {
   IoMdArrowDropleftCircle,
   IoMdArrowDroprightCircle,
-  IoMdInformationCircle,
 } from "react-icons/io";
-import { MdFavorite } from "react-icons/md";
-import { BiSolidPurchaseTag } from "react-icons/bi";
-import PriceTag from "@/app/components/PriceTag";
+import PriceTag from "@/app/components/badges/PriceTag";
 import {
   formatCategory,
   formatImageUrl,
   formatDate,
   getAge,
 } from "@/app/helper/format";
+import AdminProductStatus from "@/app/components/badges/AdminProductStatus";
 
 // types ----------------------------------------------------------------------------------------------
 interface ProductCardProps {
@@ -160,27 +158,10 @@ const AdminProductCard = ({ product, options }: ProductCardProps) => {
 
         {/* 8. Option demand display */}
         <div className="flex justify-start gap-2">
-          {/* a. option wished for by users */}
-          <div className="badge badge-error badge-outline p-3">
-            <MdFavorite size={20} />
-            <p className="ml-2 font-bold tracking-wider text-primary">
-              {options[optionIndex].wishedFor}
-            </p>
-          </div>
-          {/* b. option requested by users */}
-          <div className="badge badge-info badge-outline p-3">
-            <IoMdInformationCircle size={20} />
-            <p className="ml-2 font-bold tracking-wider text-primary">
-              {options[optionIndex].requested}
-            </p>
-          </div>
-          {/* c. option ordered by users */}
-          <div className="badge badge-success badge-outline p-3">
-            <BiSolidPurchaseTag size={20} />
-            <p className="ml-2 font-bold tracking-wider text-primary">
-              {options[optionIndex].ordered}
-            </p>
-          </div>
+          <AdminProductStatus
+            action={options[optionIndex].action}
+            amount={options[optionIndex].wishedFor}
+          />
         </div>
       </div>
     </div>
