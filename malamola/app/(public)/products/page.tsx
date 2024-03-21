@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { GrFilter, GrSort } from "react-icons/gr";
-import PaginationBar from "@/app/components/products/PaginationBar";
+import PaginationBar from "@/app/components/filters/PaginationBar";
 import { formatImageUrl } from "@/app/helper/format";
 
 // types ----------------------------------------------------------------------------------------------

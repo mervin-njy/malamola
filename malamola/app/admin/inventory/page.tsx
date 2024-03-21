@@ -4,9 +4,9 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React from "react";
-import { GrFilter, GrSort } from "react-icons/gr";
 import AddProductCard from "./AddProductCard";
-import PaginationBar from "@/app/components/products/PaginationBar";
+import PaginationBar from "@/app/components/filters/PaginationBar";
+import CategoryFilter from "@/app/components/filters/CategoryFilter";
 
 // metadata --------------------------------------------------------------------------------------------------
 export const metadata = {
@@ -15,20 +15,21 @@ export const metadata = {
 
 // types -----------------------------------------------------------------------------------------------------
 interface ProductsPageProps {
-  searchParams: { page: string };
+  // get searchParams for page number and category filter
+  searchParams: { page: string; category: string };
 }
 
 const ManageInventoryPage = async ({
-  searchParams: { page = "1" }, // get ?page= searchParams from PaginationBar Links => default at 1 onMount
+  searchParams: { page = "1", category = "All" }, // get ?page= searchParams from PaginationBar Links => default at 1 onMount
 }: ProductsPageProps) => {
   // variables -----------------------------------------------------------------------------------------------
-  // 1. session validation => ADMIN
+  // 1. session validation => ADMIN ----------------------------------------------------------
   const session = await getServerSession(authOptions);
   // restrict access to only those who are logged in => TO CHANGE TO ADMIN
   if (session?.user.role !== "admin")
     redirect("/api/auth/signin?callbackUrl=/admin/inventory"); // route to request sign-in
 
-  // 2. generate page variables
+  // 2. generate page variables --------------------------------------------------------------
   const currentPage = parseInt(page);
 
   const productCards = 5;
@@ -38,10 +39,13 @@ const ManageInventoryPage = async ({
 
   const totalPages = Math.ceil(totalItemCount / productCards);
 
-  // 3. products for display to edit
+  // 2. generate filter variables ------------------------------------------------------------
+
+  // 4. products for display to edit ---------------------------------------------------------
   // TODO: add filter options
   const products = await prisma.product.findMany({
     orderBy: { id: "desc" },
+    // where: { category: equals: filterCategory } // based on filterCategory state
     skip: (currentPage - 1) * productCards,
     take: productCards,
     include: { Options: true },
@@ -58,26 +62,19 @@ const ManageInventoryPage = async ({
           <div className="flex flex-row items-center justify-between pl-4 tracking-wider">
             {/* 1. HEADING */}
             <h1 className="text-3xl font-bold">Manage your Products</h1>
+            
             {/* <RiFilter2Fill /> */}
-
             {/* 2. FILTER TABS - categories */}
-            <div className="flex gap-2 rounded-xl text-xl font-light">
-              <h2 className="btn btn-ghost btn-sm w-[7.5rem] border-base-300 normal-case">
-                All
-              </h2>
-              <h2 className="btn btn-ghost btn-sm w-[7.5rem] border-base-300 normal-case">
-                Mola Gang
-              </h2>
-              <h2 className="btn btn-ghost btn-sm w-[7.5rem] border-base-300 normal-case">
-                Seasonal
-              </h2>
-              <h2 className="btn btn-ghost btn-sm w-[7.5rem] border-base-300 normal-case">
-                DIY
-              </h2>
-              <h2 className="btn btn-ghost btn-sm w-[7.5rem] border-base-300 normal-case">
-                Past Projects
-              </h2>
-            </div>
+            <CategoryFilter
+              current={category}
+              categories={[
+                "All",
+                "Mola Gang",
+                "Seasonal",
+                "DIY",
+                "Past Projects",
+              ]}
+            />
           </div>
 
           <div className="my-6 grid grid-cols-1 gap-4 px-4 tablet:grid-cols-2 laptop:grid-cols-3">
