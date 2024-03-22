@@ -38,8 +38,16 @@ Deployment: package.json => scripts => see vercel caching problem with prisma
 <!--
 TODO:
 
+1. price toggle
+2. sorting (past projects last, newest first)
+3. language (add with toggle)
+4. product option display (hover over selection to update other elements)
+5. product tags
+6. product actions (wish/enquire/order)
+. cart actions
+
 - All products filter to other categories w/ tabs:
-    . product page
+    . product page (DONE)
     . inventory (admin) page (DONE)
     . sort () => 'Past' least priority, else 'CreatedAt' top priority
 

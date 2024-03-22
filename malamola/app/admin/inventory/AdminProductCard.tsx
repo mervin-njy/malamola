@@ -58,7 +58,7 @@ const AdminProductCard = ({ product, options }: ProductCardProps) => {
           alt={`option-${options[optionIndex].name}`}
           width={800}
           height={400}
-          className="h-80 rounded-[2rem] object-cover p-6 tablet:h-56 tablet:rounded-none tablet:p-0"
+          className="h-80 rounded-[2rem] object-cover tablet:h-72 tablet:rounded-none tablet:p-0"
         />
         {/* render buttons for option selection if there are more than 1 */}
         {options.length > 1 && (

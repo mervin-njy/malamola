@@ -84,7 +84,7 @@ const ManageInventoryPage = async ({
           <AddProductCard />
 
           {/* 4. PRODUCT LIST DISPLAY || 0 products description */}
-          {products.length > 1 ? (
+          {products.length > 0 ? (
             products.map((product) => (
               <AdminProductCard
                 product={product}
