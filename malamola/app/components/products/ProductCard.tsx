@@ -10,6 +10,7 @@ import {
   IoMdArrowDroprightCircle,
 } from "react-icons/io";
 import PriceTag from "../badges/PriceTag";
+import BtnProductOptions from "../buttons/BtnProductOptions";
 
 // types ----------------------------------------------------------------------------------------------
 interface ProductCardProps {
@@ -60,33 +61,6 @@ const ProductCard = ({ product, options }: ProductCardProps) => {
             NEW
           </div>
         )}
-        {/* render buttons for option selection if there are more than 1 */}
-        {options.length > 1 && (
-          <div>
-            <button
-              onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
-                handleOptionChange("minus")
-              }
-              className="absolute bottom-0 left-0 top-0 block cursor-pointer p-2 ease-in-out"
-            >
-              <IoMdArrowDropleftCircle
-                size={25}
-                className="fill-base-200 hover:fill-base-100"
-              />
-            </button>
-            <button
-              onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
-                handleOptionChange("plus")
-              }
-              className="absolute bottom-0 right-0 top-0 block cursor-pointer p-2 ease-in-out"
-            >
-              <IoMdArrowDroprightCircle
-                size={25}
-                className="fill-base-200 hover:fill-base-100"
-              />
-            </button>
-          </div>
-        )}
       </figure>
 
       {/* TODO: change to LINK with href={"/products/" + product.id} */}
@@ -119,6 +93,13 @@ const ProductCard = ({ product, options }: ProductCardProps) => {
           />
 
           {/* 7. Options (if applicable) */}
+          {options.length > 1 && (
+            <BtnProductOptions
+              options={options}
+              optionIndex={optionIndex}
+              setOptionIndex={setOptionIndex}
+            />
+          )}
         </div>
       </div>
     </div>
