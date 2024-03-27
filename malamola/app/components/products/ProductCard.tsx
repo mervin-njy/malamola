@@ -52,8 +52,14 @@ const ProductCard = ({ product, options }: ProductCardProps) => {
           alt={`option-${options[optionIndex].name}`}
           width={800}
           height={400}
-          className="rounded-[2rem] object-cover tablet:h-72 tablet:rounded-none tablet:p-0"
+          className="rounded-[2rem] object-cover tablet:h-72 tablet:p-0"
         />
+        {/* 2. isNew tag */}
+        {isNew && (
+          <div className="attentionGrab badge badge-info absolute right-4 top-4 p-3">
+            NEW
+          </div>
+        )}
         {/* render buttons for option selection if there are more than 1 */}
         {options.length > 1 && (
           <div>
@@ -86,31 +92,33 @@ const ProductCard = ({ product, options }: ProductCardProps) => {
       {/* TODO: change to LINK with href={"/products/" + product.id} */}
       <div className="card-body w-full p-6">
         {/* PRODUCT HEADER */}
-        {/* 2. title */}
+        {/* 3. title */}
         <div className="flex items-center justify-between">
           <h3 className="card-title tracking-wider">{product.name} </h3>
-          {/* 3. category */}
+          {/* 4. category */}
           <h4 className="badge badge-accent badge-outline rounded-md p-3 font-bold italic tracking-wider">
             {formatCategory("db", product.category)}
           </h4>
         </div>
 
-        {/* 4. description */}
+        {/* 5. description */}
         <p className="line-clamp-2 max-h-10 text-sm tracking-wide laptop:line-clamp-3 laptop:max-h-24">
           {product.description}
         </p>
 
         <div className="mt-2 flex justify-between">
-          {/* 5. price */}
+          {/* 6. price */}
           <PriceTag
             price={options[optionIndex].priceSGD}
             currency="SGD"
-            className="badge-ghost rounded-md p-3"
+            className={`badge-ghost rounded-md p-3 ${
+              options[optionIndex].action === "Order"
+                ? "font-semibold"
+                : "text-opacity-50"
+            }`}
           />
-          {/* 6. isNew */}
-          {isNew && (
-            <div className="attentionGrab badge badge-info p-3">NEW</div>
-          )}
+
+          {/* 7. Options (if applicable) */}
         </div>
       </div>
     </div>
