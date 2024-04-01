@@ -69,6 +69,7 @@ const AddProductPage = () => {
     setProductFields((prevFields) => ({ ...prevFields, [id]: value }));
   };
 
+  // server action => addProduct
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {

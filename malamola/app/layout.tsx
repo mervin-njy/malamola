@@ -3,7 +3,8 @@ import type { Metadata } from "next"; // SEO tool to optimize for search engines
 import { Roboto } from "next/font/google";
 import NavBar from "./Navbar/NavBar";
 import Footer from "./Footer";
-import SessionProvider from "./SessionProvider"; // wrap this to ensure all session info accessible in all pages => but because this is a server component, we export from a client component
+import SessionProvider from "./providers/SessionProvider"; // wrap this to ensure all session info accessible in all pages => but because this is a server component, we export from a client component
+import StoreProvider from "./providers/StoreProvider";
 
 const roboto = Roboto({
   weight: ["100", "300", "400", "700", "900"],
@@ -33,23 +34,27 @@ export const metadata: Metadata = {
 //  The ratio of your og:image isn't optimal
 //  Image size is optimal (<8mb)
 
-export default function RootLayout({
-  children,
-}: {
+// types ------------------------------------------------------------------------------------------------------
+interface RootLayoutProps {
   children: React.ReactNode;
-}) {
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
+  // render layout --------------------------------------------------------------------------------------------
   return (
     <html lang="en" data-theme="molaTheme">
       <body
         className={`${roboto.className} flex min-h-screen min-w-[50rem] flex-col justify-between`}
       >
-        <SessionProvider>
-          <NavBar />
-          <main className="m-auto min-h-screen w-full max-w-7xl py-10">
-            {children}
-          </main>
-          <Footer />
-        </SessionProvider>
+        <StoreProvider>
+          <SessionProvider>
+            <NavBar />
+            <main className="m-auto min-h-screen w-full max-w-7xl py-10">
+              {children}
+            </main>
+            <Footer />
+          </SessionProvider>
+        </StoreProvider>
       </body>
     </html>
   );

@@ -11,6 +11,8 @@ import {
 } from "react-icons/io";
 import PriceTag from "../badges/PriceTag";
 import BtnProductOptions from "../buttons/BtnProductOptions";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/state/store";
 
 // types ----------------------------------------------------------------------------------------------
 interface ProductCardProps {
@@ -22,6 +24,8 @@ const ProductCard = ({ product, options }: ProductCardProps) => {
   // variables ----------------------------------------------------------------------------------------
   // give a NEW icon beside recently updated products (within 7 days => convert from ms)
   const isNew = getAge(product.createdAt) < 7;
+
+  const language = useSelector((state: RootState) => state.language.current);
 
   // hooks --------------------------------------------------------------------------------------------
   const [optionIndex, setOptionIndex] = useState<number>(0); // to track option index for rendering within card
@@ -83,8 +87,12 @@ const ProductCard = ({ product, options }: ProductCardProps) => {
         <div className="mt-2 flex justify-between">
           {/* 6. price */}
           <PriceTag
-            price={options[optionIndex].priceSGD}
-            currency="SGD"
+            price={
+              language === "en"
+                ? options[optionIndex].priceSGD
+                : options[optionIndex].priceTWD
+            }
+            currency={language === "en" ? "SGD" : "TWD"}
             className={`badge-ghost rounded-md p-3 ${
               options[optionIndex].action === "Order"
                 ? "font-semibold"

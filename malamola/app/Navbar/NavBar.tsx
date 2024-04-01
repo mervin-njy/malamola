@@ -4,16 +4,19 @@ import Link from "next/link";
 import Image from "next/image";
 import InputSearchQuery from "./InputSearchQuery";
 import NavLinks from "./NavLinks";
-import { getCart } from "@/lib/db/cart";
 import BtnShoppingCart from "./cart/BtnShoppingCart";
 import BtnUserOptions from "./BtnUserOptions";
+import { getCart } from "@/lib/db/cart";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
+import ToggleLanguage from "./ToggleLanguage";
+
+// types -----------------------------------------------------------------------------------------------------
 
 // this server component fetches data & contains 3 client component (NavLinks, InputSearchQuery, BtnShoppingCart)
 const NavBar = async () => {
   // variables -----------------------------------------------------------------------------------------------
-  // fetch on server component
+  // server side data fetching for session and cart info
   // const cart = await getCart();
   const session = await getServerSession(authOptions);
 
@@ -38,12 +41,17 @@ const NavBar = async () => {
         </div>
 
         {/* RIGHT: profile helper links */}
-        <div className="flex items-center tracking-wider text-secondary tablet:gap-1">
+        <div className="flex items-center tracking-wider text-secondary tablet:gap-2">
           {/* 1. formData => redirect to /search query page */}
           <InputSearchQuery />
-          {/* 2. cart Btn + dropdown => client component to dynamically display cart size */}
+
+          {/* 2. language toggle */}
+          <ToggleLanguage />
+
+          {/* 3. cart Btn + dropdown => client component to dynamically display cart size */}
           {/* <BtnShoppingCart cart={cart} /> */}
-          {/* 3. user profile + dropdown => client component to dynamically show user session options */}
+
+          {/* 4. user profile + dropdown => client component to dynamically show user session options */}
           <BtnUserOptions session={session} />
         </div>
       </nav>
