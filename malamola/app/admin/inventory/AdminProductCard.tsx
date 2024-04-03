@@ -141,13 +141,10 @@ const AdminProductCard = ({ product, options }: ProductCardProps) => {
           {/* 6. price SGD & TWD */}
           <div className="flex gap-2">
             <PriceTag
-              price={options[optionIndex].priceSGD}
-              currency="SGD"
-              className="badge-ghost rounded-md p-3"
-            />
-            <PriceTag
-              price={options[optionIndex].priceTWD}
-              currency="TWD"
+              prices={[
+                options[optionIndex].priceSGD,
+                options[optionIndex].priceTWD,
+              ]}
               className="badge-ghost rounded-md p-3"
             />
           </div>

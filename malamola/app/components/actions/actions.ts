@@ -10,14 +10,16 @@ import { revalidatePath } from "next/cache";
 
 export const updateProductQuantity = async (
   revalidateUrl: string,
-  productId: string,
+  productOptionID: string,
   quantity: number,
 ) => {
   // 1. user's cart (whether existing or new)
   const cart = (await getCart()) ?? (await createCart()); // creates cart if get cart returns null
 
   // 2. check if the item to change qty of (cartItem) is already in the cart
-  const articleInCart = cart.items.find((item) => item.productId === productId);
+  const articleInCart = cart.items.find(
+    (item) => item.productOptionID === productOptionID,
+  );
 
   // 3. update cartItem schema
   if (quantity === 0) {
@@ -62,14 +64,14 @@ export const updateProductQuantity = async (
     } else {
       // c. CREATE cartItem w/ selected quantity (if cartItem doesn't) associated w/ the cart & product
       // await prisma.cartItem.create({
-      //   data: { cartId: cart.id, productId, quantity },
+      //   data: { cartId: cart.id, productOptionID, quantity },
       // });
 
       await prisma.cart.update({
         where: { id: cart.id },
         data: {
           items: {
-            create: { productId, quantity },
+            create: { productOptionID, quantity, status: "InCart" },
           },
         },
       });

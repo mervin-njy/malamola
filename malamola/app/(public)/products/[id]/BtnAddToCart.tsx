@@ -1,10 +1,11 @@
 "use client";
+
 import React, { useState, useTransition } from "react";
 import { RiShoppingCart2Fill } from "react-icons/ri";
 import ToastSuccess from "./ToastSuccess";
 
 interface BtnAddToCartProps {
-  productId: string;
+  productOptionID: string;
   updateProductQuantity: (
     revalidateUrl: string,
     productId: string,
@@ -13,7 +14,7 @@ interface BtnAddToCartProps {
 }
 
 const BtnAddToCart = ({
-  productId,
+  productOptionID,
   updateProductQuantity,
 }: BtnAddToCartProps) => {
   // react hooks ---------------------------------------------------------------------------------------------
@@ -29,7 +30,7 @@ const BtnAddToCart = ({
     setSuccess(false);
     startTransition(async () => {
       // TODO: change 1 to quantity according to dropdown select
-      await updateProductQuantity("/product/[id]", productId, 1);
+      await updateProductQuantity("/product/[id]", productOptionID, 1);
       setSuccess(true);
 
       // // account for multiple btn click entries for many items added
@@ -49,7 +50,7 @@ const BtnAddToCart = ({
 
       {/* Pending: loading indicator */}
       {isPending && (
-        <span className="ml-4 loading loading-ring loading-md text-info" />
+        <span className="loading loading-ring loading-md ml-4 text-info" />
       )}
 
       {/* {toasts.length > 0 &&

@@ -17,7 +17,7 @@ import ToggleLanguage from "./ToggleLanguage";
 const NavBar = async () => {
   // variables -----------------------------------------------------------------------------------------------
   // server side data fetching for session and cart info
-  // const cart = await getCart();
+  const cart = await getCart();
   const session = await getServerSession(authOptions);
 
   // render component ----------------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ const NavBar = async () => {
           <ToggleLanguage />
 
           {/* 3. cart Btn + dropdown => client component to dynamically display cart size */}
-          {/* <BtnShoppingCart cart={cart} /> */}
+          <BtnShoppingCart cart={cart} />
 
           {/* 4. user profile + dropdown => client component to dynamically show user session options */}
           <BtnUserOptions session={session} />

@@ -25,18 +25,19 @@ Apart from the products on display, the platform is meant to be educational and 
    ```bash
    npx create-next-app@latest                                           # 1. nextjs
 
-   npm i -D daisyui@latest                                              # 2. daisyUI (UI utilities)
-   npm install react-icons --save                                       # 3. react-icons
-   npm install classnames                                               # 4. classnames
-   npm i prettier eslint-config-prettier prettier-plugin-tailwindcss    # 5. tailwind & prettier formatting
+   npm i prettier eslint-config-prettier prettier-plugin-tailwindcss    # 2. tailwind & prettier formatting
+   npm i -D daisyui@latest                                              # 3. daisyUI (UI utilities)
+   npm install react-icons --save                                       # 4. react-icons
+   npm i --save react-flagkit                                           # 5. country flag icons
+   npm install classnames                                               # 6. classnames
 
-   npm i prisma @prisma/client                                          # 6. prisma (db management)
-   npm i next/auth @auth/prisma-adapter                                 # 7. next-auth
+   npm i prisma @prisma/client                                          # 7. prisma (db management)
+   npm i next/auth @auth/prisma-adapter                                 # 8. next-auth
 
-   npm i zod                                                            # 8. zod (validation)
-   npm i react-hook-form                                                # 9. react-hook-form
+   npm i zod                                                            # 9. zod (validation)
+   npm i react-hook-form                                                # 10. react-hook-form
 
-   npm i react-redux @reduxjs/toolkit                                   # 10. react redux toolkit (state management)
+   npm i react-redux @reduxjs/toolkit                                   # 11. react redux toolkit (state management)
    ```
 
 4. **Prisma commands**
@@ -49,12 +50,13 @@ Apart from the products on display, the platform is meant to be educational and 
    ```
 
 5. **Create .env in /app folder**
-   Ensure following variables match the corresponding credentials on mongodb and google cloud (auth provider):
-   DATABASE_URL
-   GOOGLE_CLIENT_ID
-   GOOGLE_CLIENT_SECRET
-   NEXTAUTH_URL
-   NEXTAUTH_SECRET
+
+Ensure following variables match the corresponding credentials on mongodb and google cloud (auth provider):
+- DATABASE_URL
+- GOOGLE_CLIENT_ID
+- GOOGLE_CLIENT_SECRET
+- NEXTAUTH_URL
+- NEXTAUTH_SECRET
 
 ### To run server
 
@@ -80,8 +82,10 @@ Apart from the products on display, the platform is meant to be educational and 
 4. Prisma ORM
    => see prisma extension at lib/db/prisma.ts
 
-// https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/vercel-caching-issue
-Deployment: package.json => scripts => see vercel caching problem with prisma
+## CREDITS
+
+[React](https://react-icons.github.io/react-icons/)
+[React-flagkit](https://github.com/stephenway/react-flagkit)
 
 <!--
 TODO:

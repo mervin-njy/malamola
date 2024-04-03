@@ -1,14 +1,21 @@
+"use client";
+
 import { formatPrice } from "@/app/helper/format";
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/state/store";
 
 // types -----------------------------------------------------------------------------------------------------
 interface PriceTagProps {
-  price: number;
-  currency: string;
+  prices: number[];
   className?: string;
 }
 
-const PriceTag = ({ price, currency, className }: PriceTagProps) => {
+const PriceTag = ({ prices, className }: PriceTagProps) => {
+  // variables -----------------------------------------------------------------------------------------------
+  const language = useSelector((state: RootState) => state.language.current);
+  const price = language === "en" ? prices[0] : prices[1];
+  const currency = language === "en" ? "SGD" : "TWD";
   // render component ----------------------------------------------------------------------------------------
   return (
     <span className={`badge ${className}`}>{formatPrice(price, currency)}</span>

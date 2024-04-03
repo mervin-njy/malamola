@@ -30,24 +30,10 @@ const ProductCard = ({ product, options }: ProductCardProps) => {
   // hooks --------------------------------------------------------------------------------------------
   const [optionIndex, setOptionIndex] = useState<number>(0); // to track option index for rendering within card
 
-  // event handlers -----------------------------------------------------------------------------------
-  const handleOptionChange = (next: string) => {
-    // generate options for display
-    setOptionIndex((prevIndex: number) => {
-      if (next === "plus") {
-        return prevIndex === options.length - 1 ? 0 : prevIndex + 1;
-      } else if (next === "minus") {
-        return prevIndex === 0 ? options.length - 1 : prevIndex - 1;
-      }
-      // if no change => return current index
-      return prevIndex;
-    });
-  };
-
   // render component ---------------------------------------------------------------------------------
   return (
-    <div
-      // Link: href={"/products/" + product.id}
+    <Link
+      href={"/products/" + product.id}
       className="flex w-full flex-row rounded-xl bg-neutral bg-opacity-5 transition-shadow laptop:card hover:shadow-xl"
     >
       <figure className="relative w-8/12 laptop:w-full">
@@ -87,12 +73,10 @@ const ProductCard = ({ product, options }: ProductCardProps) => {
         <div className="mt-2 flex justify-between">
           {/* 6. price */}
           <PriceTag
-            price={
-              language === "en"
-                ? options[optionIndex].priceSGD
-                : options[optionIndex].priceTWD
-            }
-            currency={language === "en" ? "SGD" : "TWD"}
+            prices={[
+              options[optionIndex].priceSGD,
+              options[optionIndex].priceTWD,
+            ]}
             className={`badge-ghost rounded-md p-3 ${
               options[optionIndex].action === "Order"
                 ? "font-semibold"
@@ -110,7 +94,7 @@ const ProductCard = ({ product, options }: ProductCardProps) => {
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -8,17 +8,18 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 // 0. export types for use at multiple locations
 export type CartWithProducts = Prisma.CartGetPayload<{
   // a. this extends the existing Cart schema w/ the cartItems along w/ product info
-  include: { items: { include: { product: true } } }; // same as cart query at 1b.
+  include: { items: { include: { productOption: true } } }; // same as cart query at 1b.
 }>;
 
 export type CartItemWithProduct = Prisma.CartItemGetPayload<{
-  include: { product: true };
+  include: { productOption: true };
 }>;
 
 export type ShoppingCart = CartWithProducts & {
   // b. this extends Cart type in prisma schema (along w/ 0a.) that we will need in 1c.
   size: number;
-  subtotal: number;
+  subtotalSGD: number;
+  subtotalTWD: number;
 };
 
 // FUNCTIONS ------------------------------------------------------------------------------------------------------------------------------------------
@@ -34,7 +35,7 @@ export const getCart = async (): Promise<ShoppingCart | null> => {
     cart = await prisma.cart.findFirst({
       // only the first cart since user may have multiple
       where: { userId: session.user.id },
-      include: { items: { include: { product: true } } }, // pass cartItems into cart + pass product info into cartItem (via their id)
+      include: { items: { include: { productOption: true } } }, // pass cartItems into cart + pass product info into cartItem (via their id)
     });
   } else {
     // b. Anonymous Cart --------------------------------------------------------------------
@@ -45,7 +46,7 @@ export const getCart = async (): Promise<ShoppingCart | null> => {
     cart = localCartId
       ? await prisma.cart.findUnique({
           where: { id: localCartId },
-          include: { items: { include: { product: true } } }, // pass cartItems into cart + pass product info into cartItem (via their id)
+          include: { items: { include: { productOption: true } } }, // pass cartItems into cart + pass product info into cartItem (via their id)
         })
       : null;
   }
@@ -56,8 +57,12 @@ export const getCart = async (): Promise<ShoppingCart | null> => {
   return {
     ...cart,
     size: cart.items.reduce((acc, i) => acc + i.quantity, 0),
-    subtotal: cart.items.reduce(
-      (acc, i) => acc + i.quantity * i.product.price,
+    subtotalSGD: cart.items.reduce(
+      (acc, i) => acc + i.quantity * i.productOption.priceSGD,
+      0,
+    ),
+    subtotalTWD: cart.items.reduce(
+      (acc, i) => acc + i.quantity * i.productOption.priceTWD,
       0,
     ),
   };
@@ -90,7 +95,8 @@ export const createCart = async (): Promise<ShoppingCart> => {
     ...newCart,
     items: [],
     size: 0,
-    subtotal: 0,
+    subtotalSGD: 0,
+    subtotalTWD: 0,
   };
 };
 
@@ -135,7 +141,7 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
       const mergedCartItems = mergeCartItems(localCart.items, userCart.items);
       // (step 2)
       await tx.cartItem.deleteMany({
-        where: { cartId: userCart.id }, // delete all items that belong to userCart => before replacing with mergedCartItems
+        where: { cartID: userCart.id }, // delete all items that belong to userCart => before replacing with mergedCartItems
       });
 
       // await tx.cartItem.createMany({
@@ -154,8 +160,9 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
           items: {
             createMany: {
               data: mergedCartItems.map((i) => ({
-                productId: i.productId,
+                productOptionID: i.productOptionID,
                 quantity: i.quantity,
+                status: "InCart",
               })),
             },
           },
@@ -174,8 +181,9 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
               data: localCart.items.map((i) => ({
                 // ignore id again
                 // ignore cartId => auto generated
-                productId: i.productId,
+                productOptionID: i.productOptionID,
                 quantity: i.quantity,
+                status: "InCart",
               })),
             },
           },
@@ -197,7 +205,9 @@ function mergeCartItems(...cartItems: CartItem[][]): CartItem[] {
   return cartItems.reduce((acc, items) => {
     items.forEach((item) => {
       // get existing item that is already in accumulating mergeCartItem (acc)
-      const existingItem = acc.find((i) => i.productId === item.productId);
+      const existingItem = acc.find(
+        (i) => i.productOptionID === item.productOptionID,
+      );
 
       if (existingItem) {
         // if item is in mergedCart => combine quantity

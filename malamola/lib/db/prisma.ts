@@ -12,16 +12,15 @@ const globalForPrisma = globalThis as unknown as {
 
 const prismaBase = globalForPrisma.prisma ?? prismaClientSingleton();
 // include prisma extension to change updatedAt timestamp
-export const prisma = prismaBase;
-// export const prisma = prismaBase.$extends({
-//   query: {
-//     cart: {
-//       async update({ args, query }) {
-//         args.data = { ...args.data, updatedAt: new Date() };
-//         return query(args);
-//       },
-//     },
-//   },
-// });
+export const prisma = prismaBase.$extends({
+  query: {
+    cart: {
+      async update({ args, query }) {
+        args.data = { ...args.data, updatedAt: new Date() };
+        return query(args);
+      },
+    },
+  },
+});
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prismaBase;

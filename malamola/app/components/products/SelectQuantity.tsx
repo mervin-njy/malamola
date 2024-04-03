@@ -4,20 +4,19 @@ import React, { useState } from "react";
 
 interface SelectQuantityProps {
   quantity: number;
-  stock: number;
+  max: number;
 }
 
-const SelectQuantity = ({ quantity, stock }: SelectQuantityProps) => {
+const SelectQuantity = ({ quantity, max }: SelectQuantityProps) => {
   // react hook ----------------------------------------------------------------------------------------------
 
-
   // functions -----------------------------------------------------------------------------------------------
-  const getQuantityOptions = (max: number, stock: number) => {
+  const getQuantityOptions = (max: number) => {
     // generate options for each cartItem quantity based on stock left
     const options: JSX.Element[] = [];
     for (let i = 1; i <= max; i++) {
       options.push(
-        i <= stock ? (
+        i <= max ? (
           <option key={i} value={i} className="">
             {i}
           </option>
@@ -56,7 +55,7 @@ const SelectQuantity = ({ quantity, stock }: SelectQuantityProps) => {
         defaultValue={quantity}
         onChange={handleQuantityChange}
       >
-        {getQuantityOptions(10, stock)}
+        {getQuantityOptions(max)}
       </select>
     </div>
   );

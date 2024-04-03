@@ -5,6 +5,8 @@ import { formatPrice } from "@/app/helper/format";
 import { MdClose } from "react-icons/md";
 import Link from "next/link";
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/state/store";
 
 // types ----------------------------------------------------------------------------------------------
 interface BtnShoppingCartProps {
@@ -12,10 +14,18 @@ interface BtnShoppingCartProps {
 }
 
 const DropdownCart = ({ cart }: BtnShoppingCartProps) => {
+  // variables ----------------------------------------------------------------------------------------
+  const language = useSelector((state: RootState) => state.language.current);
   // functions ----------------------------------------------------------------------------------------
   const closeDropdown = () => {
     const elem = document.activeElement as HTMLElement;
     if (elem) elem.blur(); // this is important to close BtnshoppingCart dropdown when user is redirected away from the page
+  };
+
+  const displayPrice = (prices: number[]) => {
+    const price = language === "en" ? prices[0] : prices[1];
+    const currency = language === "en" ? "SGD" : "TWD";
+    return formatPrice(price, currency);
   };
 
   // render component ---------------------------------------------------------------------------------
@@ -47,9 +57,14 @@ const DropdownCart = ({ cart }: BtnShoppingCartProps) => {
                 key={ind}
                 className="flex justify-between rounded-md p-1 italic odd:bg-secondary odd:bg-opacity-10"
               >
-                <span className="flex-1">{item.product.name}</span>
+                <span className="flex-1">{item.productOption.name}</span>
                 <span className="mr-4">{item.quantity} x</span>
-                <span>{formatPrice(item.product.price)}</span>
+                <span>
+                  {displayPrice([
+                    item.productOption.priceSGD,
+                    item.productOption.priceTWD,
+                  ])}
+                </span>
               </li>
             );
           })}
@@ -59,7 +74,7 @@ const DropdownCart = ({ cart }: BtnShoppingCartProps) => {
         <div className="mt-1 flex justify-between p-1">
           <span>Subtotal:</span>
           <span className="text-sm font-semibold">
-            {formatPrice(cart?.subtotal || 0)}
+            {displayPrice([cart?.subtotalSGD || 0, cart?.subtotalTWD || 0])}
           </span>
         </div>
 
