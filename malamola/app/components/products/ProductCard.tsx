@@ -5,14 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
 import { formatCategory, formatImageUrl, getAge } from "@/app/helper/format";
-import {
-  IoMdArrowDropleftCircle,
-  IoMdArrowDroprightCircle,
-} from "react-icons/io";
 import PriceTag from "../badges/PriceTag";
-import BtnProductOptions from "../buttons/BtnProductOptions";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/state/store";
+import HoverProductOptions from "./HoverProductOptions";
 
 // types ----------------------------------------------------------------------------------------------
 interface ProductCardProps {
@@ -24,8 +18,6 @@ const ProductCard = ({ product, options }: ProductCardProps) => {
   // variables ----------------------------------------------------------------------------------------
   // give a NEW icon beside recently updated products (within 7 days => convert from ms)
   const isNew = getAge(product.createdAt) < 7;
-
-  const language = useSelector((state: RootState) => state.language.current);
 
   // hooks --------------------------------------------------------------------------------------------
   const [optionIndex, setOptionIndex] = useState<number>(0); // to track option index for rendering within card
@@ -86,7 +78,7 @@ const ProductCard = ({ product, options }: ProductCardProps) => {
 
           {/* 7. Options (if applicable) */}
           {options.length > 1 && (
-            <BtnProductOptions
+            <HoverProductOptions
               options={options}
               optionIndex={optionIndex}
               setOptionIndex={setOptionIndex}

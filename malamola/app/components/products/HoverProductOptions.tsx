@@ -2,18 +2,18 @@ import { ProductOptions } from "@prisma/client";
 import React from "react";
 
 // types ----------------------------------------------------------------------------------------------
-interface BtnProductOptionsProps {
+interface HoverProductOptionsProps {
   options: ProductOptions[]; // get options from product
   optionIndex: number; // to track option index for rendering within card
   setOptionIndex: React.Dispatch<React.SetStateAction<number>>; // to change optionIndex state
 }
 
 // component takes in list of options and map buttons to change optionIndex
-const BtnProductOptions = ({
+const HoverProductOptions = ({
   options,
   optionIndex,
   setOptionIndex,
-}: BtnProductOptionsProps) => {
+}: HoverProductOptionsProps) => {
   // event handlers -----------------------------------------------------------------------------------
   const handleHover = (index: number) => {
     // change option index upon corresponding button click
@@ -43,4 +43,4 @@ const BtnProductOptions = ({
   );
 };
 
-export default BtnProductOptions;
+export default HoverProductOptions;

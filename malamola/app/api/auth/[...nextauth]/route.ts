@@ -42,9 +42,28 @@ export const authOptions: NextAuthOptions = {
   events: {
     async signIn({ user }) {
       // triggers on event - signIn => mergeCarts() w/ user that just signed in
+      // TRY: add debouncing to prevent multiple calls
+      const debounce = (fn: (...args: any[]) => void, delay: number = 300): ((...args: any[]) => void) => {
+        let timer: NodeJS.Timeout;
+        return (...args: any[]) => {
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            fn.apply(this, args);
+          }, delay);
+        };
+      };
+
+      const debouncedMergeCart = debounce(async () => {
+        await mergeAnonymousCartIntoUserCart(user.id);
+        console.log(user, "has successfully signed in.");
+      }, 500); // adjust the debounce delay as needed
+
+      debouncedMergeCart();
+
       // Offload heavy tasks to background processes or queues
       // await processHeavyTasks(user.id);
-      console.log(user, "has succesfully signed in.");
+      // await mergeAnonymousCartIntoUserCart(user.id);
+      // console.log(user, "has succesfully signed in.");
     },
   },
   theme: {
@@ -55,14 +74,8 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-async function processHeavyTasks(userId: string) {
-  // Perform heavy tasks asynchronously
-  console.log("Processing heavy tasks for user:", userId);
-  await mergeAnonymousCartIntoUserCart(userId);
-}
+const handler = NextAuth(authOptions);
 
-// const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
 
-// export { handler as GET, handler as POST };
-
-export default NextAuth(authOptions);
+// export default NextAuth(authOptions);
