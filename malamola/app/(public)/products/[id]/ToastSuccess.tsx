@@ -1,9 +1,18 @@
 import { MdClose } from "react-icons/md";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ToastSuccess = () => {
   // react hooks ---------------------------------------------------------------------------------------------
   const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    // close toast after 5 seconds
+    const timer = setTimeout(() => {
+      setIsVisible(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [isVisible]);
 
   // functions ----------------------------------------------------------------------------------------
   const closeToast = () => setIsVisible(false);

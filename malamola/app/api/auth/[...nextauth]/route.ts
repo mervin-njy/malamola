@@ -8,8 +8,9 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import { NextAuthOptions } from "next-auth";
 import { Adapter } from "next-auth/adapters";
-import NextAuth from "next-auth/next";
+import NextAuth from "next-auth"; // next-auth/next
 import GoogleProvider from "next-auth/providers/google";
+import { debounce } from "@/app/helper/debounce";
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: "database" },
@@ -42,17 +43,7 @@ export const authOptions: NextAuthOptions = {
   events: {
     async signIn({ user }) {
       // triggers on event - signIn => mergeCarts() w/ user that just signed in
-      // TRY: add debouncing to prevent multiple calls
-      const debounce = (fn: (...args: any[]) => void, delay: number = 300): ((...args: any[]) => void) => {
-        let timer: NodeJS.Timeout;
-        return (...args: any[]) => {
-          clearTimeout(timer);
-          timer = setTimeout(() => {
-            fn.apply(this, args);
-          }, delay);
-        };
-      };
-
+      // WORKS! Added debouncing to prevent multiple calls
       const debouncedMergeCart = debounce(async () => {
         await mergeAnonymousCartIntoUserCart(user.id);
         console.log(user, "has successfully signed in.");

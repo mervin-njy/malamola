@@ -8,11 +8,11 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 // 0. export types for use at multiple locations
 export type CartWithProducts = Prisma.CartGetPayload<{
   // a. this extends the existing Cart schema w/ the cartItems along w/ product info
-  include: { items: { include: { productOption: true } } }; // same as cart query at 1b.
+  include: { items: { include: { productOption: true; product: true } } }; // same as cart query at 1b.
 }>;
 
 export type CartItemWithProduct = Prisma.CartItemGetPayload<{
-  include: { productOption: true };
+  include: { productOption: true; product: true };
 }>;
 
 export type ShoppingCart = CartWithProducts & {
@@ -35,7 +35,7 @@ export const getCart = async (): Promise<ShoppingCart | null> => {
     cart = await prisma.cart.findFirst({
       // only the first cart since user may have multiple
       where: { userId: session.user.id },
-      include: { items: { include: { productOption: true } } }, // pass cartItems into cart + pass product info into cartItem (via their id)
+      include: { items: { include: { productOption: true, product: true } } }, // pass cartItems into cart + pass product info into cartItem (via their id)
     });
   } else {
     // b. Anonymous Cart --------------------------------------------------------------------
@@ -46,7 +46,9 @@ export const getCart = async (): Promise<ShoppingCart | null> => {
     cart = localCartId
       ? await prisma.cart.findUnique({
           where: { id: localCartId },
-          include: { items: { include: { productOption: true } } }, // pass cartItems into cart + pass product info into cartItem (via their id)
+          include: {
+            items: { include: { productOption: true, product: true } },
+          }, // pass cartItems into cart + pass product info into cartItem (via their id)
         })
       : null;
   }
@@ -161,6 +163,7 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
             createMany: {
               data: mergedCartItems.map((i) => ({
                 productOptionID: i.productOptionID,
+                productID: i.productID,
                 quantity: i.quantity,
                 status: "InCart",
               })),
@@ -182,6 +185,7 @@ export const mergeAnonymousCartIntoUserCart = async (userId: string) => {
                 // ignore id again
                 // ignore cartId => auto generated
                 productOptionID: i.productOptionID,
+                productID: i.productID,
                 quantity: i.quantity,
                 status: "InCart",
               })),

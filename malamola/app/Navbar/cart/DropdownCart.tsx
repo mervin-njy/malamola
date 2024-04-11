@@ -32,7 +32,7 @@ const DropdownCart = ({ cart }: BtnShoppingCartProps) => {
   return (
     <div
       tabIndex={0}
-      className="card dropdown-content card-compact z-30 mt-3 w-72 bg-base-100 shadow-md"
+      className="card dropdown-content card-compact z-30 mt-3 w-[20rem] bg-base-100 shadow-md"
     >
       {/* z index to make sure it is on top of the page */}
       <div className="card-body">
@@ -57,7 +57,12 @@ const DropdownCart = ({ cart }: BtnShoppingCartProps) => {
                 key={ind}
                 className="flex justify-between rounded-md p-1 italic odd:bg-secondary odd:bg-opacity-10"
               >
-                <span className="flex-1">{item.productOption.name}</span>
+                <p>
+                  <span className="font-semibold">{item.product.name}</span>
+                  <span>
+                    {item.productOption.name && ` - ${item.productOption.name}`}
+                  </span>
+                </p>
                 <span className="mr-4">{item.quantity} x</span>
                 <span>
                   {displayPrice([

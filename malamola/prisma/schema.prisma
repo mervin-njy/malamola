@@ -22,6 +22,9 @@ model Product {
   // RELATED MODELS -------------------------------------------------
   // (One)-Many | (Product)-ProductOptions: for linking product to multiple productOptions
   Options ProductOptions[]
+
+  // (One)-Many | Product-(CartItem): for linking product to multiple cartItems
+  CartItem CartItem[]
   // ----------------------------------------------------------------
 
   // product details
@@ -123,6 +126,10 @@ model CartItem {
   // One-(Many) | ProductOptions-(CartItem): for linking multiple cartItems to productOption
   productOptionID String         @db.ObjectId
   productOption   ProductOptions @relation(fields: [productOptionID], references: [id], onDelete: Cascade) // delete cartItem if productOption is deleted
+
+  // One-(Many) | Product-(CartItem): for linking multiple cartItems to product
+  productID String  @db.ObjectId
+  product   Product @relation(fields: [productID], references: [id])
 
   // One-(Many) | Cart-(CartItem): for linking multiple cartItems to cart
   cartID String @db.ObjectId

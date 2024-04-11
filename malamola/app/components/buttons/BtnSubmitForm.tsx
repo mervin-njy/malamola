@@ -1,7 +1,9 @@
 "use client";
+
 import React, { ComponentProps } from "react";
 import { useFormStatus } from "react-dom";
 
+// types -----------------------------------------------------------------------------------------------------
 type BtnSubmitFormProps = {
   children: React.ReactNode;
   className?: string;
@@ -15,6 +17,7 @@ const BtnSubmitForm = ({
   // experimental FormStatus => show loading status even on server component (has to be in a CSR component used in SSR component)
   const { pending } = useFormStatus();
 
+  // render component ----------------------------------------------------------------------------------------
   return (
     <button
       {...props} // this applies the remaining props, but before the important props below that have priority

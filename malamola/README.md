@@ -52,6 +52,7 @@ Apart from the products on display, the platform is meant to be educational and 
 5. **Create .env in /app folder**
 
 Ensure following variables match the corresponding credentials on mongodb and google cloud (auth provider):
+
 - DATABASE_URL
 - GOOGLE_CLIENT_ID
 - GOOGLE_CLIENT_SECRET
@@ -91,12 +92,12 @@ Ensure following variables match the corresponding credentials on mongodb and go
 TODO:
 
 1. price toggle *** DONE
-2. language (add with toggle) *** DONE - but only affects price
+2. language (add with toggle) *** DONE - but only affects price and not text
 3. sorting (past projects last, newest first)
 4. product option display (hover over selection to update other elements)
 5. product tags
 6. product actions (wish/enquire/order)
-. cart actions
+7. updateNavbar cart after mergingAnnonymousCart when logged in (debounce)
 
 - All products filter to other categories w/ tabs:
  . product page (DONE)
@@ -116,6 +117,7 @@ TODO:
 - product schema:
  . add product tags (i.e. mammal, fish, bird)
  . add imageUrl [] for group photos to display
+ . add groupPhotoUrl
 
 - product quantity updates for admin
  . order > preparing > ready > delivery > completed

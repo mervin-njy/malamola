@@ -9,6 +9,7 @@ import { updateProductQuantity } from "@/app/components/actions/actions";
 import { formatImageUrl, formatCategory } from "@/app/helper/format";
 import SelectOption from "@/app/components/products/SelectOption";
 import SelectQuantity from "@/app/components/products/SelectQuantity";
+import ProductItemQuantity from "./ProductItemQuantity";
 
 // metadata ------------------------------------------------------------------------------------------------
 export async function generateMetadata({
@@ -109,16 +110,10 @@ const ProductPage = async ({
           }`}
         />
 
-        {/* 5. Quantity to add */}
-        {/* <SelectQuantity /> => if (product.stock <= 5) { ShowStock() } */}
-        <SelectQuantity quantity={1} max={10} />
-
-        {/* 6. Button to confirm add */}
-        <BtnAddToCart
-          // TODO: change to productOptionID
-          // TODO:  btnName={(formatCategory("db", product.category) === "DIY" ? "Add to Cart" : "Preorder" )}
-          productOptionID={options[index].id}
-          updateProductQuantity={updateProductQuantity}
+        {/* 5. Quantity Selection section */}
+        <ProductItemQuantity
+          optionID={options[index].id}
+          productID={product.id}
         />
 
         {/* 7. favourite option */}

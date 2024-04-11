@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import CartEntry from "./CartEntry";
 import { updateProductQuantity } from "@/app/components/actions/actions";
-import { formatPrice } from "@/app/helper/format";
+import CartSubTotal from "./CartSubTotal";
 
 export const metadata = {
   title: "Your cart - Filly Flower Crafts",
@@ -49,13 +49,8 @@ const CartDisplay = async () => {
       {/* 3. Total + Checkout button */}
       {cart?.size !== 0 && cart?.size && (
         <div className="flex flex-col items-end">
-          <h2 className="mb-4 text-2xl font-bold tracking-wider">
-            Total:
-            <span className="ml-4 w-16">
-              {formatPrice(cart?.subtotal || 0)}
-            </span>
-          </h2>
-          <Link href={"/checkout"} className="btn btn-accent tablet:w-[200px]">
+          <CartSubTotal cart={cart} />
+          <Link href={"/checkout"} className="btn btn-accent tablet:w-[12rem]">
             Checkout
           </Link>
         </div>

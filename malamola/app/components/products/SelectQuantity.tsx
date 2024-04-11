@@ -1,14 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useTransition } from "react";
+import { updateProductQuantity } from "../actions/actions";
 
 interface SelectQuantityProps {
   quantity: number;
+  setQuantity?: React.Dispatch<React.SetStateAction<number>>;
   max: number;
+  update: boolean;
+  productOptionID: string;
+  productID: string;
 }
 
-const SelectQuantity = ({ quantity, max }: SelectQuantityProps) => {
-  // react hook ----------------------------------------------------------------------------------------------
+const SelectQuantity = ({
+  quantity,
+  setQuantity,
+  max,
+  update,
+  productOptionID,
+  productID,
+}: SelectQuantityProps) => {
+  // react hooks ---------------------------------------------------------------------------------------------
+  const [isPending, startTransition] = useTransition();
 
   // functions -----------------------------------------------------------------------------------------------
   const getQuantityOptions = (max: number) => {
@@ -40,10 +53,20 @@ const SelectQuantity = ({ quantity, max }: SelectQuantityProps) => {
     // accounts for select element OR button element with delete icon
     const newQuantity = parseInt(event.currentTarget.value);
 
-    // startTransition(async () => {
-    //   // call server action to update cartItem qty
-    //   await updateProductQuantity("/cart", product.id, newQuantity);
-    // });
+    // update local state - for non-cart page
+    !update && setQuantity && setQuantity(newQuantity);
+
+    // only update cartItem quantity when update is true - for cart page
+    update &&
+      startTransition(async () => {
+        // call server action to update cartItem qty
+        await updateProductQuantity(
+          "/cart",
+          productOptionID,
+          productID,
+          newQuantity,
+        );
+      });
   };
 
   // render component ----------------------------------------------------------------------------------------
@@ -57,6 +80,11 @@ const SelectQuantity = ({ quantity, max }: SelectQuantityProps) => {
       >
         {getQuantityOptions(max)}
       </select>
+
+      {/* loading indicator - only when cart item's quantity is updating */}
+      {update && isPending && (
+        <span className="loading loading-spinner loading-sm ml-2" />
+      )}
     </div>
   );
 };

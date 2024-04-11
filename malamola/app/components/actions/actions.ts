@@ -11,6 +11,7 @@ import { revalidatePath } from "next/cache";
 export const updateProductQuantity = async (
   revalidateUrl: string,
   productOptionID: string,
+  productID: string,
   quantity: number,
 ) => {
   // 1. user's cart (whether existing or new)
@@ -71,7 +72,7 @@ export const updateProductQuantity = async (
         where: { id: cart.id },
         data: {
           items: {
-            create: { productOptionID, quantity, status: "InCart" },
+            create: { productOptionID, productID, quantity, status: "InCart" },
           },
         },
       });

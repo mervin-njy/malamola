@@ -12,7 +12,7 @@ const CartPage = async () => {
 
   // render component ----------------------------------------------------------------------------------------
   return (
-    <div className="flex flex-col gap-5 laptop:flex-row">
+    <div className="mx-12 flex flex-col gap-5 laptop:mx-6 laptop:flex-row">
       {/* 1. Main Cart Details on the left */}
       <CartDisplay />
 

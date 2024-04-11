@@ -6,44 +6,27 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useTransition } from "react";
+import SelectQuantity from "@/app/components/products/SelectQuantity";
+import PriceTag from "@/app/components/badges/PriceTag";
+import CartEntrySubTotal from "./CartEntrySubtotal";
 
 // types -----------------------------------------------------------------------------------------------------
 interface CartEntryProps {
   cartItem: CartItemWithProduct;
   updateProductQuantity: (
     revalidateUrl: string,
-    productId: string,
+    productOptionID: string,
+    productID: string,
     quantity: number,
   ) => Promise<void>;
 }
 
 const CartEntry = ({
-  cartItem: { product, quantity },
+  cartItem: { product, productOption, quantity },
   updateProductQuantity,
 }: CartEntryProps) => {
   // react hooks ---------------------------------------------------------------------------------------------
   const [isPending, startTransition] = useTransition();
-
-  // functions -----------------------------------------------------------------------------------------------
-  const getQuantityOptions = (max: number, stock: number) => {
-    // generate options for each cartItem quantity based on stock left
-    const options: JSX.Element[] = [];
-    for (let i = 1; i <= max; i++) {
-      options.push(
-        i <= stock ? (
-          <option key={i} value={i} className="">
-            {i}
-          </option>
-        ) : (
-          <option key={i} value={i} disabled className="text-base-300">
-            {i}
-          </option>
-        ),
-      );
-    }
-
-    return options;
-  };
 
   // event handlers-------------------------------------------------------------------------------------------
   const handleQuantityChange = (
@@ -51,12 +34,17 @@ const CartEntry = ({
       | React.ChangeEvent<HTMLSelectElement>
       | React.MouseEvent<HTMLButtonElement>,
   ) => {
-    // accounts for select element OR button element with delete icon
+    // accounts for button element with delete icon
     const newQuantity = parseInt(event.currentTarget.value);
 
     startTransition(async () => {
       // call server action to update cartItem qty
-      await updateProductQuantity("/cart", product.id, newQuantity);
+      await updateProductQuantity(
+        "/cart",
+        productOption.id,
+        product.id,
+        newQuantity,
+      );
     });
   };
 
@@ -67,8 +55,8 @@ const CartEntry = ({
       <div className="my-5 flex flex-wrap items-center gap-10 rounded-xl">
         {/* Image on the left */}
         <Image
-          src={formatImageUrl(product.imageUrl)}
-          alt={product.name}
+          src={formatImageUrl(productOption.imageUrl)}
+          alt={productOption.name || product.name} // if no productOption name, fallback to product name
           width={200}
           height={200}
           className="h-44 w-6/12 rounded-lg object-cover tablet:h-56 laptop:w-5/12"
@@ -82,7 +70,7 @@ const CartEntry = ({
               href={"/products/" + product.id}
               className="text-xl font-bold"
             >
-              {product.name}
+              {`${product.name} ${productOption.name && `- ${productOption.name}`}`}
             </Link>
             {/* loading indicator */}
             {isPending && (
@@ -97,28 +85,25 @@ const CartEntry = ({
               {/* PRICE */}
               <div className="mb-3 flex flex-wrap items-center">
                 <p className="w-24 font-semibold laptop:w-20">Price:</p>
-                <p>{formatPrice(product.price)}</p>
+                <PriceTag
+                  prices={[productOption.priceSGD, productOption.priceTWD]}
+                />
               </div>
 
               {/* QUANTITY */}
-              <div className="mb-4 flex flex-wrap items-center">
-                <p className="w-24 font-semibold laptop:w-20">Quantity:</p>
-                <select
-                  className="select select-bordered select-sm w-24"
-                  defaultValue={quantity}
-                  onChange={handleQuantityChange}
-                >
-                  {getQuantityOptions(10, product.stock)}
-                </select>
-              </div>
+              <SelectQuantity
+                quantity={quantity}
+                max={10}
+                update={true}
+                productOptionID={productOption.id}
+                productID={product.id}
+              />
 
               {/* SUBTOTAL */}
-              <div className="flex flex-wrap items-center">
-                <p className="w-24 font-semibold laptop:w-20">Subtotal:</p>
-                <p className="badge badge-secondary p-3">
-                  {formatPrice(product.price * quantity)}
-                </p>
-              </div>
+              <CartEntrySubTotal
+                productOption={productOption}
+                quantity={quantity}
+              />
             </div>
 
             {/* Delete button on the right */}

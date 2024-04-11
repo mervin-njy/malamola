@@ -4,22 +4,25 @@ import React from "react";
 import { formatPrice } from "@/app/helper/format";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/state/store";
+import { ShoppingCart } from "@/lib/db/cart";
 
 // types -----------------------------------------------------------------------------------------------------
-interface PriceTagProps {
-  prices: number[];
-  className?: string;
+interface CartSubTotalProps {
+  cart: ShoppingCart | null;
 }
 
-const PriceTag = ({ prices, className }: PriceTagProps) => {
+const CartSubTotal = ({ cart }: CartSubTotalProps) => {
   // variables -----------------------------------------------------------------------------------------------
   const language = useSelector((state: RootState) => state.language.current);
-  const price = language === "en" ? prices[0] : prices[1];
+  const price = language === "en" ? cart?.subtotalSGD : cart?.subtotalTWD;
   const currency = language === "en" ? "SGD" : "TWD";
   // render component ----------------------------------------------------------------------------------------
   return (
-    <span className={`badge ${className}`}>{formatPrice(price, currency)}</span>
+    <div className="mb-4 flex flex-row text-2xl font-bold tracking-wider items-center">
+      <h2 className="mr-4">Total:</h2>
+      <h2 className="w-[12rem] text-right badge badge-lg badge-secondary p-4">{formatPrice(price || 0, currency)}</h2>
+    </div>
   );
 };
 
-export default PriceTag;
+export default CartSubTotal;

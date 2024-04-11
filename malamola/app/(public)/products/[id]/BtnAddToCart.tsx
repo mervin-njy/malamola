@@ -5,15 +5,20 @@ import { RiShoppingCart2Fill } from "react-icons/ri";
 import ToastSuccess from "./ToastSuccess";
 
 interface BtnAddToCartProps {
+  quantity: number;
+  productID: string;
   productOptionID: string;
   updateProductQuantity: (
     revalidateUrl: string,
+    productOptionID: string,
     productId: string,
     quantity: number,
   ) => Promise<void>;
 }
 
 const BtnAddToCart = ({
+  quantity,
+  productID,
   productOptionID,
   updateProductQuantity,
 }: BtnAddToCartProps) => {
@@ -30,7 +35,12 @@ const BtnAddToCart = ({
     setSuccess(false);
     startTransition(async () => {
       // TODO: change 1 to quantity according to dropdown select
-      await updateProductQuantity("/product/[id]", productOptionID, 1);
+      await updateProductQuantity(
+        "/product/[id]",
+        productOptionID,
+        productID,
+        quantity,
+      );
       setSuccess(true);
 
       // // account for multiple btn click entries for many items added
@@ -58,7 +68,7 @@ const BtnAddToCart = ({
           if (toast.display) <ToastSuccess key={ind} />;
         })} */}
 
-      {/* Success: toast to signify item added */}
+      {/* Success: toast to signify item added - close automatically in 5s */}
       {!isPending && success && <ToastSuccess />}
     </div>
   );
