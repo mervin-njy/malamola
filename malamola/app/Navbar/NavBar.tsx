@@ -1,3 +1,6 @@
+import { getCart } from "@/lib/db/cart";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/configs/auth";
 import React from "react";
 import mainLogo from "@/public/assets/fillyFlowerLogo-200.svg";
 import Link from "next/link";
@@ -6,9 +9,6 @@ import InputSearchQuery from "./InputSearchQuery";
 import NavLinks from "./NavLinks";
 import BtnShoppingCart from "./cart/BtnShoppingCart";
 import BtnUserOptions from "./BtnUserOptions";
-import { getCart } from "@/lib/db/cart";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 import ToggleLanguage from "./ToggleLanguage";
 
 // types -----------------------------------------------------------------------------------------------------

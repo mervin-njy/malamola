@@ -1,6 +1,6 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/configs/auth";
 import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/db/prisma";
 import { ProductsCategory, OptionChoices } from "@prisma/client"; // import enums
