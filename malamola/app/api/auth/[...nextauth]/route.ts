@@ -9,11 +9,11 @@ import { PrismaClient } from "@prisma/client";
 import { NextAuthOptions } from "next-auth";
 import { Adapter } from "next-auth/adapters";
 // import NextAuth from "next-auth/next"; // next-auth/next
-import nextAuth from "next-auth";
+import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { debounce } from "@/app/helper/debounce";
 
-export const authOptions: NextAuthOptions = {
+const handler = NextAuth({
   session: { strategy: "database" },
   adapter: PrismaAdapter(prisma as PrismaClient) as Adapter, // this allows us to store user info & session data in MongoDB using Prisma
   providers: [
@@ -59,9 +59,9 @@ export const authOptions: NextAuthOptions = {
     logo: "https://drive.google.com/uc?export=view&id=18mskAEdQ_tOsJrWksTmMedBCD6hiucNk", // Absolute URL to image
     buttonText: "#f3eee1", // Hex color code
   },
-};
+});
 
-const handler = nextAuth(authOptions);
+// const handler = nextAuth(authOptions);
 
 export { handler as GET, handler as POST };
 
