@@ -21,7 +21,7 @@ const ProductItemQuantity = ({
 
   // render component ----------------------------------------------------------------------------------------
   return (
-    <div>
+    <div className="flex flex-row items-center justify-between tablet:w-[20rem]">
       {/* 1. Quantity to add */}
       {/* TODO: if (productOption.action === "order") { ShowStock() } */}
       <SelectQuantity

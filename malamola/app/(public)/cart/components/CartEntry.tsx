@@ -81,9 +81,9 @@ const CartEntry = ({
           {/* Details of cartItem */}
           <div className="mt-12 flex w-60 justify-between text-sm laptop:text-base">
             {/* Options on the left */}
-            <div>
+            <div className="flex flex-col gap-3">
               {/* PRICE */}
-              <div className="mb-3 flex flex-wrap items-center">
+              <div className="flex flex-wrap items-center">
                 <p className="w-24 font-semibold laptop:w-20">Price:</p>
                 <PriceTag
                   prices={[productOption.priceSGD, productOption.priceTWD]}

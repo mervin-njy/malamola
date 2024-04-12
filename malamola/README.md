@@ -93,11 +93,23 @@ TODO:
 
 1. price toggle *** DONE
 2. language (add with toggle) *** DONE - but only affects price and not text
-3. sorting (past projects last, newest first)
-4. product option display (hover over selection to update other elements)
-5. product tags
-6. product actions (wish/enquire/order)
-7. updateNavbar cart after mergingAnnonymousCart when logged in (debounce)
+3. product option display (hover over selection to update other elements) *** DONE
+
+4. furnish details for product/[id] page:
+   - link to category filter
+   - group price + qty + BtnAddToCart
+   - product actions => Order && BtnAddToCart / Enquire && BtnEnquireProduct / Wish && BtnAddFavourite
+5. sorting (past projects last, newest first)
+
+6. Admin Update Product
+
+7. More product details (db + UI):
+   - product tags
+   - group photo URL
+   - add related products (admin inventory update function + display in product/[id])
+
+9. product actions => admin
+10. updateNavbar cart after mergingAnnonymousCart when logged in (debounce)
 
 - All products filter to other categories w/ tabs:
  . product page (DONE)
