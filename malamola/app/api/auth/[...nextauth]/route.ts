@@ -8,7 +8,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import { NextAuthOptions } from "next-auth";
 import { Adapter } from "next-auth/adapters";
-import NextAuth from "next-auth"; // next-auth/next
+// import NextAuth from "next-auth/next"; // next-auth/next
+import nextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { debounce } from "@/app/helper/debounce";
 
@@ -50,11 +51,6 @@ export const authOptions: NextAuthOptions = {
       }, 500); // adjust the debounce delay as needed
 
       debouncedMergeCart();
-
-      // Offload heavy tasks to background processes or queues
-      // await processHeavyTasks(user.id);
-      // await mergeAnonymousCartIntoUserCart(user.id);
-      // console.log(user, "has succesfully signed in.");
     },
   },
   theme: {
@@ -65,7 +61,7 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-const handler = NextAuth(authOptions);
+const handler = nextAuth(authOptions);
 
 export { handler as GET, handler as POST };
 
