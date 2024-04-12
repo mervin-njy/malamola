@@ -13,7 +13,7 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { debounce } from "@/app/helper/debounce";
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   session: { strategy: "database" },
   adapter: PrismaAdapter(prisma as PrismaClient) as Adapter, // this allows us to store user info & session data in MongoDB using Prisma
   providers: [
@@ -60,7 +60,6 @@ const authOptions: NextAuthOptions = {
     buttonText: "#f3eee1", // Hex color code
   },
 };
-export default authOptions;
 
 const handler = NextAuth(authOptions);
 
