@@ -53,7 +53,7 @@ const BtnAddToCart = ({
   // render component ----------------------------------------------------------------------------------------
   return (
     <div className="flex items-center">
-      <button className="btn btn-accent" onClick={handleAddToCart}>
+      <button className="btn btn-accent btn-sm" onClick={handleAddToCart}>
         Add to Cart
         <RiShoppingCart2Fill />
       </button>

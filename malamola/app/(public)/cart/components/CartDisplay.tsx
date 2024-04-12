@@ -15,7 +15,7 @@ const CartDisplay = async () => {
 
   // render component ----------------------------------------------------------------------------------------
   return (
-    <div className="w-full min-w-[525px] rounded-xl border-2 border-accent border-opacity-10 bg-neutral bg-opacity-5 p-5">
+    <div className="w-full min-w-[32.8rem] rounded-xl border-2 border-accent border-opacity-10 bg-neutral bg-opacity-5 p-5">
       {/* 1. Title */}
       <div className="text-3xl font-bold tracking-wider">
         <h1>Your Cart</h1>

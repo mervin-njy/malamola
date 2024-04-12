@@ -44,7 +44,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" data-theme="molaTheme">
       <body
-        className={`${roboto.className} flex min-h-screen min-w-[50rem] flex-col justify-between`}
+        className={`${roboto.className} flex min-h-screen flex-col justify-between min-w-[45rem]`}
       >
         <StoreProvider>
           <SessionProvider>

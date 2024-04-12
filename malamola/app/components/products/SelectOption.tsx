@@ -46,7 +46,7 @@ const SelectOption = ({
   );
 
   // render component ----------------------------------------------------------------------------------------
-  return <div className="mb-4 flex flex-row gap-2">{optionSelections}</div>;
+  return <div className="flex flex-row gap-2">{optionSelections}</div>;
 };
 
 export default SelectOption;

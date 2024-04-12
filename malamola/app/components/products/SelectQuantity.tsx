@@ -71,7 +71,7 @@ const SelectQuantity = ({
 
   // render component ----------------------------------------------------------------------------------------
   return (
-    <div className="mb-4 flex flex-wrap items-center">
+    <div className="flex flex-wrap items-center">
       <p className="w-24 font-semibold laptop:w-20">Quantity:</p>
       <select
         className="select select-bordered select-sm w-24"
