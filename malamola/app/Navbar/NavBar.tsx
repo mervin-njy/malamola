@@ -1,26 +1,29 @@
+import { getCart } from "@/lib/db/cart";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/configs/auth";
 import React from "react";
 import mainLogo from "@/public/assets/fillyFlowerLogo-200.svg";
 import Link from "next/link";
 import Image from "next/image";
 import InputSearchQuery from "./InputSearchQuery";
 import NavLinks from "./NavLinks";
-import { getCart } from "@/lib/db/cart";
 import BtnShoppingCart from "./cart/BtnShoppingCart";
 import BtnUserOptions from "./BtnUserOptions";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import ToggleLanguage from "./ToggleLanguage";
+
+// types -----------------------------------------------------------------------------------------------------
 
 // this server component fetches data & contains 3 client component (NavLinks, InputSearchQuery, BtnShoppingCart)
 const NavBar = async () => {
   // variables -----------------------------------------------------------------------------------------------
-  // fetch on server component
+  // server side data fetching for session and cart info
   const cart = await getCart();
   const session = await getServerSession(authOptions);
 
   // render component ----------------------------------------------------------------------------------------
   return (
     <div className="border-b-2 border-accent border-opacity-10 bg-neutral bg-opacity-5 shadow-sm">
-      <nav className="m-auto flex h-20 max-w-7xl justify-between px-3 tablet:h-24 tablet:px-12 laptop:px-0">
+      <nav className="m-auto flex h-24 max-w-7xl justify-between px-6 tablet:px-12 laptop:px-6">
         {/* LEFT: Main Logo for home nav */}
         <div className="flex items-center justify-start tablet:gap-5 laptop:gap-10">
           <Link href="/">
@@ -38,12 +41,17 @@ const NavBar = async () => {
         </div>
 
         {/* RIGHT: profile helper links */}
-        <div className="flex items-center tracking-wider text-secondary tablet:gap-1">
+        <div className="flex items-center tracking-wider text-secondary tablet:gap-2">
           {/* 1. formData => redirect to /search query page */}
           <InputSearchQuery />
-          {/* 2. cart Btn + dropdown => client component to dynamically display cart size */}
+
+          {/* 2. language toggle */}
+          <ToggleLanguage />
+
+          {/* 3. cart Btn + dropdown => client component to dynamically display cart size */}
           <BtnShoppingCart cart={cart} />
-          {/* 3. user profile + dropdown => client component to dynamically show user session options */}
+
+          {/* 4. user profile + dropdown => client component to dynamically show user session options */}
           <BtnUserOptions session={session} />
         </div>
       </nav>

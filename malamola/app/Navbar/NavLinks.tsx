@@ -26,9 +26,9 @@ const NavLinks = () => {
             <Link
               href={option.href}
               className={classNames({
-                "underline-offset-8 hover:text-neutral": true,
-                "font-bold text-accent": currentRoute === option.href,
-                "text-secondary hover:underline": currentRoute !== option.href,
+                "underline-offset-8 hover:text-neutral": true, // underline offset for hovered links
+                "font-semibold text-accent": currentRoute === option.href, // active link
+                "text-secondary hover:underline": currentRoute !== option.href, // inactive link
               })}
             >
               {option.label}

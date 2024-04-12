@@ -27,6 +27,7 @@ const SearchPage = async ({ searchParams: { query } }: SearchPageProps) => {
       ],
     },
     orderBy: { id: "desc" },
+    include: { Options: true },
   });
 
   // render component ---------------------------------------------------------------------------------
@@ -37,7 +38,13 @@ const SearchPage = async ({ searchParams: { query } }: SearchPageProps) => {
       ) : (
         <div className="grid grid-cols-1 gap-4 tablet:grid-cols-2 laptop:grid-cols-3">
           {products.map((product) => {
-            return <ProductCard key={product.id} product={product} />;
+            return (
+              <ProductCard
+                key={product.id}
+                product={product}
+                options={product.Options}
+              />
+            );
           })}
         </div>
       )}

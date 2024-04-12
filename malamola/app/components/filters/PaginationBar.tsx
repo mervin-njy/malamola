@@ -12,13 +12,14 @@ const PaginationBar = ({ currentPage, totalPages }: PaginationBarProps) => {
   const maxPage = Math.min(totalPages, Math.max(currentPage + 4, 10)); // get max number between current+4, total or 10
   const minPage = Math.max(1, Math.min(currentPage - 5, maxPage - 9)); // get min number between 1, current-5 or total-9
 
+  // generate page tabs --------------------------------------------------------------------------------------
   const numberedPageItems: JSX.Element[] = [];
   for (let page = minPage; page <= maxPage; page++) {
     numberedPageItems.push(
       <Link
         key={page}
         href={"?page=" + page}
-        className={`btn join-item border-accent border-opacity-10 bg-accent hover:bg-accent hover:bg-opacity-20 ${
+        className={`btn join-item btn-sm border-accent border-opacity-10 bg-accent hover:bg-accent hover:bg-opacity-20 ${
           currentPage === page
             ? "btn-active pointer-events-none bg-opacity-50"
             : "bg-opacity-5"
@@ -40,18 +41,18 @@ const PaginationBar = ({ currentPage, totalPages }: PaginationBarProps) => {
         {currentPage > 1 && (
           <Link
             href={"?page=" + (currentPage - 1)}
-            className="text-md btn join-item"
+            className="btn join-item btn-sm"
           >
             «
           </Link>
         )}
-        <button className="btn join-item pointer-events-none">
+        <button className="btn join-item btn-sm pointer-events-none">
           {currentPage}
         </button>
         {currentPage < totalPages && (
           <Link
             href={"?page=" + (currentPage + 1)}
-            className="text-md btn join-item"
+            className="btn join-item btn-sm"
           >
             »
           </Link>

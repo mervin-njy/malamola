@@ -3,10 +3,13 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next/types";
 import Image from "next/image";
 import React, { cache } from "react";
-import PriceTag from "@/app/components/PriceTag";
+import PriceTag from "@/app/components/badges/PriceTag";
 import BtnAddToCart from "./BtnAddToCart";
 import { updateProductQuantity } from "@/app/components/actions/actions";
-import { formatImageUrl } from "@/lib/format";
+import { formatImageUrl, formatCategory } from "@/app/helper/format";
+import SelectOption from "@/app/components/products/SelectOption";
+import SelectQuantity from "@/app/components/products/SelectQuantity";
+import ProductItemQuantity from "./ProductItemQuantity";
 
 // metadata ------------------------------------------------------------------------------------------------
 export async function generateMetadata({
@@ -17,7 +20,7 @@ export async function generateMetadata({
     title: product.name + " - Filly Flower Crafts",
     description: product.description,
     openGraph: {
-      images: [{ url: formatImageUrl(product.imageUrl) }],
+      images: [{ url: formatImageUrl(product.Options[0].imageUrl) }],
     },
   };
 }
@@ -25,51 +28,60 @@ export async function generateMetadata({
 // types ---------------------------------------------------------------------------------------------------
 interface ProductPageProps {
   params: {
-    id: string;
+    id: string; // get product id
+  };
+  searchParams: {
+    // query params are strings => convert to number within component
+    option?: string; // get option index param from query (if available) => default to 0}
   };
 }
 
 // functions -----------------------------------------------------------------------------------------------
 const getProduct = cache(async (id: string) => {
   // cached the fetched product data so we can share with metadata => fetching w/ prisma doesn't allow default data cache w/ javascript fetch
-  const product = await prisma.product.findUnique({ where: { id } });
+  const product = await prisma.product.findUnique({
+    where: { id },
+    include: { Options: true },
+  });
   if (!product) notFound();
   console.log("Product fetched:", product.name);
+
   return product;
 });
 
 // render component ----------------------------------------------------------------------------------------
-const ProductPage = async ({ params: { id } }: ProductPageProps) => {
+const ProductPage = async ({
+  params: { id },
+  searchParams: { option = "0" },
+}: ProductPageProps) => {
+  // variables ---------------------------------------------------------------------------------------------
   const product = await getProduct(id);
+  const options = product.Options;
+  const index = parseInt(option);
 
   return (
     <div className="flex flex-col tablet:flex-row">
       {/* LEFT: Product images */}
-      <div className="mb-4 tablet:w-7/12">
+      <div className="mb-4">
         <Image
-          src={formatImageUrl(product.imageUrl)}
+          src={formatImageUrl(options[index].imageUrl)}
           alt={product.name}
           width={600}
           height={200}
-          className="m-auto mb-4 rounded-2xl object-cover tablet:w-11/12"
+          className="m-auto mb-4 rounded-2xl object-cover"
           priority
         />
 
         <div>
           {/* 1. Add image options - replace with imageUrl array */}
           {/* 2. Add selected to highlight selected image */}
-          <div className="m-auto grid w-[600px] grid-cols-5 gap-4 tablet:w-11/12">
-            {[...Array(5)].map((elem, ind) => {
-              return (
-                <div
-                  key={ind}
-                  className="aspect-square rounded-lg bg-neutral bg-opacity-20 hover:bg-opacity-100"
-                >
-                  {elem}
-                </div>
-              );
-            })}
-          </div>
+          {options.length > 1 && (
+            <SelectOption
+              options={options}
+              currentOption={index}
+              display="image"
+            />
+          )}
         </div>
       </div>
 
@@ -77,21 +89,34 @@ const ProductPage = async ({ params: { id } }: ProductPageProps) => {
       <div className="mx-auto w-[600px] tablet:w-5/12">
         {/* 2. Details */}
         <h1 className="text-5xl font-bold">{product.name}</h1>
-        <PriceTag price={product.price} className="mt-4" />
         <p className="py-6">{product.description}</p>
 
-        {/* <SelectVariation /> */}
+        {/* 3. variations if available */}
+        {options.length > 1 && (
+          <SelectOption
+            options={options}
+            currentOption={index}
+            display="name"
+          />
+        )}
 
-        {/* 2. Quantity to add */}
-        {/* <SelectQuantity /> => if (product.stock <= 5) { ShowStock() } */}
-        {/* (product.category === "DIY" && <SelectQuantity />) */}
-
-        {/* 3. Button to confirm add */}
-        <BtnAddToCart
-          // TODO:  btnName={(product.category === "DIY" ? "Add to Cart" : "Preorder" )}
-          productId={product.id}
-          updateProductQuantity={updateProductQuantity}
+        {/* 4. price */}
+        <PriceTag
+          prices={[options[index].priceSGD, options[index].priceTWD]}
+          className={`badge-ghost mb-4 rounded-md p-3 ${
+            options[index].action === "Order"
+              ? "font-semibold"
+              : "text-opacity-50"
+          }`}
         />
+
+        {/* 5. Quantity Selection section */}
+        <ProductItemQuantity
+          optionID={options[index].id}
+          productID={product.id}
+        />
+
+        {/* 7. favourite option */}
       </div>
     </div>
   );

@@ -1,23 +1,35 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useTransition } from "react";
+import { updateProductQuantity } from "../actions/actions";
 
 interface SelectQuantityProps {
   quantity: number;
-  stock: number;
+  setQuantity?: React.Dispatch<React.SetStateAction<number>>;
+  max: number;
+  update: boolean;
+  productOptionID: string;
+  productID: string;
 }
 
-const SelectQuantity = ({ quantity, stock }: SelectQuantityProps) => {
-  // react hook ----------------------------------------------------------------------------------------------
-
+const SelectQuantity = ({
+  quantity,
+  setQuantity,
+  max,
+  update,
+  productOptionID,
+  productID,
+}: SelectQuantityProps) => {
+  // react hooks ---------------------------------------------------------------------------------------------
+  const [isPending, startTransition] = useTransition();
 
   // functions -----------------------------------------------------------------------------------------------
-  const getQuantityOptions = (max: number, stock: number) => {
+  const getQuantityOptions = (max: number) => {
     // generate options for each cartItem quantity based on stock left
     const options: JSX.Element[] = [];
     for (let i = 1; i <= max; i++) {
       options.push(
-        i <= stock ? (
+        i <= max ? (
           <option key={i} value={i} className="">
             {i}
           </option>
@@ -41,10 +53,20 @@ const SelectQuantity = ({ quantity, stock }: SelectQuantityProps) => {
     // accounts for select element OR button element with delete icon
     const newQuantity = parseInt(event.currentTarget.value);
 
-    // startTransition(async () => {
-    //   // call server action to update cartItem qty
-    //   await updateProductQuantity("/cart", product.id, newQuantity);
-    // });
+    // update local state - for non-cart page
+    !update && setQuantity && setQuantity(newQuantity);
+
+    // only update cartItem quantity when update is true - for cart page
+    update &&
+      startTransition(async () => {
+        // call server action to update cartItem qty
+        await updateProductQuantity(
+          "/cart",
+          productOptionID,
+          productID,
+          newQuantity,
+        );
+      });
   };
 
   // render component ----------------------------------------------------------------------------------------
@@ -56,8 +78,13 @@ const SelectQuantity = ({ quantity, stock }: SelectQuantityProps) => {
         defaultValue={quantity}
         onChange={handleQuantityChange}
       >
-        {getQuantityOptions(10, stock)}
+        {getQuantityOptions(max)}
       </select>
+
+      {/* loading indicator - only when cart item's quantity is updating */}
+      {update && isPending && (
+        <span className="loading loading-spinner loading-sm ml-2" />
+      )}
     </div>
   );
 };
