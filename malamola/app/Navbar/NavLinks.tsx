@@ -19,7 +19,7 @@ const NavLinks = () => {
     // { label: "FAQs", href: "/faq" }, => move to footer
   ];
   return (
-    <ul className="flex space-x-4 text-base tracking-wider tablet:space-x-6 tablet:text-lg laptop:space-x-12 laptop:text-xl">
+    <ul className="flex space-x-4 text-sm tracking-wider tablet:space-x-6 tablet:text-lg laptop:space-x-12 laptop:text-xl">
       {navOpts.map((option, ind) => {
         return (
           <li key={ind}>

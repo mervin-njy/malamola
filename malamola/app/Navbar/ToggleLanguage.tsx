@@ -19,11 +19,11 @@ const ToggleLanguage = () => {
         className="btn btn-ghost btn-secondary btn-sm flex flex-row items-center justify-between rounded-2xl hover:border-secondary hover:bg-base-100"
         onClick={() => dispatch(toggleLanguage())}
       >
-        <MdOutlineLanguage size={18} /> <span className="text-xl">|</span>
+        <MdOutlineLanguage className="text-sm tablet:text-xl"/> <span className="text-xl">|</span>
         <Flag
           className="shadow-md"
           country={language === "en" ? "SG" : "TW"}
-          size={20}
+          size={19}
         />
       </button>
     </div>

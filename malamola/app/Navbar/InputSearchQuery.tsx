@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import React from "react";
+import { MdSearch } from "react-icons/md";
 
 const InputSearchQuery = () => {
   // actions ---------------------------------------------------------------------------------------------------
@@ -11,14 +12,17 @@ const InputSearchQuery = () => {
 
   // render component ----------------------------------------------------------------------------------------
   return (
-    <form action={searchProducts} className="mr-2">
+    <form action={searchProducts} className="join mr-2 max-h-10">
       <div className="form-control">
         <input
           name="searchQuery"
           placeholder="Search products"
-          className="input input-bordered max-h-10 w-[8rem] text-xs tablet:w-full tablet:text-sm"
+          className="input input-sm join-item input-bordered w-[7rem] text-xs focus:text-accent focus:outline-none tablet:w-full tablet:text-sm"
         />
       </div>
+      <button className="btn btn-secondary join-item btn-sm">
+        <MdSearch />
+      </button>
     </form>
   );
 };
