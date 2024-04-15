@@ -51,7 +51,7 @@ const BtnUserOptions = ({ session }: BtnUserOptionsProps) => {
             alt="Profile Picture"
             width={40}
             height={40}
-            className="w-10 rounded-full"
+            className="w-9 tablet:w-10 rounded-full"
           />
         ) : (
           <RiLoginBoxLine />
