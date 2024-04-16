@@ -5,6 +5,7 @@ import NavBar from "./Navbar/NavBar";
 import Footer from "./Footer";
 import SessionProvider from "./providers/SessionProvider"; // wrap this to ensure all session info accessible in all pages => but because this is a server component, we export from a client component
 import StoreProvider from "./providers/StoreProvider";
+import Head from "next/head";
 
 const roboto = Roboto({
   weight: ["100", "300", "400", "700", "900"],
@@ -43,8 +44,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
   // render layout --------------------------------------------------------------------------------------------
   return (
     <html lang="en" data-theme="molaTheme">
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
+      </Head>
       <body
-        className={`${roboto.className} flex min-h-screen flex-col justify-between min-w-[40rem] tablet:min-w-[45rem]`}
+        className={`${roboto.className} flex min-h-screen min-w-[40rem] flex-col justify-between tablet:min-w-[45rem]`}
       >
         <StoreProvider>
           <SessionProvider>

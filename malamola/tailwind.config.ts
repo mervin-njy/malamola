@@ -20,10 +20,10 @@ const config: Config = {
         "logo-bg": "#F2EDDF",
       },
       screens: {
-        mobile: "720px", // => @media (min-width: 360px) { ... } => change to 768px for mobile-first
-        tablet: "1024px", // => @media (min-width: 640px) { ... } => change to 1024px for tablet
-        laptop: "1366px", // => @media (min-width: 1366px) { ... }
-        desktop: "1920px", // => @media (min-width: 1920px) { ... }
+        mobile: "360px", // => @media (min-width: 360px) { ... } => change to 768px for mobile-first
+        tablet: "720px", // => @media (min-width: 640px) { ... } => change to 1024px for tablet
+        laptop: "1024px", // => @media (min-width: 1366px) { ... }
+        desktop: "1366px", // => @media (min-width: 1920px) { ... }
       },
     },
   },

@@ -22,6 +22,7 @@ const SelectOption = ({
       <Link
         key={option.id}
         href={"?option=" + ind}
+        scroll={false} // prevent page scroll (still on same page)
         className={`btn btn-sm border-accent border-opacity-10 bg-accent text-sm normal-case hover:bg-accent hover:bg-opacity-20 ${
           ind === currentOption
             ? "btn-active pointer-events-none bg-opacity-40"
@@ -31,7 +32,7 @@ const SelectOption = ({
         {option.name}
       </Link>
     ) : (
-      <Link key={option.id} href={"?option=" + ind}>
+      <Link key={option.id} href={"?option=" + ind} scroll={false}>
         <Image
           src={formatImageUrl(option.imageUrl)}
           alt={option.id}

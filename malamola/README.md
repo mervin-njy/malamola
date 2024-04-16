@@ -13,7 +13,9 @@ TODO:
    - link to category filter
    - group price + qty + BtnAddToCart
    - product actions => Order && BtnAddToCart / Enquire && BtnEnquireProduct / Wish && BtnAddFavourite
-5. sorting (past projects last, newest first)
+5. product page
+   - sorting (past projects last, newest first)
+   - product card: mobile/tablet click on option doesn't route to product/[id] (currently hover for laptop)
 
 6. Admin Update Product
 

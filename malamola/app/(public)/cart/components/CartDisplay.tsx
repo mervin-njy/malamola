@@ -50,7 +50,7 @@ const CartDisplay = async () => {
       {cart?.size !== 0 && cart?.size && (
         <div className="flex flex-col items-end">
           <CartSubTotal cart={cart} />
-          <Link href={"/checkout"} className="btn btn-accent tablet:w-[12rem]">
+          <Link href={"/checkout"} className="btn btn-sm btn-accent w-[12rem]">
             Checkout
           </Link>
         </div>

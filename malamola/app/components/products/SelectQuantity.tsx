@@ -74,7 +74,7 @@ const SelectQuantity = ({
     <div className="flex flex-wrap items-center">
       <p className="w-24 font-semibold laptop:w-20">Quantity:</p>
       <select
-        className="select select-bordered select-sm w-24"
+        className="select select-bordered select-sm w-[6rem]"
         defaultValue={quantity}
         onChange={handleQuantityChange}
       >

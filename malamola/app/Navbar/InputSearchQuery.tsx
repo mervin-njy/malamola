@@ -17,7 +17,7 @@ const InputSearchQuery = () => {
         <input
           name="searchQuery"
           placeholder="Search products"
-          className="input input-sm join-item input-bordered w-[7rem] text-xs focus:text-accent focus:outline-none tablet:w-full tablet:text-sm"
+          className="input input-sm join-item input-bordered w-[7rem] text-xs focus:text-accent focus:outline-none laptop:w-full laptop:text-sm"
         />
       </div>
       <button className="btn btn-secondary join-item btn-sm">

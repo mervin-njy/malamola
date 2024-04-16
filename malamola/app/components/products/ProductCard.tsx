@@ -25,7 +25,7 @@ const ProductCard = ({ product, options }: ProductCardProps) => {
   // render component ---------------------------------------------------------------------------------
   return (
     <Link
-      href={"/products/" + product.id}
+      href={"/products/" + product.id} // TODO: mobile/tablet click on option doesn't route to product/[id]
       className="flex w-full flex-row rounded-xl bg-neutral bg-opacity-5 transition-shadow laptop:card hover:shadow-xl"
     >
       <figure className="relative w-8/12 laptop:w-full">
