@@ -113,7 +113,7 @@ const ProductPage = async ({
           />
         )}
 
-        <div className="flex flex-col justify-between gap-4 laptop:flex-row laptop:items-center">
+        <div className="flex flex-row items-center justify-between gap-4 tablet:flex-col tablet:items-start laptop:flex-row laptop:items-center">
           {/* 4. price */}
           <PriceTag
             prices={[options[index].priceSGD, options[index].priceTWD]}

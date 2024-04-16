@@ -86,7 +86,7 @@ const DropdownCart = ({ cart }: BtnShoppingCartProps) => {
         {/* 4. Link to /Cart page for full Cart details + checkout confirmation */}
         <Link
           href={"/cart"}
-          className="btn btn-secondary btn-block"
+          className="btn btn-secondary btn-block btn-sm"
           onClick={closeDropdown}
         >
           View Cart

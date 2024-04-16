@@ -53,15 +53,16 @@ const BtnAddToCart = ({
   // render component ----------------------------------------------------------------------------------------
   return (
     <div className="flex items-center">
-      <button className="btn btn-accent btn-sm" onClick={handleAddToCart}>
-        Add to Cart
-        <RiShoppingCart2Fill />
-      </button>
-
       {/* Pending: loading indicator */}
       {isPending && (
         <span className="loading loading-ring loading-md ml-4 text-info" />
       )}
+
+      {/* Button to add to cart */}
+      <button className="btn btn-accent btn-sm" onClick={handleAddToCart}>
+        Add to Cart
+        <RiShoppingCart2Fill />
+      </button>
 
       {/* {toasts.length > 0 &&
         toasts.slice(0, -1).map((toast, ind) => {

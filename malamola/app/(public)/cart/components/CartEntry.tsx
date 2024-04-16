@@ -52,7 +52,7 @@ const CartEntry = ({
   return (
     <div>
       {/* Each entry div w/ border */}
-      <div className="my-5 flex flex-wrap items-center gap-10 rounded-xl">
+      <div className="my-5 flex flex-row items-center gap-10 rounded-xl">
         {/* Image on the left */}
         <Image
           src={formatImageUrl(productOption.imageUrl)}
