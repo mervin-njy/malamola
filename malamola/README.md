@@ -10,12 +10,14 @@ TODO:
 3. product option display (hover over selection to update other elements) *** DONE
 
 4. furnish details for product/[id] page:
-   - link to category filter
-   - group price + qty + BtnAddToCart
+   - link to category filter *** DONE
+   - group price + qty + BtnAddToCart *** DONE
    - product actions => Order && BtnAddToCart / Enquire && BtnEnquireProduct / Wish && BtnAddFavourite
 5. product page
    - sorting (past projects last, newest first)
-   - product card: mobile/tablet click on option doesn't route to product/[id] (currently hover for laptop)
+   - product card:
+      a. mobile/tablet click on option doesn't route to product/[id] (currently hover for laptop)
+      b. options and price don't fit when parent div's width is too small
 
 6. Admin Update Product
 
